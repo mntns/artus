@@ -1,0 +1,71 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <fieldset class="form-group <%= inject_danger(f, :name) %>">
+        <%= label f, :name %>
+        <%= text_input f, :name, class: "form-control", placeholder: "John Doe" %>
+        <%= error_tag f, :name %>
+      </fieldset>
+    </div>
+    <div class="col-md-6">
+      <fieldset class="form-group <%= inject_danger(f, :mail) %>">
+        <%= label f, :mail %>
+        <%= email_input f, :mail, class: "form-control", placeholder: "john@ias.org" %>
+        <%= error_tag f, :mail %>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <fieldset class="form-group <%= inject_danger(f, :branch) %>">
+        <label for="branch">Branch</label>
+        <div id="branch" class="btn-group-vertical btn-group-fix" data-toggle="buttons">
+          <%= for {id, branch} <- get_branches() do %>
+            <label class="btn btn-secondary btn-block btn-group-item-fix">
+              <%= radio_button f, :branch, id %>
+              <div class="row">
+                <div class="col-sm-2">
+                  <%= for flag <- branch["flags"] do %>
+                    <span class="flag-icon flag-icon-<%= flag %>"></span>
+                  <% end %>
+                </div>
+                <div class="col-sm-9">
+                    <%= branch["name"] %>
+                </div>
+              </div>
+            </label>
+          <% end %>
+        </div>
+        <%= error_tag f, :level %>
+      </fieldset>
+    </div>
+    <div class="col-md-6">
+      <fieldset class="form-group <%= inject_danger(f, :level) %>">
+        <label for="role">Role</label>
+        <div id="role" class="btn-group-vertical btn-group-fix" data-toggle="buttons">
+          <label class="btn btn-secondary btn-block btn-group-item-fix active">
+            <%= radio_button f, :level, "3", checked: true %> Bibliographer
+          </label>
+          <label class="btn btn-secondary btn-block btn-group-item-fix">
+            <%= radio_button f, :level, "2" %> National bibliographer
+          </label>
+          <label class="btn btn-secondary btn-block btn-group-item-fix">
+            <%= radio_button f, :level, "1" %> International bibliographer
+          </label>
+        </div>
+        <%= error_tag f, :level %>
+      </fieldset>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </fieldset>
+<% end %>

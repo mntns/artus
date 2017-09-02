@@ -1,0 +1,10 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="alert alert-warning" id="noJS" role="alert">
+    <h2>Hey there!</h2>
+    Please use a modern browser like Firefox or Chrome. Otherwise BIAS will probably not work as intended.
+  </div>
+</div>

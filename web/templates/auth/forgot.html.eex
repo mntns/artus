@@ -1,0 +1,21 @@
+<%= render Artus.SharedView, "navbar.html", %{user: nil} %>
+
+<div class="container main">
+
+  <div class="m-x-auto" style="width: 33vw;">
+    <div class="login-form">
+      <h2>Reset your password</h2>
+      <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+      <%= form_tag("/send_reset") %>
+      <fieldset class="form-group">
+        <input name="mail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      </fieldset>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i> Send reset email
+      </button>
+      </form>
+    </div>
+  </div>
+
+
+</div>

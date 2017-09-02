@@ -1,0 +1,29 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "nojs.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "noie.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <%= if @notice do %>
+    <div class="alert alert-warning" role="alert" style="margin-bottom: 10vh;">
+      <%= @notice %>
+    </div>
+  <% end %>
+  
+  <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
+
+  <%= form_tag("/search") %>
+  <fieldset>
+    <div class="input-group">
+      <input name="query" type="text" class="form-control" data-toggle="tooltip" data-placement="bottom" title="Searches by title, subtitle, author and editor" placeholder="Search BIAS">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="submit">Go!</button>
+      </span>
+    </div>
+    <a class="pull-xs-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
+  </fieldset>
+  </form>
+  
+</div>
+

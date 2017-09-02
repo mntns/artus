@@ -1,0 +1,18 @@
+{
+  "1": {"name": "Australia and New Zealand Branch", "flags": ["au", "nz"]},
+  "2": {"name": "British Branch", "flags": ["gb"]},
+  "3": {"name": "Dutch Branch", "flags": ["nl"]},
+  "4": {"name": "French Branch", "flags": ["fr"]},
+  "5": {"name": "German Branch", "flags": ["de", "at"]},
+  "6": {"name": "Hispanic Branch", "flags": ["br", "pt", "es"]},
+  "7": {"name": "Italian Branch", "flags": ["it"]},
+  "8": {"name": "Japanese Branch", "flags": ["jp"]},
+  "9": {"name": "Nordic Branch", "flags": ["no", "se", "dk"]},
+  "10": {"name": "North American Branch", "flags": ["ca", "us"]},
+  "11": {"name": "Romanian Branch", "flags": ["ro"]},
+  "12": {"name": "Swiss Branch", "flags": ["ch"]},
+  "13": {"name": "Hungarian Branch", "flags": ["hu"]},
+  "14": {"name": "Israelian Branch", "flags": ["il"]},
+  "15": {"name": "Polish Branch", "flags": ["pl"]},
+  "16": {"name": "Russian Branch", "flags": ["ru"]}
+}

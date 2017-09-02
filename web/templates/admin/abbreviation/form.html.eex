@@ -1,0 +1,38 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <fieldset class="form-group <%= inject_danger(f, :abbr) %>">
+    <%= label f, :abbr, "Token" %>
+    <%= text_input f, :abbr, class: "form-control", placeholder: "AG" %>
+    <%= error_tag f, :abbr %>
+  </fieldset>
+  <fieldset class="form-group <%= inject_danger(f, :title) %>">
+    <%= label f, :title %>
+    <%= text_input f, :title, class: "form-control", placeholder: "Acta Germanica" %>
+    <%= error_tag f, :title %>
+  </fieldset>
+  <fieldset class="form-group <%= inject_danger(f, :place) %>">
+    <%= label f, :place, "Place of publication" %>
+    <%= text_input f, :place, class: "form-control", placeholder: "Frankfurt; Bern; New York; Paris" %>
+    <%= error_tag f, :place %>
+  </fieldset>
+  <fieldset class="form-group <%= inject_danger(f, :publisher) %>">
+    <%= label f, :publisher %>
+    <%= text_input f, :publisher, class: "form-control", placeholder: "Peter Lang" %>
+    <%= error_tag f, :publisher %>
+  </fieldset>
+  <fieldset class="form-group <%= inject_danger(f, :issn) %>">
+    <%= label f, :issn, "ISSN" %>
+    <%= text_input f, :issn, class: "form-control", placeholder: "00651273" %>
+    <%= error_tag f, :issn %>
+  </fieldset>
+
+
+  <fieldset class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </fieldset>
+<% end %>

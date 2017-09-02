@@ -1,0 +1,15 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active"><a href="<%= abbreviation_path(@conn, :index) %>">Abbreviations</a></li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <h2>Add new abbreviation</h2>
+
+  <%= render "form.html", changeset: @changeset, action: abbreviation_path(@conn, :create) %>
+  <%= link "Back", to: abbreviation_path(@conn, :index) %>
+</div>

@@ -1,0 +1,11 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="alert alert-warning query-time">
+    <p>The query you're looking for does not exist anymore.</p>
+  </div>
+  
+</div>
+

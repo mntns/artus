@@ -1,0 +1,17 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <h2>Working caches</h2>
+
+  <div class="list-group">
+    <%= for cache <- @caches do %>
+      <a class="list-group-item" href="<%= cache_path(@conn, :show, cache.id) %>">
+        <%= cache.name %>
+        <span class="label label-default pull-xs-right"><%= cache.entries |> List.to_tuple |> tuple_size %></span>
+      </a>
+    <% end %>
+  </div>
+
+  <a class="btn btn-primary pull-xs-right add-button" href="/caches/new" role="button">New working cache</a>
+
+</div>

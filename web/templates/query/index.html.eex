@@ -1,0 +1,43 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <%= form_tag("/search") %>
+  <fieldset>
+    <div class="input-group">
+      <input name="query" type="text" class="form-control" placeholder="Search BIAS" value="<%= @query_str %>">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="submit">Go!</button>
+      </span>
+    </div>
+    <a class="pull-xs-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
+  </fieldset>
+  </form>
+
+  <div class="alert alert-info query-time">
+    <%= length(@results) %> results, <%= @query_time %>ms
+  </div>
+  
+  <div class="list-group">
+    <%= for item <- @results do %>
+      <div class="list-group-item"> 
+        <a href="<%= entry_path(@conn, :show, item.id) %>">
+          <%= render Artus.SharedView, "entry.html", %{entry: item} %>
+        </a>
+
+        <%= if item.reviews != [] do %>
+          <a style="z-index: 0;" class="pull-xs-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
+            <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
+          </a>
+          <div class="collapse" id="reviews<%= item.id %>">
+            <br>
+            <%= render Artus.SharedView, "reviews.html", %{entry_id: item.id, conn: @conn, reviews: item.reviews} %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+</div>
+

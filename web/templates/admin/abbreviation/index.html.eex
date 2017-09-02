@@ -1,0 +1,23 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active">Abbreviations</li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="list-group">
+    <%= for abbr <- @abbreviations do %>
+      <a href="<%= abbreviation_path(@conn, :show, abbr.id) %>" class="list-group-item">
+        <b><%= abbr.abbr %></b>: <%= abbr.title %>
+      </a>
+    <% end %>
+  </div>
+
+  <a class="btn btn-primary pull-xs-right add-button" href="<%= abbreviation_path(@conn, :new) %>" role="button">
+    <i class="fa fa-plus"></i> New abbreviation
+  </a>
+  
+</div>

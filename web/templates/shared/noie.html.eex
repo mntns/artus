@@ -1,0 +1,6 @@
+<script type="text/javascript">
+if(navigator.appName.indexOf("Internet Explorer")!=-1 || navigator.userAgent.match(/Trident.*rv[ :]*11\./))
+{
+  window.location = "<%= Artus.Router.Helpers.url(@conn) %>/noie";
+}
+</script>

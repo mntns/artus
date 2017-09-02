@@ -1,0 +1,18 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-2">
+      <h1>Imprint</h1>
+    </div>
+    <div class="col-md-12 col-lg-10" style="text-align: justify;">
+      <h4>Legal notice</h4>
+      <p>The <a href="http://www.internationalarthuriansociety.com/officers">editors of the BIAS</a> are responsible.</p>
+      
+      <h4>Disclaimer</h4>
+      <p>Although we have reviewed their contents thoroughly, we do not assume any liability for the content of external links. They are not offered by IAS, and only the operators of such linked pages are responsible for their content. IAS explicitly dissociates itself from such content and does not support such content.</p>
+    </div>
+  </div>
+</div>

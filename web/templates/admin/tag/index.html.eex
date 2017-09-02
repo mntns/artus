@@ -1,0 +1,52 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active">Tags</li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render "modal.html" %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Things</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= render "input.html", type: 1 %>
+        </li>
+        <%= for tag <- @tags[:things] do %>
+          <li class="list-group-item">
+            <i class="fa fa-fw fa-times-circle pull-xs-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
+            <i class="fa fa-fw fa-tag" aria-hidden="true"></i>
+            <%= tag.tag |> render_tag |> raw %>
+            <%= if tag.user_tag do %>
+              <span class="tag tag-default">user created</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <div class="col-md-6">
+      <h3>Author / works</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= render "input.html", type: 2 %>
+        </li>
+        <%= for tag <- @tags[:works] do %>
+          <li class="list-group-item">
+            <i class="fa fa-fw fa-times-circle pull-xs-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
+            <i class="fa fa-fw fa-tag" aria-hidden="true"></i>
+            <%= tag.tag |> render_tag |> raw %>
+            <%= if tag.user_tag do %>
+              <span class="tag tag-default">user created</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,113 @@
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '_flat';
+
+$body-bg: $clouds;
+$navbar-dark-color: white;
+$btn-primary-bg: $belize_hole;
+$artus-primary: darken($nephritis, 10%);
+
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import '../../../node_modules/react-select/scss/default';
+@import 'font-awesome/font-awesome';
+@import 'flag-icon/flag-icon';
+
+nav {
+  background-color: $artus-primary;
+}
+
+.alert {
+  border-radius: 0;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.main {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+#ias-logo {
+  //@include center-block;
+  height: 200px;
+  width: 90%;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+.breadcrumb { 
+  background-color: white;
+}
+
+.add-button {
+  margin-top: 3vh;
+  margin-left: 5px;
+}
+
+.login-form {
+  background-color: white;
+  padding: 20px;
+  h2 {
+    margin-bottom: 3vh;
+  }
+}
+
+.input-form-space {
+  margin-top: 50px;
+}
+
+.btn-group-fix {
+  width: 100%;
+  .btn-group-item-fix {
+    margin-bottom: 0;
+  }
+}
+
+.review-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.kapitaelchen {
+  font-variant: small-caps;
+}
+
+.query-time, .filter-row {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+#noJS {
+  margin-top: 5vh;
+}
+
+#logicGroup {
+    width: 100%;
+    .btn {
+      width: 25%;
+    }
+  }
+
+
+$placeholder_color: rgba(0,0,0,0.3);
+
+::-webkit-input-placeholder {
+  color: $placeholder_color;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: $placeholder_color;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: $placeholder_color;
+}
+
+:-ms-input-placeholder {  
+  color: $placeholder_color;
+}

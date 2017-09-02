@@ -1,0 +1,127 @@
+{    
+  "biblio_record_id": {
+    "label": "Item number in printed BIAS/BBSIA (till 2015)",
+    "type": "text",
+    "sample": "1968, 269"
+  },
+  "author": {
+    "label": "Author(s) of Primary or Secondary Text", 
+    "type": "text", 
+    "sample": "'Chrétien de Troyes'   OR    'Bumke, Joachim; Vinaver, Eugène'"
+  },
+  "editor": {
+    "label": "Editor(s) (in case of an edition click the help button)", 
+    "type": "text", 
+    "sample": "Allaire, Gloria; Psaki, F. Regina"
+  },
+  "reviewer": {
+    "label": "Reviewer", 
+    "type": "text",
+    "sample": "Henkel, Nikolaus"
+  },
+  "titl_title": {
+    "label": "Title", 
+    "type": "text",
+    "sample": "Une lecture généalogique du _Roman de Tristan_ de Thomas d’Angleterre"
+  },
+  "titl_subtitle": {
+    "label": "Subtitle", 
+    "type": "text",
+    "sample": "Les 'sous-textes' médical, logique et théologique"
+  },
+  "titl_add": {
+    "label": "Number of Impression", 
+    "type": "text",
+    "sample": "2nd edition"
+  },
+  "ser_title": {
+    "label": "Title of Volume or Journal / Series Name", 
+    "type": "text",
+    "sample": "Journal of the International Arthurian Society"
+  },
+  "ser_volume": {
+    "label": "Journal Volume / Series Number", 
+    "type": "text",
+    "sample": "15"
+  },
+  "ser_code": {
+    "label": "Journal Title Abbreviation", 
+    "type": "abbreviation",
+    "sample": "JIAS"
+  },
+  "ser_issue": {
+    "label": "Journal Issue", 
+    "type": "text",
+    "sample": "1"
+  },
+  "ser_count": {
+    "label": "Number of Pages / Range of Pages", 
+    "type": "text",
+    "sample": "113-45"
+  },
+  "ser_year_pub": {
+    "label": "Year of Publication", 
+    "type": "text",
+    "sample": "2016"
+  },
+  "publ_pub_house": {
+    "label": "Publisher", 
+    "type": "text",
+    "sample": "Routledge"
+  },
+  "publ_pub_place": {
+    "label": "Place of Publication", 
+    "type": "text",
+    "sample": "Oxford; New York, NY"
+  },
+  "biblio_issn": {
+    "label": "ISSN", 
+    "type": "text",
+    "sample": "21969353"
+  },
+  "biblio_isbn": {
+    "label": "ISBN", 
+    "type": "text",
+    "sample": "9783110441871"
+  },
+  "doi": {
+    "label": "Digital Object Identifier", 
+    "type": "text",
+    "sample": "10.1515/jias-2015-0001"
+  },
+  "abstract": {
+    "label": "Abstract", 
+    "type": "abstract",
+    "sample": ""
+  },
+  "language": {
+    "label": "Language", 
+    "type": "language",
+    "sample": "Dutch"
+  },
+  "subject_things": {
+    "label": "Tags: Things", 
+    "type": "tags",
+    "sample": ""
+  },
+  "subject_works": {
+    "label": "Tags: Author / Work", 
+    "type": "tags",
+    "sample": ""
+  },
+  "additional_info": {
+    "label": "Additional information",
+    "type": "textbox",
+    "sample": ""
+  },
+  "links": {
+    "label": "Links",
+    "type": "textbox",
+    "sample": "http://episteme.revues.org/225 [episteme]"
+  },
+  "internal_comment": {
+    "label": "Internal comment",
+    "type": "textbox",
+    "sample": ""
+  }
+}

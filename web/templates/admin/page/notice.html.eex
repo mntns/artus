@@ -1,0 +1,14 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active">Notice</li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <p>Here you can set a notice which will be shown on the front page. Please use this feature only for important updates.</p>
+
+</div>

@@ -1,0 +1,19 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      Oops, something went wrong! Please check the errors below.
+    </div>
+  <% end %>
+
+  <fieldset class="form-group <%= inject_danger(f, :abbr) %>">
+    <%= label f, :name, "Name of the working cache" %>
+    <%= text_input f, :name, class: "form-control", placeholder: "" %>
+    <%= error_tag f, :name %>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <button class="btn btn-primary pull-xs-right" type="submit">
+      <i class="fa fa-fw fa-paper-plane" aria-hidden="true"></i> Create Cache
+    </button>
+  </fieldset>
+<% end %>

@@ -1,0 +1,283 @@
+<!-- TYPE A -->
+<%= if @entry.type == "a" do %>
+  <%= if authors = @entry.author do %>
+    <%= authors |> style_authors |> raw %>,
+  <% end %>
+
+  <%= style_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+  <%= if @entry.ser_title do %>
+    in <i><%= @entry.ser_title %></i>,
+  <% end %>
+
+  <%= if editors = @entry.editor do %>
+    ed. <%= editors |> style_editors |> raw %>.
+  <% end %>
+
+  <%= if title_add = @entry.titl_add do %>
+    <%= title_add %>,
+  <% end %>
+
+  <%= if publ_place = @entry.publ_pub_place do %>
+    <%= style_publ(publ_place) %>:
+  <% end %>
+
+  <%= if publ_house = @entry.publ_pub_house do %>
+    <%= publ_house %>,
+  <% end %>
+
+  <%= if ser_year_pub = @entry.ser_year_pub do %>
+    <%= ser_year_pub %>,
+  <% end %>
+
+  <%= if ser_count = @entry.ser_count do %>
+    pp. <%= ser_count %>.
+  <% end %>
+<% end %>
+
+<!-- TYPE B -->
+<%= if @entry.type == "b" do %>
+  
+  <%= if @entry.part == 1 do %>
+    <%= if authors = @entry.author do %>
+      <%= authors |> style_authors |> raw %>,
+    <% end %>
+
+    <%= style_monograph_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+      <%= if editors = @entry.editor do %>
+        <%= editors |> style_editors |> raw %>.
+      <% end %>
+
+      <%= if title_add = @entry.titl_add do %>
+        <%= title_add %>,
+      <% end %>
+      
+      <%= if publ_place = @entry.publ_pub_place do %>
+      <%= style_publ(publ_place) %>:
+    <% end %>
+
+    <%= if publ_house = @entry.publ_pub_house do %>
+      <%= publ_house %>,
+    <% end %>
+
+    <%= if ser_year_pub = @entry.ser_year_pub do %>
+      <%= ser_year_pub %>,
+    <% end %>
+
+    <%= if ser_count = @entry.ser_count do %>
+      <%= ser_count %> p.
+    <% end %>
+
+    <%= if ser_title = @entry.ser_title do %>
+      <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+    <% end %>
+
+    <%= if ser_volume = @entry.ser_volume do %>
+      <%= ser_volume %>.
+    <% end %>
+  <% end %>
+  
+  <%= if @entry.part == 3 do %>
+    <%= if authors = @entry.author do %>
+      <%= authors |> style_authors |> raw %>,
+    <% end %>
+
+    <%= style_monograph_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+      <%= if editors = @entry.editor do %>
+        <%= editors |> style_editors |> raw %>.
+      <% end %>
+
+      <%= if title_add = @entry.titl_add do %>
+        <%= title_add %>,
+      <% end %>
+      
+      <%= if publ_place = @entry.publ_pub_place do %>
+      <%= style_publ(publ_place) %>:
+    <% end %>
+
+    <%= if publ_house = @entry.publ_pub_house do %>
+      <%= publ_house %>,
+    <% end %>
+
+    <%= if ser_year_pub = @entry.ser_year_pub do %>
+      <%= ser_year_pub %>,
+    <% end %>
+
+    <%= if ser_count = @entry.ser_count do %>
+      <%= ser_count %> p.
+    <% end %>
+
+    <%= if ser_title = @entry.ser_title do %>
+      <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+    <% end %>
+
+    <%= if ser_volume = @entry.ser_volume do %>
+      <%= ser_volume %>.
+    <% end %>
+  <% end %>
+  
+  
+  <%= if @entry.part == 2 do %>
+    <%= if authors = @entry.author do %>
+      <%= authors |> style_authors |> raw %>,
+
+      <%= style_monograph_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+      <%= if title_add = @entry.titl_add do %>
+        <%= title_add %>,
+      <% end %>
+      
+      <%= if editors = @entry.editor do %>
+        ed. <%= editors |> style_editors |> raw %>.
+      <% end %>
+      
+      <%= if publ_place = @entry.publ_pub_place do %>
+        <%= style_publ(publ_place) %>:
+      <% end %>
+
+      <%= if publ_house = @entry.publ_pub_house do %>
+        <%= publ_house %>,
+      <% end %>
+
+      <%= if ser_year_pub = @entry.ser_year_pub do %>
+        <%= ser_year_pub %>,
+      <% end %>
+
+      <%= if ser_count = @entry.ser_count do %>
+        <%= ser_count %> p.
+      <% end %>
+
+      <%= if ser_title = @entry.ser_title do %>
+        <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+      <% end %>
+
+      <%= if ser_volume = @entry.ser_volume do %>
+        <%= ser_volume %>.
+      <% end %>
+    <% else %>
+      <%= style_monograph_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+      <%= if editors = @entry.editor do %>
+        ed. <%= editors |> style_editors |> raw %>.
+      <% end %>
+
+      <%= if title_add = @entry.titl_add do %>
+        <%= title_add %>,
+      <% end %>
+        
+      <%= if publ_place = @entry.publ_pub_place do %>
+        <%= style_publ(publ_place) %>:
+      <% end %>
+
+      <%= if publ_house = @entry.publ_pub_house do %>
+        <%= publ_house %>,
+      <% end %>
+
+      <%= if ser_year_pub = @entry.ser_year_pub do %>
+        <%= ser_year_pub %>,
+      <% end %>
+
+      <%= if ser_count = @entry.ser_count do %>
+        <%= ser_count %> p.
+      <% end %>
+
+    <% end%>
+  <% end %>
+  <%= if @entry.part == 4 do %>
+    <%= if authors = @entry.author do %>
+      <%= authors |> style_authors |> raw %>,
+    <% end %>
+
+    <%= style_monograph_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+    <%= if ser_title = @entry.ser_title do %>
+      <%= ser_title %>
+    <% end %>
+
+    <%= if ser_volume = @entry.ser_volume do %>
+      <%= ser_volume %>
+    <% end %>
+
+    <%= if publ_house = @entry.publ_pub_house do %>
+      (<%= publ_house %>,
+    <% end %>
+
+    <%= if ser_year_pub = @entry.ser_year_pub do %>
+      <%= ser_year_pub %>).
+    <% end %>
+  <% end %>
+<% end %>
+
+<!-- TYPE Z -->
+<%= if @entry.type == "z" do %>
+  <%= if authors = @entry.author do %>
+    <%= authors |> style_authors |> raw %>,
+  <% end %>
+
+  <%= style_titles(@entry.titl_title, @entry.titl_subtitle) |> raw %>
+
+  <%= if editors = @entry.editor do %>
+    ed. <%= editors |> style_editors |> raw %>.
+  <% end %>
+
+  <%= if ser_code = @entry.ser_code do %>
+    <i><%= ser_code %></i>,
+  <% else %>
+    <%= if @entry.ser_title do %>
+      <i><%= @entry.ser_title %></i>,
+    <% end %>
+  <% end %>
+  
+  <%= if ser_volume = @entry.ser_volume do %>
+    <%= if ser_issue = @entry.ser_issue do %>
+      <%= ser_volume %>.<%= ser_issue %>
+    <% else %>
+      <%= ser_volume %>
+    <% end %>
+  <% end %>
+
+  <%= if ser_year_pub = @entry.ser_year_pub do %>
+    (<%= ser_year_pub %>),
+  <% end %>
+
+  <%= if ser_count = @entry.ser_count do %>
+    <%= ser_count %>.
+  <% end %>
+<% end %>
+
+<!-- TYPE R - REVIEW -->
+<%= if @entry.type == "r" do %>
+  <%= if reviewers = @entry.reviewer do %>
+    Rev. by <%= reviewers |> style_authors |> raw %>,
+  <% end %>
+
+  <%= if ser_code = @entry.ser_code do %>
+    <i><%= ser_code %></i>,
+  <% else %>
+    <%= if ser_title = @entry.ser_title do %>
+      <i><%= ser_title %></i>,
+    <% end %>
+  <% end %>
+  
+  <%= if ser_volume = @entry.ser_volume do %>
+     <%= ser_volume %>
+  <% end %>
+  
+  <%= if ser_issue = @entry.ser_issue do %>
+    <%= ser_issue %>
+  <% end %>
+
+  <%= if ser_year_pub = @entry.ser_year_pub do %>
+    (<%= ser_year_pub %>),
+  <% end %>
+
+  <%= if ser_count = @entry.ser_count do %>
+    <%= ser_count %>.
+  <% end %>
+<% end %>
+
+<%= if @entry.system_type == 2 do %>
+  <span class="label label-primary pull-xs-right">Reprint</span>
+<% end %>

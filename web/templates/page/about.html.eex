@@ -1,0 +1,46 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-2">
+      <h1>About</h1>
+    </div>
+    <div class="col-md-12 col-lg-10" style="text-align: justify;">
+      <p>
+      The Database of the International Arthurian Society is a bibliographical tool for research in the field of Arthurian literature.
+      </p>
+
+      <h4>Purpose</h4>
+      <p>
+      The purpose of <i>BIAS</i> is to provide a continuing record of scholarly books and articles directly concerned with the <i>matière de Bretagne</i>. The bibliography’s aim is to include all books, reviews and articles published since 2015. In the long run, all entries in the bibliographies of the Arthurian Society from 1948 will be included in the database.
+      <br>
+      The database allows users to search for a special title, year, author or tag to find matches according to individual scholarly interests. Selected matches can be exported.
+      </p>
+
+      <h4>Editorial conventions</h4>
+      <p>
+      Each national branch of the Arthurian Society is responsible for the items published in its country. All items are divided into five parts: I. Texts, Translations and Adaptations; II. Critical and Historical Studies; III. Reviews; IV. Reprints; V. Unpublished Doctoral Dissertations/Higher Degree Theses. As often as possible a brief, objective account is given of the contents of each study listed in the Bibliography. For practical purposes, as well as to conform to a decision taken at the Second Triennial Arthurian Congress, these digests are given in English, French or German.<br>
+      Subjects which are only indirectly concerned with arthurian matters, such as the origins of courtly love, are deliberately excluded. Also excluded are popular works, general surveys found in histories of literature and most studies which deal with the Arthurian tradition after the sixteenth century.
+      </p>
+
+      <h4>History</h4>
+      <p>
+      From 1949 to 2011 the Society published this annual bibliography as well as research articles in the annual <i>Bibliographical Bulletin of the Arthurian Society / Bulletin Bibliographique de la Société Internationale Arthurienne</i> (BBIAS / BBSIA). The last combined volume of bibliography and research articles was released in 2011. They have now been separated into two new <a href="http://www.internationalarthuriansociety.com/publications">publications</a>, JIAS (<i>Journal of the International Arthurian Society</i>) and BIAS (<i>Bibliography of the International Arthurian Society</i>), both available online. Since 2017 BIAS has been merged into this database.
+      </p>
+
+      <h4>Credits</h4>
+      <p>
+      <i>Technical Developer</i><br>
+      <a href="https://monoton.space">Eddy Shure</a>
+      </p>
+      <p>
+      <i>Editorial Support</i><br>
+      Nathanael Busch & Antonia Krihl
+      </p>
+
+      <a href="/imprint">Imprint</a>
+    </div>
+  </div>
+</div>

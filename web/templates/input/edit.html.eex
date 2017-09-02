@@ -1,0 +1,21 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <h2>
+    <i class="fa fa-pencil-square" aria-hidden="true"></i> Edit entry
+  </h2>
+
+    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
+    <script>window.systemType = 4;</script>
+    <script>window.entryID = "<%= @entry_id %>";</script>
+
+    <%= if @cache do %>
+      <script>window.workingCacheID = <%= @cache.id %>;</script>
+    <% else %>
+      <script>window.workingCacheID = null;</script>
+    <% end %>
+    
+    <%= form_tag("/submit") %>
+      <div id="review-edit-form"></div>
+    </form>
+</div>

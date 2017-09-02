@@ -1,0 +1,162 @@
+defmodule Artus.Router do
+  use Artus.Web, :router
+  use Plug.ErrorHandler
+
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
+  # Assigns :user to conn
+  pipeline :artus_conn do
+    plug Artus.UserPlug
+
+    # Websockets token
+    plug :put_user_token
+  end
+
+  # Checks if user is assigned
+  pipeline :artus_user do
+    plug :check_user
+  end
+
+  # Checks if assigned user is admin
+  pipeline :artus_admin do
+    plug :check_admin
+  end
+
+  # Email plug
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
+  end
+
+  scope "/", Artus do
+    pipe_through :browser # Use the default browser stack
+    pipe_through :artus_conn
+
+    # General routes
+    get "/", PageController, :index
+    get "/nojs", PageController, :nojs
+    get "/noie", PageController, :noie
+    get "/about", PageController, :about
+    get "/imprint", PageController, :imprint
+    get "/feedback", PageController, :feedback
+    post "/feedback", PageController, :submit_feedback
+
+    # Query
+    get "/advanced", QueryController, :advanced
+    post "/search", QueryController, :search
+    post "/advanced-search", QueryController, :advanced_search
+    get "/query/:id", QueryController, :query
+    post "/query/:id", QueryController, :query_sort
+
+    # Authentication
+    get "/login", AuthController, :login
+    post "/auth", AuthController, :auth
+    get "/logout", AuthController, :logout
+    get "/activate/:code", AuthController, :activate
+    get "/forgot", AuthController, :forgot
+    post "/send_reset", AuthController, :send_reset
+    post "/set_pass/:code", AuthController, :set_pass
+    post "/reset_pass/:code", AuthController, :reset_pass
+    get "/reset/:code", AuthController, :reset
+
+    # Entries
+    get "/entries/:id", EntryController, :show
+    get "/entries/:id/export", EntryController, :export
+    get "/entries/:id/export/:type", EntryController, :export_type
+
+    scope "/" do
+      pipe_through :artus_user
+
+      get "/account", PageController, :account
+
+      # Entries
+      get "/entries/:id/review", EntryController, :review
+      get "/entries/:id/edit", EntryController, :edit
+      get "/entries/:id/child", EntryController, :child
+      get "/entries/:id/reprint", EntryController, :reprint
+      get "/entries/:id/delete", EntryController, :delete
+      get "/entries/:id/move/:target", EntryController, :move
+      post "/entries/:id/link", EntryController, :link
+      get "/entries/:id/remove_link/:target", EntryController, :remove_link
+
+      # Input form
+      get "/input", InputController, :input
+      get "/input/:cache_id", InputController, :input_cache
+      get "/review/:id", InputController, :review
+      get "/review/:id/edit", InputController, :edit
+      get "/review/:id/submit", InputController, :submit
+      get "/review/:id/submit_edit", InputController, :submit_edit
+
+      # Caches
+      resources "/caches", CacheController, except: [:delete]
+      get "/caches/:id/delete", CacheController, :delete
+      get "/caches/:id/submit", CacheController, :submit
+      post "/caches/:id/send_up", CacheController, :supervisor_submit
+      get "/caches/:id/down", CacheController, :down
+      post "/caches/:id/send_down", CacheController, :send_down
+      get "/caches/:id/publish", CacheController, :publish
+    end
+
+    # Admin routes
+    scope "/admin", Admin do
+      pipe_through :artus_user
+      pipe_through :artus_admin
+
+      get "/", PageController, :index
+      get "/stats", PageController, :stats
+      get "/logs", PageController, :logs
+      get "/notice", PageController, :notice
+
+      # Tags
+      get "/tags", TagController, :index
+      post "/tags/:type", TagController, :create
+      get "/tags/:id/delete", TagController, :delete
+
+      # Users
+      resources "/users", UserController, except: [:delete]
+      get "/users/:id/delete", UserController, :delete
+      get "/users/:id/reset", UserController, :reset
+      get "/users/:id/caches", UserController, :caches
+
+      # Abbreviations
+      resources "/abbreviations", AbbreviationController, except: [:delete]
+      get "/abbreviations/:id/delete", AbbreviationController, :delete
+    end
+  end
+
+  scope "/api", Artus do
+    pipe_through :api
+  end
+
+  defp check_admin(conn, _) do
+    case conn.assigns.user.admin do
+      true -> conn
+      _ -> conn |> put_flash(:info, "You have no admin rights!") |> redirect(to: "/")
+    end
+  end
+
+  defp check_user(conn, _) do
+    case conn.assigns.user do
+      nil -> conn |> put_flash(:info, "Please log in.") |> redirect(to: "/")
+      _ -> conn
+    end
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = conn.assigns.user do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
+    end
+  end
+end

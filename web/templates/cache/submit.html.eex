@@ -1,0 +1,42 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/caches">Working Caches</a></li>
+    <li class="breadcrumb-item"><a href="<%= cache_path(@conn, :show, @cache.id) %>"><%= @cache.name %></a></li>
+    <li class="breadcrumb-item active">Submit Cache</li>
+  </ol>
+
+  <%= if @supervisor do %>
+    <p>You are about to submit this Working Cache to:</p>
+
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title"><%= @supervisor.name %></h3>
+        <p class="card-text"><%= lookup_role(@supervisor.level) %></p>
+      </div>
+    </div>
+
+    <%= form_tag(cache_path(@conn, :supervisor_submit, @cache.id)) %>
+      <input type="hidden" value="<%= @supervisor.id %>" name="supervisor">
+			<div class="form-group">
+				<label for="comment">Comment</label>
+				<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary pull-xs-right">Submit</button>
+    </form>
+
+  <% else %>
+    <div class="alert alert-danger" role="alert">
+      There is no person of your branch registered who represents a higher level.
+    </div>
+  <% end %>
+
+
+
+
+
+  
+
+
+</div>

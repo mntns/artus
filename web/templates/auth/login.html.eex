@@ -1,0 +1,27 @@
+<%= render Artus.SharedView, "navbar.html", %{user: nil} %>
+
+<div class="container main">
+
+  <div class="m-x-auto" style="width: 33vw;">
+    <div class="login-form">
+      <h2>Login for bibliographers</h2>
+      <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+      <%= form_tag("/auth") %>
+      <fieldset class="form-group">
+        <input name="mail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      </fieldset>
+      <fieldset class="form-group">
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      </fieldset>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <i class="fa fa-key" aria-hidden="true"></i> Sign in
+      </button>
+      </form>
+    </div>
+    <small class="text-muted">
+      <a class="pull-xs-right" href="/forgot">Forgot password?</a>
+    </small>
+  </div>
+
+
+</div>

@@ -1,0 +1,9 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="alert alert-error" role="alert">
+    <h2>An error occurred!</h2>
+  </div>
+</div>

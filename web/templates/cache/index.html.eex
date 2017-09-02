@@ -1,0 +1,40 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.Shared.ModalView, "working_cache_help.html", %{conn: @conn} %>
+  
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">Working Caches</li>
+  </ol>
+
+  <%= if @caches == [] do %>
+    <div class="alert alert-info">
+      <p class="text-xs-center text-muted">
+        You have no working caches.
+        <br>
+        <a data-toggle="modal" data-target="#cacheHelpModal" href="#">What is a working cache?</a>
+      </p>
+    
+    </div>
+  <% else %>
+    <div class="list-group">
+      <%= for cache <- @caches do %>
+        <a class="list-group-item" href="<%= cache_path(@conn, :show, cache.id) %>">
+          <%= cache.name %>
+          <span class="label label-default pull-xs-right"><%= length(cache.entries) %></span>
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="pull-xs-right">
+    <button type="button" class="btn btn-secondary add-button" data-toggle="modal" data-target="#cacheHelpModal">
+      <i class="fa fa-question-circle" aria-hidden="true"></i> Help
+    </button>
+    <a class="btn btn-primary add-button" href="<%= cache_path(@conn, :new) %>" role="button">
+      <i class="fa fa-plus" aria-hidden="true"></i> New working cache
+    </a>
+  </div>
+
+</div>

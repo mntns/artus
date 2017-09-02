@@ -1,0 +1,13 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active"><a href="<%= user_path(@conn, :index) %>">Users</a></li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <h2>Create new user</h2>
+  <%= render "form.html", changeset: @changeset, action: user_path(@conn, :create) %>
+</div>

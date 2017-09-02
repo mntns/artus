@@ -1,0 +1,44 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item"><a href="<%= user_path(@conn, :index) %>">Users</a></li>
+    <li class="breadcrumb-item"><a href="<%= user_path(@conn, :show, @shown_user.id) %>"><%= @shown_user.name %></a></li>
+    <li class="breadcrumb-item active">Working Caches</li>
+  </ol>
+  
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <%= if @caches == [] do %>
+    <div class="alert alert-info">
+      <p class="text-xs-center text-muted">
+        This user has no working caches.
+      </p>
+    </div>
+  <% else %>
+      <%= for cache <- @caches do %>
+        <div class="card">
+          <div class="card-header">
+            <%= cache.name %>
+          </div>
+          <div class="card-block">
+            <div class="list-group">
+              <%= if cache.entries == [] do %>
+                <p class="text-xs-center text-muted">
+                  This working cache is empty.
+                </p>
+              <% end %>
+              <%= for entry <- cache.entries do %>
+                <a href="<%= entry_path(@conn, :show, entry.id) %>" class="list-group-item">
+                  <%= render Artus.SharedView, "entry.html", %{entry: entry} %>
+                </a>
+              <% end %>
+            </div>
+          </div>
+        </div> 
+      <% end %>
+  <% end %>
+
+
+</div>

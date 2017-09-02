@@ -1,0 +1,31 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <h2>Feedback</h2>
+
+  <%= form_tag("/feedback") %>
+    <fieldset class="form-group">
+      <%= if @user do %>
+        <%= email_input :feedback, :mail, class: "form-control", placeholder: "Your email", value: @user.mail %>
+      <% else %>
+        <%= email_input :feedback, :mail, class: "form-control", placeholder: "Your email" %>
+      <% end %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= textarea :feedback, :text, class: "form-control", rows: 10, placeholder: "Your feedback" %>
+    </fieldset>
+  
+    <%= text_input :feedback, :bot, hidden: true %>
+
+    <button class="btn btn-primary pull-xs-right" type="submit">
+      <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit feedback
+    </button>
+
+  </form>
+
+
+</div>
+

@@ -1,0 +1,49 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <h1>Review entry</h1>
+
+  <%= if @errors do %>
+    <div class="alert alert-danger" role="alert">
+      <strong>Error while submitting entry to DB!</strong>
+      <br>
+      <%= for {field, error} <- @errors do %>
+        "<%= display_key(Atom.to_string(field)) %>" <%= elem(error, 0) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <table class="table table-hover">
+    <thead></thead>
+    <tbody>
+      <%= for {key, value} <- Enum.sort_by(@entry, fn({k,v}) -> display_key(k) end) do %>
+        <%= if is_relevant?(key) do %>
+          <tr>
+            <th scope="row"><%= display_key(key) %></th>
+            <td><%= display_value(key, value) |> raw %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+
+  <div class="pull-xs-right">
+    <a class="btn btn-danger btn-lg" href="/input" role="button">
+      <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+    </a>
+    <a class="btn btn-secondary btn-lg" href="<%= input_path(@conn, :edit, @id) %>" role="button">
+      <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+    </a>
+    <%= if Map.has_key?(@entry, "id") do %>
+      <a class="btn btn-primary btn-lg" href="<%= input_path(@conn, :submit_edit, @id) %>" role="button">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit edit
+      </a>
+      <%= else %>
+      <a class="btn btn-primary btn-lg" href="<%= input_path(@conn, :submit, @id) %>" role="button">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i> Submit
+      </a>
+    <% end %>
+  </div>
+
+</div>

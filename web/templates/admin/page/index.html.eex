@@ -1,0 +1,29 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <ol class="breadcrumb">
+    <li class="active">Admin</li>
+  </ol>
+
+  <div class="list-group">
+    <a class="list-group-item" href="<%= user_path(@conn, :index) %>">
+      <i class="fa fa-user fa-fw"></i> Users
+    </a>
+    <a class="list-group-item" href="<%= tag_path(@conn, :index) %>">
+      <i class="fa fa-tag fa-fw"></i> Tags
+    </a>
+    <a class="list-group-item" href="<%= abbreviation_path(@conn, :index) %>">
+      <i class="fa fa-share fa-fw"></i> Abbreviations
+    </a>
+    <a class="list-group-item" href="<%= page_path(@conn, :stats) %>">
+      <i class="fa fa-bar-chart fa-fw"></i> Statistics
+    </a>
+    <a class="list-group-item" href="<%= page_path(@conn, :logs) %>">
+      <i class="fa fa-server fa-fw"></i> Logs
+    </a>
+    <a class="list-group-item disabled" disabled href="#">
+      <i class="fa fa-comment fa-fw"></i> Notice
+    </a>
+  </div>
+  
+</div>

@@ -1,0 +1,21 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <h2>Export entry</h2>
+
+  <div class="list-group">
+    <a href="<%= entry_path(@conn, :export_type, @entry.id, "rtf") %>" class="list-group-item list-group-item-action" download>
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> Rich Text Format (.rtf)
+    </a>
+    <a href="<%= entry_path(@conn, :export_type, @entry.id, "latex") %>" class="list-group-item list-group-item-action" download>
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> LaTeX (.latex)
+    </a>
+    <a href="<%= entry_path(@conn, :export_type, @entry.id, "odt") %>" class="list-group-item list-group-item-action" download>
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> OpenDocument Format (.odt)
+    </a>
+  </div>
+
+  <br>
+  
+  <a href="<%= entry_path(@conn, :show, @entry.id) %>">Back to entry</a>
+</div>

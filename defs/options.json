@@ -1,0 +1,12 @@
+{
+  "parts": [
+    {"value": 1, "label": "Text, Translations and Adaptions"},
+    {"value": 2, "label": "Critical and Historical Studies"},
+    {"value": 4, "label": "Unpublished Doctoral Dissertations / Higher Degree Theses"}
+  ],
+  "types": [
+    {"value": "a", "label": "Article in a collected Volume"},
+    {"value": "b", "label": "Monograph / Collected Volume"},
+    {"value": "z", "label": "Journal paper / Article in a yearbook"}
+  ]
+}

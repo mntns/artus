@@ -1,0 +1,8 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <script>window.userToken = "<%= assigns[:user_token] %>";</script>
+  <script>window.systemType = 42;</script>
+  <div id="advanced"></div>
+</div>

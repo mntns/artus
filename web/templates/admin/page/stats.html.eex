@@ -1,0 +1,56 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item active">Statistics</li>
+  </ol>
+
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="card">
+    <div class="card-block">
+      <h1 class="card-text display-3">
+        <%= @stats.user_count %>
+        <small class="text-muted">bibliographers</small>
+      </h1>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-block">
+      <h1 class="card-text display-3">
+        <%= @stats.entry_count %>
+        <small class="text-muted">entries</small>
+      </h1>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-block">
+      <h1 class="card-text display-3">
+        <%= @stats.cache_count %>
+        <small class="text-muted">caches</small>
+      </h1>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-block">
+      <h1 class="card-text display-3">
+        <%= @stats.query_count %>
+        <small class="text-muted">queries</small>
+      </h1>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-block">
+      <h1 class="card-text display-3">
+        <%= @stats.cached_query_count %>
+        <small class="text-muted">cached queries</small>
+      </h1>
+    </div>
+  </div>
+</div>

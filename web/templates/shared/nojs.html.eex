@@ -1,0 +1,3 @@
+<noscript>
+  <meta http-equiv="refresh" content="2;url=<%= Artus.Router.Helpers.url(@conn) %>/nojs">
+</noscript>

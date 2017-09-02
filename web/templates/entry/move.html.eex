@@ -1,0 +1,7 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <h2>Export entry</h2>
+  <p>Export feature coming soon.</p>
+  <a href="<%= entry_path(@conn, :show, @entry.id) %>">Back to entry</a>
+</div>

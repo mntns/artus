@@ -1,0 +1,19 @@
+[
+  {"value": "anglonorman", "label": "Anglo-Norman"},
+  {"value": "catalan", "label": "Catalan"},
+  {"value": "danish", "label": "Danish"},
+  {"value": "dutch", "label": "Dutch"},
+  {"value": "english", "label": "English"},
+  {"value": "french", "label": "French"},
+  {"value": "german", "label": "German"},
+  {"value": "icelandic", "label": "Icelandic"},
+  {"value": "italian", "label": "Italian"},
+  {"value": "japanese", "label": "Japanese"},
+  {"value": "latin", "label": "Latin"},
+  {"value": "norwegian", "label": "Norwegian"},
+  {"value": "portugese", "label": "Portuguese"},
+  {"value": "romanian", "label": "Romanian"},
+  {"value": "spanish", "label": "Spanish"},
+  {"value": "swedish", "label": "Swedish"},
+  {"value": "welsh", "label": "Welsh"}
+]

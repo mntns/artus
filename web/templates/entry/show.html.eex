@@ -1,0 +1,183 @@
+<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+
+  <div class="card">
+    <div class="card-block">
+      <%= render Artus.SharedView, "entry.html", %{entry: @entry} %>
+    </div>
+  </div>
+
+  <%= if @is_owner do %>
+    <%= render Artus.Shared.ModalView, "entry_delete_modal.html", %{conn: @conn, entry_id: @entry.id} %>
+    <%= if @user_caches != [] do %>
+      <%= render Artus.Shared.ModalView, "entry_move_modal.html", %{conn: @conn, entry_id: @entry.id, caches: @user_caches} %>
+    <% end %>
+  <% end %>
+
+  <h2 style="margin-bottom: 50px;">
+
+    <!--
+    <%= if titl_title = @entry.titl_title do %>
+        <%= titl_title |> NotMarkdown.to_html |> raw %>
+      <% end %>
+    -->
+
+    <%= if @entry.system_type == 1 do %>
+      <% parent_id = @entry.review_parent_id %>
+      Review of <a href="<%= entry_path(@conn, :show, parent_id) %>">#<%= parent_id %></a>
+    <% end %>
+    <!--
+    <%= if @entry.titl_subtitle do %>
+      <small class="text-muted"><%= @entry.titl_subtitle |> NotMarkdown.to_html |> raw %></small>
+    <% end %>
+    -->
+    <div class="actions pull-xs-right">
+      <%= if @is_owner do %>
+        <%= if @user_caches != [] do %>
+          <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#entryMoveModal" >
+            <i class="fa fa-share" aria-hidden="true"></i> Move to another working cache
+          </button>
+        <% end %>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#entryDeleteModal">
+          <i class="fa fa-trash" aria-hidden="true"></i> Delete
+        </button>
+        <a class="btn btn-primary" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
+          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        </a>
+        <%= end %>
+        <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
+          <i class="fa fa-share-alt" aria-hidden="true"></i> Export
+        </a>
+    </div>
+  </h2>
+
+  <% entry_map = Map.from_struct(@entry) %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-hover">
+        <thead></thead>
+        <tbody>
+          <% shown = [:publ_pub_house, :ser_title, :publ_pub_place, :biblio_id, :branch, :section, :type, :issn, :isbn, :links, :language, :part] %> 
+          <%= for {key, value} <- entry_map do %>
+            <%= if Enum.member?(shown, key) and value do %>
+              <tr>
+                <%= case key do %>
+                  <% :links -> %>
+                  <th scope="row">Links</th>
+                  <td>
+                    <%= for line <- String.split(value, "\n", trim: true) do %>
+                      <% link_set = String.split(line, " ") %>
+                      <a href="<%= hd(link_set) %>"><%= List.last(link_set) %></a>
+                    <% end %>
+                  </td>
+                  <% :part -> %>
+                  <th scope="row">Part</th>
+                  <td><%= get_part(value) %></td>
+                  <% :language -> %>
+                  <th scope="row">Language</th>
+                  <td><%= get_language(value) %></td>
+                  <% :type -> %>
+                  <th scope="row">Type</th>
+                  <td><%= get_type(value) %></td>
+                  <% :branch -> %>
+                  <th scope="row">Branch</th>
+                  <td>
+                    <% branch = get_branch(@entry.branch) %>
+                    <%= for flag <- branch["flags"] do %>
+                      <span class="flag-icon flag-icon-<%= flag %>"></span>
+                    <% end %>
+                    (<%= branch["name"] %>)
+                  </td>
+                  <% _ -> %>
+                  <th scope="row"><%= key |> Atom.to_string |> get_label %></th>
+                  <td><%= value %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+
+      <table class="table table-hover">
+        <thead></thead>
+        <tbody>
+          <%= if @entry.doi do %>
+            <tr>
+              <th scope="row">Digital Object Identifier</th>
+              <td>
+                <a target="_blank" href="<%= doi_link(@entry.doi) %>"><%= @entry.doi %></a>
+              </td>
+            </tr>
+          <% end %>
+
+          <% subject_things = Enum.filter(@entry.tags, fn(x) -> x.type == 1 end) %>
+          <% subject_works = Enum.filter(@entry.tags, fn(x) -> x.type == 2 end) %>
+          
+          <tr>
+            <th scope="row"><%= get_label("subject_things") %></th>
+            <td>
+              <%= for tag <- subject_things do %>
+                <span class="tag tag-default"><%= tag |> render_tag |> raw %></span>
+              <% end %>
+            </td>
+          </tr>
+          
+          <tr>
+            <th scope="row"><%= get_label("subject_works")  %></th>
+            <td>
+              <%= for tag <- subject_works do %>
+                <span class="tag tag-default"><%= tag |> render_tag |> raw %></span>
+              <% end %>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead></thead>
+        <tbody>
+          <%= for selected_key <- [:additional_info, :internal_comment] do %>
+            <%= for {key, value} <- entry_map do %>
+              <%= if key == selected_key do %>
+                <%= if value do %>
+                <tr>
+                  <th scope="row"><%= key %></th>
+                  <td><%= value %></td>
+                </tr>
+              <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= if @entry.abstract do %>
+    <label for="abstract"><b>Abstract</b></label>
+    <blockquote class="blockquote" id="abstract"><%= @entry.abstract |> NotMarkdown.to_html |> raw %></blockquote>
+  <% end %>
+
+  <%= if @entry.system_type != 1 do %>
+    <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
+    <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
+    <%= if @entry.type == "b" do %>
+      <%= render Artus.SharedView, "children.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
+    <% end %>
+  <% end %>
+
+  <p class="text-muted pull-xs-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
+</div>
