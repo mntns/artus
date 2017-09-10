@@ -34,9 +34,10 @@ class FilterSelectModal extends React.Component {
         </div>
         )
   }
+  /**
   propTypes: {
     handleHideModal: React.PropTypes.func.isRequired
-  }
+  } */
 }
 
 export default FilterSelectModal;
