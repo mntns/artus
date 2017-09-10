@@ -45,7 +45,7 @@ defmodule Artus.QueryRunner do
       nil ->
         {:reply, {:err, :notfound}, state}
       x ->
-        m1 = System.os_time() |> System.convert_time_unit(:native, :millisecond)
+        m1 = System.system_time(:millisecond)
 
         # Fetch query data
         query_data = state[id]
@@ -56,7 +56,7 @@ defmodule Artus.QueryRunner do
         results = Artus.Repo.all(final) |> Artus.Repo.preload(:reviews)
         
         # Calculate query time
-        m2 = System.os_time() |> System.convert_time_unit(:native, :millisecond)
+        m2 = System.system_time(:millisecond)
         query_time = m2 - m1
         
         {:reply, {:ok, query_time, results}, state}
@@ -68,7 +68,7 @@ defmodule Artus.QueryRunner do
       nil ->
         {:reply, {:err, :notfound}, state}
       x ->
-        m1 = System.os_time() |> System.convert_time_unit(:native, :millisecond)
+        m1 = System.system_time(:millisecond)
 
         # Fetch query data
         query_data = state[id]
@@ -79,7 +79,7 @@ defmodule Artus.QueryRunner do
         results = Artus.Repo.all(final2) |> Artus.Repo.preload(:reviews)
         
         # Calculate query time
-        m2 = System.os_time() |> System.convert_time_unit(:native, :millisecond)
+        m2 = System.system_time(:millisecond)
         query_time = m2 - m1
         
         {:reply, {:ok, query_time, results}, state}
