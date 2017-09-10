@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="max-width: 66%; height: auto;" src="https://raw.githubusercontent.com/EddyShure/artus/master/logo/IAS_Logo_rendered.png">
+  <img width="444" height="205" src="https://raw.githubusercontent.com/EddyShure/artus/master/logo/IAS_Logo_rendered.png">
 </p>
 
 ---
