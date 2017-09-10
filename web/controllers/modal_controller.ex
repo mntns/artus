@@ -31,7 +31,7 @@ defmodule Artus.ModalController do
   end
 
   defp render_tags(tags) do
-    tags |> Enum.map(fn(x) -> %{id: x.id, raw: x.tag, rendered: NotMarkdown.to_html(x.tag)} end)
+    tags |> Enum.map(fn(x) -> %{id: x.id, raw: x.tag, rendered: Artus.NotMarkdown.to_html(x.tag)} end)
   end
 
 

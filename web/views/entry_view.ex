@@ -7,7 +7,7 @@ defmodule Artus.EntryView do
   alias Artus.Cache
 
   def render_tag(tag) do
-    tag.tag |> NotMarkdown.to_html()
+    tag.tag |> Artus.NotMarkdown.to_html()
   end
 
   def get_label(key) do

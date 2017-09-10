@@ -2,7 +2,7 @@ defmodule Artus.Admin.UserView do
   use Artus.Web, :view
 
   def render_tag(string) do
-    NotMarkdown.to_html(string)
+    Artus.NotMarkdown.to_html(string)
   end
 
 

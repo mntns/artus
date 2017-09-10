@@ -8,15 +8,15 @@ defmodule Artus.SharedView do
 
   def style_titles(title, subtitle) do
     case subtitle do
-      nil -> "#{NotMarkdown.to_html("#{title}")}," |> encap
-      sub -> "#{NotMarkdown.to_html("#{title}")}. #{NotMarkdown.to_html("#{sub}")}," |> encap
+      nil -> "#{Artus.NotMarkdown.to_html("#{title}")}," |> encap
+      sub -> "#{Artus.NotMarkdown.to_html("#{title}")}. #{Artus.NotMarkdown.to_html("#{sub}")}," |> encap
     end
   end
 
   def style_monograph_titles(title, subtitle) do
     case subtitle do
-      nil -> "<i>#{NotMarkdown.to_html("#{title}")}</i>,"
-      sub -> "<i>#{NotMarkdown.to_html("#{title}")}</i>. <i>#{NotMarkdown.to_html("#{sub}")}</i>,"
+      nil -> "<i>#{Artus.NotMarkdown.to_html("#{title}")}</i>,"
+      sub -> "<i>#{Artus.NotMarkdown.to_html("#{title}")}</i>. <i>#{Artus.NotMarkdown.to_html("#{sub}")}</i>,"
     end
   end
 

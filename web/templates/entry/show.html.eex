@@ -20,7 +20,7 @@
 
     <!--
     <%= if titl_title = @entry.titl_title do %>
-        <%= titl_title |> NotMarkdown.to_html |> raw %>
+        <%= titl_title |> Artus.NotMarkdown.to_html |> raw %>
       <% end %>
     -->
 
@@ -30,7 +30,7 @@
     <% end %>
     <!--
     <%= if @entry.titl_subtitle do %>
-      <small class="text-muted"><%= @entry.titl_subtitle |> NotMarkdown.to_html |> raw %></small>
+      <small class="text-muted"><%= @entry.titl_subtitle |> Artus.NotMarkdown.to_html |> raw %></small>
     <% end %>
     -->
     <div class="actions pull-xs-right">

@@ -116,7 +116,7 @@ defmodule Artus.FormChannel do
   end
 
   defp render_tags(tags) do
-    tags |> Enum.map(fn(x) -> %{id: x.id, raw: x.tag, rendered: NotMarkdown.to_html(x.tag)} end)
+    tags |> Enum.map(fn(x) -> %{id: x.id, raw: x.tag, rendered: Artus.NotMarkdown.to_html(x.tag)} end)
   end
 
   defp filter_element(v) when is_binary(v) do
