@@ -18,7 +18,6 @@ defmodule Artus.Admin.UserView do
 
   def get_branch(branch_int) do
     branches = Artus.DefinitionManager.branches
-    IO.inspect branch_int
     case branches["#{branch_int}"] do
       x -> x
     end

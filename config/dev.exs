@@ -44,3 +44,6 @@ config :artus, Artus.Repo,
   database: "artus_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :artus, Artus.Mailer,
+  adapter: Bamboo.LocalAdapter

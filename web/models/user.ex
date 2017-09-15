@@ -12,7 +12,7 @@ defmodule Artus.User do
     field :activation_code, :string
     field :level, :integer
 
-    has_many :caches, Artus.Cache
+    has_many :caches, Artus.Cache, on_delete: :delete_all
     has_many :entries, Artus.Entry
 
     timestamps
