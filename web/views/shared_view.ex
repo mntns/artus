@@ -40,7 +40,7 @@ defmodule Artus.SharedView do
               x -> x
           end
         x ->
-          split = Enum.map(x, fn(name) -> 
+          split = x |> Enum.map(fn(name) -> 
            case split = String.split(name, ",", trim: true) do
              [sur, first] -> "#{String.trim(first)} <span class=\"kapitaelchen\">#{sur}</span>"
              x -> "#{x}"

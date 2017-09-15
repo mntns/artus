@@ -3,6 +3,7 @@ defmodule Artus.QueryRunner do
   use GenServer
 
   import Ecto.Query
+  alias Artus.Repo
   alias Artus.Entry
   alias Artus.Filters
 
@@ -53,7 +54,7 @@ defmodule Artus.QueryRunner do
         final = Enum.reduce(query_data["filters"], query, &build_chain(&1, &2))
         #IO.inspect Ecto.Adapters.SQL.to_sql(:all, Artus.Repo, final)
         
-        results = Artus.Repo.all(final) |> Artus.Repo.preload(:reviews)
+        results = final |> Repo.all() |> Repo.preload(:reviews)
         
         # Calculate query time
         m2 = System.system_time(:millisecond)
@@ -75,7 +76,7 @@ defmodule Artus.QueryRunner do
         final = Enum.reduce(query_data["filters"], query, &build_chain(&1, &2))
         final2 = from e in final, order_by: field(e, ^String.to_atom(sort))
         
-        results = Artus.Repo.all(final2) |> Artus.Repo.preload(:reviews)
+        results = final2 |> Repo.all() |> Repo.preload(:reviews)
         
         # Calculate query time
         m2 = System.system_time(:millisecond)

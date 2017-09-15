@@ -20,7 +20,7 @@ defmodule Artus.AuthController do
     case Comeonin.Bcrypt.checkpw(password, user.hash) do
       true ->
         Artus.EventLogger.log(:log_in, user)
-        
+
         conn
         |> put_session(:logged_in, true)
         |> put_session(:user_id, user.id)
@@ -79,54 +79,38 @@ defmodule Artus.AuthController do
   def set_pass(conn, %{"code" => code, "password" => pass, "password_c" => pass_c}) do
     case check_activation_code(code) do
       {:ok, user} ->
-        case pass do
-          ^pass_c ->
-            hash = Comeonin.Bcrypt.hashpwsalt(pass)
-            changeset = User.changeset(user, %{activation_code: "", activated: true, hash: hash})
-            case Repo.update(changeset) do
-              {:ok, _} ->
-                conn
-                |> put_flash(:info, "Successfully set password! Please log in now.")
-                |> redirect(to: auth_path(conn, :login))
-              {:error, _} ->
-                conn
-                |> put_flash(:error, "Error 133712.")
-                |> redirect(to: auth_path(conn, :activate, code))
-            end
-          _ ->
-            conn
-            |> put_flash(:error, "Passwords do not match!")
-            |> redirect(to: auth_path(conn, :activate, code))
-        end
+        do_set_pass(conn, user, pass, pass_c, code)
       :error ->
         conn
         |> put_flash(:error, "Expired activation code.")
         |> redirect(to: page_path(conn, :index))
     end
   end
-  
+
+  defp do_set_pass(conn, user, pass, pass_c, code \\ "") do
+    case pass do
+      ^pass_c ->
+        hash = Comeonin.Bcrypt.hashpwsalt(pass)
+
+        user
+        |> User.changeset(%{activation_code: "", activated: true, hash: hash})
+        |> Repo.update!()
+
+        conn
+        |> put_flash(:info, "Successfully set password! Please log in now.")
+        |> redirect(to: auth_path(conn, :login))
+      _ ->
+        conn
+        |> put_flash(:error, "Passwords do not match!")
+        |> redirect(to: auth_path(conn, :activate, code))
+    end
+  end
+
+
   def reset_pass(conn, %{"code" => code, "password" => pass, "password_c" => pass_c}) do
     case check_reset_code(code) do
       {:ok, user} ->
-        case pass do
-          ^pass_c ->
-            hash = Comeonin.Bcrypt.hashpwsalt(pass)
-            changeset = User.changeset(user, %{activation_code: "", activated: true, hash: hash})
-            case Repo.update(changeset) do
-              {:ok, _} ->
-                conn
-                |> put_flash(:info, "Successfully set new password! Please log in now.")
-                |> redirect(to: auth_path(conn, :login))
-              {:error, _} ->
-                conn
-                |> put_flash(:error, "Error 133712.")
-                |> redirect(to: auth_path(conn, :activate, code))
-            end
-          _ ->
-            conn
-            |> put_flash(:error, "Passwords do not match!")
-            |> redirect(to: auth_path(conn, :activate, code))
-        end
+        do_set_pass(conn, user, pass, pass_c, code)
       :error ->
         conn
         |> put_flash(:error, "Expired reset code.")
@@ -154,17 +138,17 @@ defmodule Artus.AuthController do
 
   defp check_activation_code(code) do
     query = from u in User,
-            where: u.activated == false and u.activation_code == ^code
+      where: u.activated == false and u.activation_code == ^code
 
     case Repo.one(query) do
       nil -> :error
       x -> {:ok, x}
     end
   end
-  
+
   defp check_reset_code(code) do
     query = from u in User,
-            where: u.activation_code == ^code
+      where: u.activation_code == ^code
 
     case Repo.one(query) do
       nil -> :error

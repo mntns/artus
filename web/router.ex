@@ -1,44 +1,34 @@
 defmodule Artus.Router do
   use Artus.Web, :router
   use Plug.ErrorHandler
-
-  pipeline :browser do
+  
+  @doc "Assigns :user do conn"
+  pipeline :artus_conn do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-  end
-
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  # Assigns :user to conn
-  pipeline :artus_conn do
+    
     plug Artus.UserPlug
-
-    # Websockets token
     plug :put_user_token
   end
 
-  # Checks if user is assigned
+  @doc "Checks if :user is assigned"
   pipeline :artus_user do
     plug :check_user
   end
 
-  # Checks if assigned user is admin
+  @doc "Checks if assigned :user is admin"
   pipeline :artus_admin do
     plug :check_admin
   end
 
-  # Email plug
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
   end
 
   scope "/", Artus do
-    pipe_through :browser # Use the default browser stack
     pipe_through :artus_conn
 
     # General routes
@@ -81,7 +71,7 @@ defmodule Artus.Router do
       # Entries
       get "/entries/:id/review", EntryController, :review
       get "/entries/:id/edit", EntryController, :edit
-      get "/entries/:id/child", EntryController, :child
+      get "/entries/:id/article", EntryController, :article
       get "/entries/:id/reprint", EntryController, :reprint
       get "/entries/:id/delete", EntryController, :delete
       get "/entries/:id/move/:target", EntryController, :move
@@ -131,10 +121,6 @@ defmodule Artus.Router do
       resources "/abbreviations", AbbreviationController, except: [:delete]
       get "/abbreviations/:id/delete", AbbreviationController, :delete
     end
-  end
-
-  scope "/api", Artus do
-    pipe_through :api
   end
 
   defp check_admin(conn, _) do

@@ -38,10 +38,9 @@ defmodule Artus.EntryController do
     render conn, "reprint.html", parent_id: entry.id
   end
 
-  def child(conn, %{"id" => id}) do
-    # TODO: check if type b
+  def article(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
-    render conn, "child.html", parent_id: entry.id
+    render conn, "article.html", parent_id: entry.id
   end
 
   def move(conn, %{"id" => id, "target" => target}) do
@@ -56,44 +55,6 @@ defmodule Artus.EntryController do
     
     conn
     |> put_flash(:info, "Successfully moved entry to working cache '#{target_cache.name}'.")
-    |> redirect(to: entry_path(conn, :show, id))
-  end
-
-  def link(conn, %{"id" => id, "target" => %{"target" => target}}) do
-    # TODO: Refactor matching if clause to case
-    if (target = Repo.get(Entry, target)) != nil do
-      parent_entry = Repo.get!(Entry, id) 
-      target = target |> Repo.preload([:bibliograph, :cache, :reviews, :reprints, :children, :children_parent])
-
-      changeset = target
-                |> Ecto.Changeset.change
-                |> Ecto.Changeset.put_assoc(:children_parent, parent_entry)
-
-      changeset |> Repo.update!()
-
-      conn
-      |> put_flash(:info, "Successfully linked child entry")
-      |> redirect(to: entry_path(conn, :show, id))
-    else
-      conn
-      |> put_flash(:error, "The entry id you wanted to link to is invalid.")
-      |> redirect(to: entry_path(conn, :show, id))
-    end
-  end
-
-  def remove_link(conn, %{"id" => id, "target" => target_id}) do
-    target = Entry
-             |> Repo.get!(target_id)
-             |> Repo.preload([:bibliograph, :cache, :reviews, :reprints, :children, :children_parent])
-    
-    changeset = target
-                |> Ecto.Changeset.change
-                |> Ecto.Changeset.put_assoc(:children_parent, nil)
-
-    changeset |> Repo.update!()
-    
-    conn
-    |> put_flash(:info, "Successfully removed link to child ##{target_id}.")
     |> redirect(to: entry_path(conn, :show, id))
   end
 

@@ -43,7 +43,8 @@ defmodule Artus.InputController do
   end
 
   def submit_edit(conn, %{"id" => id}) do
-    edit_entry = Artus.EntryCache.fetch(id)
+    edit_entry = id
+                 |> Artus.EntryCache.fetch()
                  |> Map.delete("cache")
                  |> Map.delete("cache_id")
 

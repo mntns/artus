@@ -175,7 +175,7 @@
     <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
     <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
     <%= if @entry.type == "b" do %>
-      <%= render Artus.SharedView, "children.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
+      <%= render Artus.SharedView, "articles.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
     <% end %>
   <% end %>
 
