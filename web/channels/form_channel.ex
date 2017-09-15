@@ -55,7 +55,8 @@ defmodule Artus.FormChannel do
   end
   def handle_in("caches", _, socket) do
     user = Repo.get!(Artus.User, socket.assigns.user)
-    query = Ecto.assoc(user, :caches)
+    query = user
+            |> Ecto.assoc(:caches)
             |> select([c], {c.id, c.name})
     caches = query
              |> Repo.all
@@ -76,7 +77,8 @@ defmodule Artus.FormChannel do
                :doi, :abstract, :language, :subject_things,
                :subject_works, :additional_info, :links,
                :internal_comment, :id, :cache_id]
-    entry = Repo.get!(Artus.Entry, id)
+    entry = Artus.Entry
+            |> Repo.get!(id)
             |> Map.from_struct
             |> Map.take(to_take)
     {:reply, {:ok, %{entry: entry}}, socket}
@@ -88,7 +90,8 @@ defmodule Artus.FormChannel do
                :publ_pub_place, :biblio_issn, :biblio_isbn,
                :doi, :additional_info, :links,
                :internal_comment]
-    entry = Repo.get!(Artus.Entry, id)
+    entry = Artus.Entry
+            |> Repo.get!(id)
             |> Map.from_struct
             |> Map.take(to_take)
     {:reply, {:ok, %{entry: entry}}, socket}

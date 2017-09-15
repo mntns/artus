@@ -7,9 +7,11 @@ defmodule Artus.CacheController do
   alias Artus.User
 
   def index(conn, _params) do
-    user = Repo.get(User, conn.assigns.user.id)
-    query = Ecto.assoc(user, :caches)
-    caches = Repo.all(query) |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
+    caches = User
+             |> Repo.get!(conn.assigns.user.id)
+             |> Ecto.assoc(:caches)
+             |> Repo.all() 
+             |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
     render conn, "index.html", %{caches: caches}
   end
 
@@ -34,18 +36,19 @@ defmodule Artus.CacheController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get(User, conn.assigns.user.id)
-    cache = Repo.get_by(Cache, id: id) |> Repo.preload(:entries)
+    # TODO: Why not get!?
+    cache = Cache |> Repo.get_by(id: id) |> Repo.preload(:entries)
     render conn, "show.html", %{cache: cache}
   end
 
   def submit(conn, %{"id" => id}) do
     supervisor = get_supervisor(conn.assigns.user)
-    cache = Repo.get!(Cache, id) |> Repo.preload(:entries)
+    cache = Cache |> Repo.get!(id) |> Repo.preload(:entries)
     render conn, "submit.html", %{cache: cache, supervisor: supervisor}
   end
 
   def supervisor_submit(conn, %{"id" => id, "supervisor" => supervisor_id, "comment" => comment}) do
-    cache = Repo.get!(Cache, id) |> Repo.preload(:user)
+    cache = Cache |> Repo.get!(id) |> Repo.preload(:user)
     supervisor = Repo.get!(User, supervisor_id)
     
     send_transfer_mail(conn.assigns.user, supervisor, cache, comment)
@@ -58,12 +61,12 @@ defmodule Artus.CacheController do
 
   def down(conn, %{"id" => id}) do
     subordinates = get_subordinates(conn.assigns.user)
-    cache = Repo.get!(Cache, id) |> Repo.preload(:entries)
+    cache = Cache |> Repo.get!(id) |> Repo.preload(:entries)
     render conn, "down.html", %{cache: cache, subordinates: subordinates}
   end
 
   def send_down(conn, %{"id" => id, "subordinate" => subordinate_id, "comment" => comment}) do
-    cache = Repo.get!(Cache, id) |> Repo.preload(:user)
+    cache = Cache |> Repo.get!(id) |> Repo.preload(:user)
     subordinate = Repo.get!(User, subordinate_id)
 
     send_transfer_mail(conn.assigns.user, subordinate, cache, comment)
@@ -75,7 +78,8 @@ defmodule Artus.CacheController do
   end
 
   defp send_transfer_mail(from_user, user, cache, comment) do
-    Artus.Email.transfer_cache_email(from_user, user, cache, comment)
+    from_user
+    |> Artus.Email.transfer_cache_email(user, cache, comment)
     |> Artus.Mailer.deliver_now
   end
   
@@ -107,7 +111,9 @@ defmodule Artus.CacheController do
   end
 
   def publish(conn, %{"id" => id}) do
-    cache = Repo.get!(Cache, id) |> Repo.preload(:entries)
+    cache = Cache
+            |> Repo.get!(id)
+            |> Repo.preload(:entries)
 
     Enum.map(cache.entries, &publish_entry(&1))
     Repo.delete(cache)

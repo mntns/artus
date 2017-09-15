@@ -7,7 +7,7 @@ defmodule Artus.EntryController do
   alias Artus.User
 
   def show(conn, %{"id" => id}) do
-    entry = Repo.get!(Entry, id) |> Repo.preload([:tags, :bibliograph, :cache, :reviews, :reprints, :children])
+    entry = Entry |> Repo.get!(id) |> Repo.preload([:tags, :bibliograph, :cache, :reviews, :reprints, :children])
     case user = conn.assigns.user do
       nil ->
         render conn, "show.html", %{entry: entry, user_caches: [], is_owner: false}
@@ -16,7 +16,7 @@ defmodule Artus.EntryController do
         user = Repo.get!(User, user_id)
         user_caches = case entry.cache do 
                         nil -> []
-                        _ -> Ecto.assoc(user, :caches) |> where([c], c.id != ^entry.cache.id) |> Repo.all
+                        _ -> user |> Ecto.assoc(:caches) |> where([c], c.id != ^entry.cache.id) |> Repo.all
                       end
                       is_owner = case cache = entry.cache do
                         nil ->
@@ -50,7 +50,9 @@ defmodule Artus.EntryController do
 
   def move(conn, %{"id" => id, "target" => target}) do
     target_cache = Repo.get!(Cache, target)
-    Repo.get!(Entry, id) 
+
+    Entry
+    |> Repo.get!(id)
     |> Repo.preload([:bibliograph, :cache, :reviews, :reprints])
     |> Ecto.Changeset.change
     |> Ecto.Changeset.put_assoc(:cache, target_cache)
@@ -62,6 +64,7 @@ defmodule Artus.EntryController do
   end
 
   def link(conn, %{"id" => id, "target" => %{"target" => target}}) do
+    # TODO: Refactor matching if clause to case
     if (target = Repo.get(Entry, target)) != nil do
       parent_entry = Repo.get!(Entry, id) 
       target = target |> Repo.preload([:bibliograph, :cache, :reviews, :reprints, :children, :children_parent])
@@ -83,7 +86,8 @@ defmodule Artus.EntryController do
   end
 
   def remove_link(conn, %{"id" => id, "target" => target_id}) do
-    target = Repo.get!(Entry, target_id)
+    target = Entry
+             |> Repo.get!(target_id)
              |> Repo.preload([:bibliograph, :cache, :reviews, :reprints, :children, :children_parent])
     
     changeset = target

@@ -65,9 +65,10 @@ defmodule Artus.AuthController do
         reset_code = UUID.uuid4()
         changeset = User.changeset(user, %{activation_code: reset_code})
 
-        Repo.update!(changeset)
-        |> Artus.Email.password_reset_email
-        |> Artus.Mailer.deliver_now
+        changeset
+        |> Repo.update!()
+        |> Artus.Email.password_reset_email()
+        |> Artus.Mailer.deliver_now()
 
         conn
         |> put_flash(:success, "Password reset link sent successfully.")

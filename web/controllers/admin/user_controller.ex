@@ -46,9 +46,11 @@ defmodule Artus.Admin.UserController do
   end
 
   def caches(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
-    query = Ecto.assoc(user, :caches)
-    caches = Repo.all(query) |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
+    caches = User
+             |> Repo.get!(id)
+             |> Ecto.assoc(:caches)
+             |> Repo.all() 
+             |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
     render conn, "caches.html", %{shown_user: user, caches: caches}
   end
 
