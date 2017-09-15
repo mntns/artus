@@ -10,14 +10,14 @@
   
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
-  <%= if @caches == [] do %>
+  <%= if @shown_user.caches == [] do %>
     <div class="alert alert-info">
       <p class="text-xs-center text-muted">
         This user has no working caches.
       </p>
     </div>
   <% else %>
-      <%= for cache <- @caches do %>
+      <%= for cache <- @shown_user.caches do %>
         <div class="card">
           <div class="card-header">
             <%= cache.name %>

@@ -8,8 +8,7 @@ defmodule Artus.Admin.UserController do
   plug :scrub_params, "user" when action in [:create, :update]
 
   def index(conn, _params) do
-    query = from u in User,
-            order_by: u.name
+    query = from u in User, order_by: u.name
     users = Repo.all(query)
     render conn, "index.html", %{users: users}
   end
@@ -46,12 +45,11 @@ defmodule Artus.Admin.UserController do
   end
 
   def caches(conn, %{"id" => id}) do
-    caches = User
-             |> Repo.get!(id)
-             |> Ecto.assoc(:caches)
-             |> Repo.all() 
-             |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
-    render conn, "caches.html", %{shown_user: user, caches: caches}
+    user = User
+           |> Repo.get!(id)
+           |> Repo.preload([{:caches, :entries}])
+    
+    render conn, "caches.html", %{shown_user: user}
   end
 
   def delete(conn, %{"id" => id}) do
