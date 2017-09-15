@@ -115,7 +115,7 @@ defmodule Artus.CacheController do
             |> Repo.get!(id)
             |> Repo.preload(:entries)
 
-    Enum.map(cache.entries, &publish_entry(&1))
+    Enum.each(cache.entries, &publish_entry(&1))
     Repo.delete(cache)
 
     conn

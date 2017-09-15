@@ -63,7 +63,6 @@ defmodule Artus.QueryRunner do
     end
   end
   def handle_call({:run_sorted, id, sort}, _from, state) do
-    IO.inspect sort
     case query_data = state[id] do
       nil ->
         {:reply, {:err, :notfound}, state}

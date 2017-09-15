@@ -7,28 +7,24 @@ defmodule Artus.EntryController do
   alias Artus.User
 
   def show(conn, %{"id" => id}) do
-    entry = Entry |> Repo.get!(id) |> Repo.preload([:tags, :bibliograph, :cache, :reviews, :reprints, :children])
-    case user = conn.assigns.user do
-      nil ->
-        render conn, "show.html", %{entry: entry, user_caches: [], is_owner: false}
-      user ->
-        user_id = user.id
-        user = Repo.get!(User, user_id)
-        user_caches = case entry.cache do 
-                        nil -> []
-                        _ -> user |> Ecto.assoc(:caches) |> where([c], c.id != ^entry.cache.id) |> Repo.all
-                      end
-                      is_owner = case cache = entry.cache do
-                        nil ->
-                          false
-                        _ ->
-                          cache = cache |> Repo.preload(:user)
-                          case cache.user.id do
-                          ^user_id -> true
-                          _ -> false
-                          end
-                      end
-        render conn, "show.html", %{entry: entry, user_caches: user_caches, is_owner: is_owner}
+    entry = Entry 
+            |> Repo.get!(id) 
+            |> Repo.preload([{:user, :caches}, :tags, :bibliograph, :cache, :reviews, :reprints, :children])
+
+    conn_user_id = fetch_user_id(conn)
+    
+    case entry.user.id do
+      ^conn_user_id ->
+        render conn, "show.html", %{entry: entry, is_owner: true}
+      _ ->
+        render conn, "show.html", %{entry: entry, is_owner: false}
+    end
+  end
+
+  defp fetch_user_id(conn) do
+    case conn.assigns.user do
+      nil -> 0
+      x -> x.id
     end
   end
 

@@ -49,6 +49,8 @@ defmodule Artus.Entry do
     belongs_to :cache, Artus.Cache, on_replace: :nilify
     belongs_to :bibliograph, Artus.User, on_replace: :nilify
 
+    belongs_to :user, Artus.User, on_replace: :nilify
+
     timestamps()
   end
 
@@ -58,8 +60,9 @@ defmodule Artus.Entry do
                        titl_title titl_subtitle titl_add ser_title ser_volume ser_code ser_year_pub 
                        publ_pub_house publ_pub_place biblio_issn biblio_isbn doi abstract language
                        ser_issue ser_count additional_info links internal_comment system_type))
-    |> cast_assoc(:cache, required: false)
-    |> cast_assoc(:bibliograph, required: true)
+                       #|> cast_assoc(:cache, required: false)
+    #|> cast_assoc(:bibliograph, required: false)
+    |> put_assoc(:user, params.user, required: true)
   end
   
   def changeset2(model, params \\ %{}) do

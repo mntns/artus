@@ -65,7 +65,6 @@ defmodule Artus.InputController do
 
     # Fetch entry from EntryCache
     entry = Artus.EntryCache.fetch(id)
-    IO.inspect entry
 
     subject_things = []
     subject_works = []
@@ -89,19 +88,19 @@ defmodule Artus.InputController do
     
     cache = Repo.get!(Cache, working_cache)
     changeset = case system_type do
-                  0 -> Entry.changeset(%Artus.Entry{bibliograph: bibliograph, cache: cache, public: false}, full_entry)
+                  0 -> Entry.changeset(%Artus.Entry{user: bibliograph, bibliograph: bibliograph, cache: cache, public: false}, full_entry)
                   1 ->
                     parent_id = entry["parentID"]
                     parent = Repo.get!(Entry, parent_id)
-                    Entry.changeset(%Artus.Entry{bibliograph: bibliograph, cache: cache, public: false, review_parent: parent}, full_entry)
+                    Entry.changeset(%Artus.Entry{user: bibliograph, bibliograph: bibliograph, cache: cache, public: false, review_parent: parent}, full_entry)
                   2 ->
                     parent_id = entry["parentID"]
                     parent = Repo.get!(Entry, parent_id)
-                    Entry.changeset(%Artus.Entry{bibliograph: bibliograph, cache: cache, public: false, reprint_parent: parent}, full_entry)
+                    Entry.changeset(%Artus.Entry{user: bibliograph, bibliograph: bibliograph, cache: cache, public: false, reprint_parent: parent}, full_entry)
                   3 ->
                     parent_id = entry["parentID"]
                     parent = Repo.get!(Entry, parent_id)
-                    Entry.changeset(%Artus.Entry{bibliograph: bibliograph, cache: cache, public: false, children_parent: parent}, full_entry)
+                    Entry.changeset(%Artus.Entry{user: bibliograph, bibliograph: bibliograph, cache: cache, public: false, children_parent: parent}, full_entry)
                 end
 
    
