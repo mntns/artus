@@ -4,6 +4,7 @@
 
 ---
 
+[![Inline docs](http://inch-ci.org/github/EddyShure/artus.svg)](http://inch-ci.org/github/EddyShure/artus)
 
 > Phoenix application used to run the [bibliographical database](https://bias.internationalarthuriansociety.com) of the [International Arthurian Society](http://internationalarthuriansociety.com/)
 

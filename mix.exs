@@ -43,7 +43,8 @@ defmodule Artus.Mixfile do
      {:bamboo, "~> 0.8"},
      {:uuid, "~> 1.1"},
      {:credo, "~> 0.4", only: [:dev, :test]},
-     {:distillery, "~> 1.4", runtime: false}]
+     {:distillery, "~> 1.4", runtime: false},
+     {:inch_ex, only: :docs}]
      #{:hackney, "~> 1.6.5", override: true}]
      #{:certifi, "~> 0.7.0", override: true}]
   end
