@@ -1,5 +1,5 @@
-@moduledoc "Model for bibliographic entries"
 defmodule Artus.Entry do
+  @moduledoc "Model for bibliographic entries"
   use Artus.Web, :model
 
   schema "entries" do

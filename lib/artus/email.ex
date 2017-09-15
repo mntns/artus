@@ -1,4 +1,5 @@
 defmodule Artus.Email do
+  @moduledoc "Mail builder module"
   import Bamboo.Email
 
   @prefix "[BIAS] "

@@ -1,5 +1,5 @@
-@moduledoc "Model for publisher abbreviations"
 defmodule Artus.Abbreviation do
+  @moduledoc "Model for publisher abbreviations"
   use Artus.Web, :model
 
   schema "abbreviations" do

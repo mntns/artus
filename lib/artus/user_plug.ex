@@ -1,4 +1,5 @@
 defmodule Artus.UserPlug do
+  @moduledoc "Plug for fetching sessions and assigning user"
   import Plug.Conn
   use Phoenix.Controller
 

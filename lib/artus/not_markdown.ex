@@ -1,4 +1,5 @@
 defmodule Artus.NotMarkdown do
+  @moduledoc "Bibliographic string formatting module"
   def to_html(string) do
     string
     |> outer_replace(~r/^>{3}(.+?)\z/sm, "blockquote")

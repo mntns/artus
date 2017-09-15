@@ -1,5 +1,5 @@
-@moduledoc "Model for bibliographers' accounts"
 defmodule Artus.User do
+  @moduledoc "Model for bibliographers' accounts"
   use Artus.Web, :model
 
   schema "users" do

@@ -1,4 +1,5 @@
 defmodule Artus.DefinitionManager do
+  @moduledoc "Module for dynamically loading definition JSON files"
   use GenServer
 
   def start_link do

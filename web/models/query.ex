@@ -1,5 +1,5 @@
-@moduledoc "Model for BIAS queries"
 defmodule Artus.Query do
+  @moduledoc "Model for BIAS queries"
   use Artus.Web, :model
 
   schema "queries" do

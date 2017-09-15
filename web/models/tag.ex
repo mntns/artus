@@ -1,5 +1,5 @@
-@moduledoc "Model for bibliographic tags"
 defmodule Artus.Tag do
+  @moduledoc "Model for bibliographic tags"
   use Artus.Web, :model
 
   schema "tags" do

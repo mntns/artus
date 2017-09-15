@@ -1,5 +1,5 @@
-@moduledoc "Model for working caches"
 defmodule Artus.Cache do
+  @moduledoc "Model for working caches"
   use Artus.Web, :model
 
   schema "caches" do

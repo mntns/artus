@@ -1,4 +1,5 @@
 defmodule Artus.FormChannel do
+  @moduledoc "Main channel for form interaction"
   use Phoenix.Channel
   alias Artus.DefinitionManager
   import Ecto.Query

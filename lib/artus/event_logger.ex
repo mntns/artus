@@ -1,4 +1,5 @@
 defmodule Artus.EventLogger do
+  @moduledoc "Event logger module which stores administrative log"
   use GenServer
 
   def start_link do

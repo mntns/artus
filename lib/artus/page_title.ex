@@ -1,4 +1,5 @@
 defmodule Artus.PageTitle do
+  @moduledoc "Page title builder injector and builder"
   @suffix "BIAS"
 
   def page_title(assigns), do: assigns |> get |> put_suffix

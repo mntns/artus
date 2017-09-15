@@ -1,4 +1,5 @@
 defmodule Artus.Filters do
+  @moduledoc "Filter definitions for composable queries"
   import Ecto.Query
 
   @doc "Filters by title, subtitle, editor and author"

@@ -72,7 +72,7 @@ defmodule Artus.SharedView do
   end
 
   defp special_join(data) do
-    if (length(data) >= 3) do
+    if length(data) >= 3 do
       [last|firsts] = (data |> Enum.reverse)
       (firsts |> Enum.reverse |> Enum.join(", ")) <> ", and " <> String.trim(last)
     else
