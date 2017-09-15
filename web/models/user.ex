@@ -1,3 +1,4 @@
+@moduledoc "Model for bibliographers' accounts"
 defmodule Artus.User do
   use Artus.Web, :model
 

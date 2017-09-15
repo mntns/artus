@@ -1,3 +1,4 @@
+@moduledoc "Model for working caches"
 defmodule Artus.Cache do
   use Artus.Web, :model
 

@@ -1,3 +1,4 @@
+@moduledoc "Model for bibliographic entries"
 defmodule Artus.Entry do
   use Artus.Web, :model
 

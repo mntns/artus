@@ -1,3 +1,4 @@
+@moduledoc "Model for publisher abbreviations"
 defmodule Artus.Abbreviation do
   use Artus.Web, :model
 

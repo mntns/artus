@@ -1,3 +1,4 @@
+@moduledoc "Model for bibliographic tags"
 defmodule Artus.Tag do
   use Artus.Web, :model
 

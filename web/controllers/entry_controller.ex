@@ -90,7 +90,7 @@ defmodule Artus.EntryController do
     conn
     |> put_resp_header("content-disposition", 
                        ~s(attachment; filename="#{filename}"))
-    |>send_file(200, Path.expand(export_root <> filename))
+    |> send_file 200, Path.expand(export_root <> filename)
   end
 
   defp convert_file(filename, id) do

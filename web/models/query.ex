@@ -1,3 +1,4 @@
+@moduledoc "Model for BIAS queries"
 defmodule Artus.Query do
   use Artus.Web, :model
 
