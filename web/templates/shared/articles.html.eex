@@ -1,11 +1,11 @@
 <div class="card">
-  <h4 class="card-header">Children</h4>
+  <h4 class="card-header">Articles</h4>
   <div class="card-block">
     <%= if @children == [] do %>
       <div class="text-xs-center text-muted">
-        <p>This entry has no children attached to it.</p>
+        <p>This entry has no articles attached to it.</p>
         <%= if @conn.assigns.user do %>
-          <a href="<%= entry_path(@conn, :child, @entry_id) %>">
+          <a href="<%= entry_path(@conn, :article, @entry_id) %>">
             <b>
               <i class="fa fa-plus" aria-hidden="true"></i> Add article
             </b>
@@ -21,7 +21,7 @@
         <% end %>
 
         <%= if @conn.assigns.user do %>
-          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :child, @entry_id) %>">
+          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :article, @entry_id) %>">
             <b>
             <i class="fa fa-plus" aria-hidden="true"></i> Add article
             </b>

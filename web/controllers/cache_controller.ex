@@ -50,7 +50,7 @@ defmodule Artus.CacheController do
   def supervisor_submit(conn, %{"id" => id, "supervisor" => supervisor_id, "comment" => comment}) do
     cache = Cache |> Repo.get!(id) |> Repo.preload(:user)
     supervisor = Repo.get!(User, supervisor_id)
-    
+
     send_transfer_mail(conn.assigns.user, supervisor, cache, comment)
     reassign_cache(cache, supervisor)
 
@@ -82,7 +82,7 @@ defmodule Artus.CacheController do
     |> Artus.Email.transfer_cache_email(user, cache, comment)
     |> Artus.Mailer.deliver_now
   end
-  
+
   defp reassign_cache(cache, target_user) do
     cache 
     |> Repo.preload(:user)
@@ -93,14 +93,24 @@ defmodule Artus.CacheController do
 
 
   defp get_supervisor(user) do
-    query = from u in User,
-            where: u.branch == ^user.branch and u.level == ^(user.level - 1)
+    query = case user.level do
+      x when x == 2 ->
+        from u in User, where: u.level == 1
+      x when x != 2 ->
+        from u in User,
+        where: u.branch == ^user.branch and u.level == ^(user.level - 1)
+    end
     Repo.one(query)
   end
 
   defp get_subordinates(user) do
-    query = from u in User,
-            where: u.branch == ^user.branch and u.level == ^(user.level + 1)
+    query = case user.level do
+      x when x == 1 -> 
+        from u in User, where: u.level == 2
+      x when x != 1 ->
+        from u in User,
+        where: u.branch == ^user.branch and u.level == ^(user.level + 1)
+    end
     Repo.all(query)
   end
 
@@ -126,7 +136,7 @@ defmodule Artus.CacheController do
   def delete(conn, %{"id" => id}) do
     cache = Repo.get!(Cache, id)
     Repo.delete!(cache)
-    
+
     conn
     |> put_flash(:info, "Cache deleted successfully.")
     |> redirect(to: cache_path(conn, :index))

@@ -10,6 +10,7 @@ defmodule Artus.Admin.UserController do
   def index(conn, _params) do
     query = from u in User, order_by: u.name
     users = Repo.all(query)
+    IO.inspect users
     render conn, "index.html", %{users: users}
   end
 
