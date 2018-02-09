@@ -4,7 +4,7 @@ defmodule Artus.Mixfile do
   def project do
     [app: :artus,
      version: "1.2.0",
-     elixir: "~> 1.5.0",
+     elixir: "~> 1.6.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -30,23 +30,21 @@ defmodule Artus.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.0"},
+    [{:phoenix, "~> 1.2.5"},
      {:phoenix_pubsub, "~> 1.0"},
-     {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 3.0-rc"},
-     {:phoenix_html, "~> 2.4"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"},
-     {:comeonin, "~> 2.4"},
-     {:exjsx, "~> 3.2.0"},
+     {:postgrex, "~> 0.13.4"},
+     {:phoenix_ecto, "~> 3.3.0"},
+     {:phoenix_html, "~> 2.10.5"},
+     {:phoenix_live_reload, "~> 1.1.3", only: :dev},
+     {:gettext, "~> 0.14.0"},
+     {:cowboy, "~> 1.1.2"},
+     {:comeonin, "~> 2.6.0"},
+     {:exjsx, "~> 3.2.1"},
      {:bamboo, "~> 0.8"},
      {:uuid, "~> 1.1"},
-     {:credo, "~> 0.4", only: [:dev, :test]},
-     {:distillery, "~> 1.4", runtime: false},
-     {:inch_ex, only: :docs}]
-     #{:hackney, "~> 1.6.5", override: true}]
-     #{:certifi, "~> 0.7.0", override: true}]
+     {:credo, "~> 0.8", only: [:dev, :test]},
+     {:distillery, "~> 1.5", runtime: false},
+     {:inch_ex, "~> 0.5.6", only: :docs}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
