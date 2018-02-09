@@ -83,9 +83,9 @@ class FormContainer extends React.Component {
             case "language":
               return <LanguageInput key={i} element={x} fieldValue={this.state.form[x.id]} changeHandler={this.handleChange.bind(this)} />
                 break;
-            case "tags":
+            case "badges":
               if (this.props.eEntry) {
-                return <div key={i} className="alert alert-warning">Currently tags cannot be edited.</div>;
+                return <div key={i} className="alert alert-warning">Currently badges cannot be edited.</div>;
                 break;
               } else {
                 return <TagInput key={i} element={x} fieldValue={this.state.form[x.id]} changeHandler={this.handleChange.bind(this)} />

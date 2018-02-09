@@ -103,6 +103,10 @@ nav {
 
 $placeholder_color: rgba(0,0,0,0.3);
 
+.Select-control {
+  border-radius: 0px;
+}
+
 ::-webkit-input-placeholder {
   color: $placeholder_color;
 }

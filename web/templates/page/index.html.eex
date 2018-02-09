@@ -24,7 +24,7 @@
         <button class="btn btn-primary" type="submit">Go!</button>
       </div>
     </div>
-    <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
+    <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced Search</small></a>
   </fieldset>
   </form>
   

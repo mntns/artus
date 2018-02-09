@@ -26,13 +26,13 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
-// TODO: why only tag deletion? 
-$('#tagDeleteModal').on('show.bs.modal', function (event) {
+// TODO: why only badge deletion? 
+$('#badgeDeleteModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
-  var tagID = button.data('tag-id'); // Extract info from data-* attributes
+  var badgeID = button.data('badge-id'); // Extract info from data-* attributes
   var modal = $(this);
-  modal.find('.modal-body #tagToDelete').text(tagID);
-  modal.find('.modal-footer #deleteButton').attr("href", "/admin/tags/" + tagID + "/delete")
+  modal.find('.modal-body #badgeToDelete').text(badgeID);
+  modal.find('.modal-footer #deleteButton').attr("href", "/admin/badges/" + badgeID + "/delete")
 });
 
 

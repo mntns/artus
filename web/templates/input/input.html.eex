@@ -1,21 +1,21 @@
 <%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+<%= render Artus.SharedView, "nojs.html", %{conn: @conn} %>
 
 <div class="container main">
-  <%= render Artus.SharedView, "nojs.html", %{conn: @conn} %>
-  <h2>
-    <i class="fa fa-pencil-square" aria-hidden="true"></i> New entry
-  </h2>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">New Entry</li>
+  </ol>
 
-    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
-    <script>window.systemType = 0;</script>
+  <script>window.userToken = "<%= assigns[:user_token] %>";</script>
+  <script>window.systemType = 0;</script>
 
-    <%= if @cache do %>
-      <script>window.workingCacheID = <%= @cache.id %>;</script>
-    <% else %>
-      <script>window.workingCacheID = null;</script>
-    <% end %>
-    
-    <%= form_tag("/submit") %>
-      <div id="input-form"></div>
-    </form>
+  <%= if @cache do %>
+    <script>window.workingCacheID = <%= @cache.id %>;</script>
+  <% else %>
+    <script>window.workingCacheID = null;</script>
+  <% end %>
+
+  <%= form_tag("/submit") %>
+  <div id="input-form"></div>
+</form>
 </div>

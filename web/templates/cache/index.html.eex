@@ -2,7 +2,7 @@
 
 <div class="container main">
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
-  <%= render Artus.Shared.ModalView, "working_cache_help.html", %{conn: @conn} %>
+  <%= render Artus.CacheView, "help_modal.html", %{conn: @conn} %>
   
   <ol class="breadcrumb">
     <li class="breadcrumb-item active">Working Caches</li>

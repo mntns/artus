@@ -10,9 +10,9 @@
   </div>
 
   <%= if @is_owner do %>
-    <%= render Artus.Shared.ModalView, "entry_delete_modal.html", %{conn: @conn, entry_id: @entry.id} %>
+    <%= render Artus.EntryView, "delete_modal.html", %{conn: @conn, entry_id: @entry.id} %>
     <%= if @entry.user.caches != [] do %>
-      <%= render Artus.Shared.ModalView, "entry_move_modal.html", %{conn: @conn, entry_id: @entry.id, caches: @entry.user.caches} %>
+      <%= render Artus.EntryView, "move_modal.html", %{conn: @conn, entry_id: @entry.id, caches: @entry.user.caches} %>
     <% end %>
   <% end %>
 

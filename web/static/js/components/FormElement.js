@@ -22,7 +22,7 @@ class FormElement extends React.Component {
       case "language":
         return <TextInput element={this.props.element} />
         //return <LanguageInput element={this.props.element} />
-      case "tags":
+      case "badges":
         return <TagInput element={this.props.element} changeHandler={this.props.changeHandler} />
       case "abstract":
         // Set limit according to type

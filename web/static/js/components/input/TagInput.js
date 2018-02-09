@@ -20,8 +20,8 @@ class TagInput extends React.Component {
     this.props.changeHandler({target: {id: this.props.element.id, value: value}});
   } 
   getTags(input, callback) { 
-    channel.push("tags", {type: this.props.element.id})
-      .receive("ok", (data) => { callback(null, {options: data.tags, complete: true}) })
+    channel.push("badges", {type: this.props.element.id})
+      .receive("ok", (data) => { callback(null, {options: data.badges, complete: true}) })
   }
   constructWeirdElement(rendered) {
     return {__html: rendered};
@@ -35,7 +35,7 @@ class TagInput extends React.Component {
     }
   }
   createPromptText(label) {
-    return "Create tag \"" + label + "\"";
+    return "Create badge \"" + label + "\"";
   }
   render() {
     return (

@@ -6,7 +6,7 @@ class LabelPill extends React.Component {
   }
   render() {
     return (
-        <span className="tag tag-pill tag-default">required</span>
+        <span className="badge badge-secondary">required</span>
     )
   }
 }
