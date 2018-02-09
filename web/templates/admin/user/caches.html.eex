@@ -12,9 +12,7 @@
 
   <%= if @shown_user.caches == [] do %>
     <div class="alert alert-info">
-      <p class="text-xs-center text-muted">
-        This user has no working caches.
-      </p>
+      This user has no working caches.
     </div>
   <% else %>
       <%= for cache <- @shown_user.caches do %>

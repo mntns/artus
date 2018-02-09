@@ -10,7 +10,7 @@
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-text display-3">
         <%= @stats.user_count %>
         <small class="text-muted">bibliographers</small>
@@ -19,7 +19,7 @@
   </div>
   
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-text display-3">
         <%= @stats.entry_count %>
         <small class="text-muted">entries</small>
@@ -28,7 +28,7 @@
   </div>
   
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-text display-3">
         <%= @stats.cache_count %>
         <small class="text-muted">caches</small>
@@ -37,7 +37,7 @@
   </div>
   
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-text display-3">
         <%= @stats.query_count %>
         <small class="text-muted">queries</small>
@@ -46,7 +46,7 @@
   </div>
   
   <div class="card">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-text display-3">
         <%= @stats.cached_query_count %>
         <small class="text-muted">cached queries</small>

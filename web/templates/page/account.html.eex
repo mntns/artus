@@ -5,15 +5,10 @@
 
   <h1 class="display-2"><%= @user.name %></h1>
   <hr>
-  <p>Mail <%= @user.mail %></p>
+  <p>Mail: <%= @user.mail %></p>
 
   <div class="alert alert-info">
     If you want to change any account-related information, please contact an administrator.
   </div>
 
-  <!--
-    <p>Made by <a href="https://monoton.space">Eddy Shure</a></p>
-    <a href="/imprint">Imprint</a>
-  -->
 </div>
-

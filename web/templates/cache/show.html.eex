@@ -7,20 +7,26 @@
   </ol>
   
   <div class="modal fade" id="cacheDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title">Delete Cache</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">Delete cache</h4>
         </div>
         <div class="modal-body">
-          <p>You're about to delete this cache. The cache and its entries will be irrevocably deleted! Please confirm your action by clicking the button below.</p>
+          <p>You're about to delete this cache.<br>
+          <b>The cache and its entries will be irrevocably deleted!</b><br>
+          Please confirm your action by clicking the button below.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="<%= cache_path(@conn, :delete, @cache.id) %>" role="button">Delete</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <i class="fa fa-fw fa-times" aria-hidden="true"></i> Cancel
+          </button>
+          <a class="btn btn-danger" href="<%= cache_path(@conn, :delete, @cache.id) %>" role="button">
+            <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
+          </a>
         </div>
       </div>
     </div>
@@ -46,32 +52,33 @@
     </div>
   </div>
 
-  <h2>
+  <h1 class="display-3">
     <%= @cache.name %>
-    <div class="actions float-right">
-      <a class="btn btn-primary" href="<%= input_path(@conn, :input_cache, @cache.id) %>" role="button">
-        <i class="fa fa-plus" aria-hidden="true"></i> Add entry
+  </h1>
+  
+  <div class="mb-3">
+    <a class="btn btn-primary" href="<%= input_path(@conn, :input_cache, @cache.id) %>" role="button">
+      <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add entry
+    </a>
+    <%= if @user.level == 1 || @user.level == 2 do %>
+      <a class="btn btn-secondary" href="<%= cache_path(@conn, :down, @cache.id) %>" role="button">
+        <i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i> Send down
       </a>
-      <%= if @user.level == 1 || @user.level == 2 do %>
-        <a class="btn btn-secondary" href="<%= cache_path(@conn, :down, @cache.id) %>" role="button">
-          <i class="fa fa-arrow-down" aria-hidden="true"></i> Send down
-        </a>
-      <% end %>
+    <% end %>
 
-      <%= if @user.level == 1 do %>
-        <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#cachePublishModal">
-          <i class="fa fa-check" aria-hidden="true"></i> Publish
-        </button>
-      <% else %>
-        <a class="btn btn-secondary" href="<%= cache_path(@conn, :submit, @cache.id) %>" role="button">
-          <i class="fa fa-arrow-up" aria-hidden="true"></i> Submit
-        </a>
-      <% end %>
-      <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#cacheDeleteModal">
-        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+    <%= if @user.level == 1 do %>
+      <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#cachePublishModal">
+        <i class="fa fa-fw fa-check" aria-hidden="true"></i> Publish
       </button>
-    </div>
-  </h2>
+    <% else %>
+      <a class="btn btn-secondary" href="<%= cache_path(@conn, :submit, @cache.id) %>" role="button">
+        <i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i> Submit
+      </a>
+    <% end %>
+    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#cacheDeleteModal">
+      <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
+    </button>
+  </div>
 
   <br>
 

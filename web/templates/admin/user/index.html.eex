@@ -14,16 +14,16 @@
       <a href="<%= user_path(@conn, :show, user.id) %>" class="list-group-item">
         <i class="fa fa-fw fa-user" aria-hidden="true"></i>
         <%= user.name %>
+        <%= if user.admin do %>
+          <span class="badge badge-primary">Admin</span>
+        <% end %>
+        <%= if !user.activated do %>
+          <span class="badge badge-secondary">not yet activated</span>
+        <% end %>
         <div class="float-right">
           <% branch = get_branch(user.branch) %>
           <%= for flag <- branch["flags"] do %>
             <span class="flag-icon flag-icon-<%= flag %>"></span>
-          <% end %>
-          <%= if user.admin do %>
-            <span class="badge badge-primary">Admin</span>
-          <% end %>
-          <%= if !user.activated do %>
-            <span class="badge badge-default">not yet activated</span>
           <% end %>
         </div>
       </a>

@@ -2,22 +2,18 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
+        <h5 class="modal-title">About Working Caches</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">About working caches</h4>
       </div>
       <div class="modal-body">
-        <p>
-        A working cache is a collection of unpublished records. 
-
-        Every record has to be part of a working cache. Before you start entering your data, you have to create at least one working cache in order to assign the new record. 
-
-        The idea of the working cache is to mark a big number of records and to move them to the responsible National Bibliographer. When you start working, you may wish to enter all data in one working cache (e.g. "BIAS 68"). You may also wish to distinguish between different types (e.g. "finished", "keep in mind"). You can create and work with different working caches at the same time. The main task of the cache is to move all records to the next level. Once the bibliographers have finished their work, they are requested to submit the working cache, in order to give the National Bibliographer a sign to start work. He or she can now edit the data. During this process you are not allowed to edit the entries. When the National Bibliographer has finished work, he or she submits all working caches to the International Bibliographer who checks and edits data from all branches and then publishes them. The International Bibliographer may resend working caches back to the National Bibliographer who may then refer them to the bibliographer if necessary.
-        </p>
+        <p>A working cache is a collection of unpublished records.</p>
+        <p>Every record has to be part of a working cache. Before you start entering your data, you have to create at least one working cache in order to assign the new record.</p>
+        <p>The idea of the working cache is to mark a big number of records and to move them to the responsible National Bibliographer. When you start working, you may wish to enter all data in one working cache (e.g. "BIAS 68"). You may also wish to distinguish between different types (e.g. "finished", "keep in mind"). You can create and work with different working caches at the same time. The main task of the cache is to move all records to the next level. Once the bibliographers have finished their work, they are requested to submit the working cache, in order to give the National Bibliographer a sign to start work. He or she can now edit the data. During this process you are not allowed to edit the entries. When the National Bibliographer has finished work, he or she submits all working caches to the International Bibliographer who checks and edits data from all branches and then publishes them. The International Bibliographer may resend working caches back to the National Bibliographer who may then refer them to the bibliographer if necessary.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-lightbulb-o" aria-hidden="true"></i> Ok, got it</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-fw fa-lightbulb-o" aria-hidden="true"></i> Ok, got it</button>
       </div>
     </div>
   </div>
