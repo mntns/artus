@@ -6,7 +6,7 @@ class SubmitButton extends React.Component {
   }
   render() {
     return (
-      <button className="btn btn-primary btn-lg pull-xs-right" type="submit">
+      <button className="btn btn-primary btn-lg float-right" type="submit">
         <i className="fa fa-paper-plane" aria-hidden="true"></i> Create
       </button>
     );

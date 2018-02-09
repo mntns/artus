@@ -57,7 +57,7 @@ class HelpButton extends React.Component {
   }
   render() {
     return (
-        <span className="pull-xs-right">
+        <span className="float-right">
           {this.state.show ? <HelpModal id={this.props.id} handleHide={this.handleHideModal.bind(this)} /> : ""}     
           <i className="fa fa-info-circle fa-lg fa-fw" aria-hidden="true" onClick={this.handleShowModal.bind(this)}></i>
         </span>

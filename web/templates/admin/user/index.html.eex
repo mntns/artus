@@ -14,23 +14,23 @@
       <a href="<%= user_path(@conn, :show, user.id) %>" class="list-group-item">
         <i class="fa fa-fw fa-user" aria-hidden="true"></i>
         <%= user.name %>
-        <div class="pull-xs-right">
+        <div class="float-right">
           <% branch = get_branch(user.branch) %>
           <%= for flag <- branch["flags"] do %>
             <span class="flag-icon flag-icon-<%= flag %>"></span>
           <% end %>
           <%= if user.admin do %>
-            <span class="tag tag-primary">Admin</span>
+            <span class="badge badge-primary">Admin</span>
           <% end %>
           <%= if !user.activated do %>
-            <span class="tag tag-default">not yet activated</span>
+            <span class="badge badge-default">not yet activated</span>
           <% end %>
         </div>
       </a>
     <% end %>
   </div>
 
-  <a class="btn btn-primary pull-xs-right add-button" href="<%= user_path(@conn, :new) %>" role="button">
+  <a class="btn btn-primary float-right add-button" href="<%= user_path(@conn, :new) %>" role="button">
     <i class="fa fa-plus"></i> New user
   </a>
   

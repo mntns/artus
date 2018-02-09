@@ -11,9 +11,9 @@
       </span>
 
       <%= if length(@results) > 0 do %>
-      <label class="col-sm-3 col-md-1 col-form-label"><span class="pull-xs-right">Sort by</span></label>
+      <label class="col-sm-3 col-md-1 col-form-label"><span class="float-right">Sort by</span></label>
       <div class="col-sm-3 col-md-3">
-        <select id="sortSelect" name="sort" onchange="this.form.submit();" class="form-control pull-xs-right" style="border-radius: 0px; border: none;">
+        <select id="sortSelect" name="sort" onchange="this.form.submit();" class="form-control float-right" style="border-radius: 0px; border: none;">
           <option value="titl_title">Title</option>
           <option value="author">Author</option>
           <option value="editor">Editor</option>
@@ -42,7 +42,7 @@ document.getElementById("sortSelect").value = "titl_title";
         </a>
 
         <%= if item.reviews != [] do %>
-          <a style="z-index: 0;" class="pull-xs-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
+          <a style="z-index: 0;" class="float-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
             <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
           </a>
           <div class="collapse" id="reviews<%= item.id %>">

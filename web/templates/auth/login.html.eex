@@ -2,7 +2,7 @@
 
 <div class="container main">
 
-  <div class="m-x-auto" style="width: 33vw;">
+  <div class="mx-auto" style="width: 33vw;">
     <div class="login-form">
       <h2>Login for bibliographers</h2>
       <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
@@ -18,10 +18,10 @@
       </button>
       </form>
     </div>
+
     <small class="text-muted">
-      <a class="pull-xs-right" href="/forgot">Forgot password?</a>
+      <a class="float-right" href="/forgot">Forgot password?</a>
     </small>
+
   </div>
-
-
 </div>

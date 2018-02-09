@@ -11,7 +11,7 @@
         <button class="btn btn-secondary" type="submit">Go!</button>
       </span>
     </div>
-    <a class="pull-xs-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
+    <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
   </fieldset>
   </form>
 
@@ -27,7 +27,7 @@
         </a>
 
         <%= if item.reviews != [] do %>
-          <a style="z-index: 0;" class="pull-xs-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
+          <a style="z-index: 0;" class="float-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
             <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
           </a>
           <div class="collapse" id="reviews<%= item.id %>">

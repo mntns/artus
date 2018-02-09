@@ -18,7 +18,7 @@
         </li>
         <%= for tag <- @tags[:things] do %>
           <li class="list-group-item">
-            <i class="fa fa-fw fa-times-circle pull-xs-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
+            <i class="fa fa-fw fa-times-circle float-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
             <i class="fa fa-fw fa-tag" aria-hidden="true"></i>
             <%= tag.tag |> render_tag |> raw %>
             <%= if tag.user_tag do %>
@@ -37,7 +37,7 @@
         </li>
         <%= for tag <- @tags[:works] do %>
           <li class="list-group-item">
-            <i class="fa fa-fw fa-times-circle pull-xs-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
+            <i class="fa fa-fw fa-times-circle float-right" aria-hidden="true" data-toggle="modal" data-target="#tagDeleteModal" data-tag-id="<%= tag.id %>"></i>
             <i class="fa fa-fw fa-tag" aria-hidden="true"></i>
             <%= tag.tag |> render_tag |> raw %>
             <%= if tag.user_tag do %>

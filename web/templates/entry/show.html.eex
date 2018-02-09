@@ -33,7 +33,7 @@
       <small class="text-muted"><%= @entry.titl_subtitle |> Artus.NotMarkdown.to_html |> raw %></small>
     <% end %>
     -->
-    <div class="actions pull-xs-right">
+    <div class="actions float-right">
       <%= if @is_owner do %>
         <%= if @entry.user.caches != [] do %>
           <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#entryMoveModal" >
@@ -179,5 +179,5 @@
     <% end %>
   <% end %>
 
-  <p class="text-muted pull-xs-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
+  <p class="text-muted float-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
 </div>

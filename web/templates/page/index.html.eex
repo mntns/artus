@@ -16,14 +16,16 @@
   <%= form_tag("/search") %>
   <fieldset>
     <div class="input-group">
-      <input name="query" type="text" class="form-control" data-toggle="tooltip" data-placement="bottom" title="Searches by title, subtitle, author and editor" placeholder="Search BIAS">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="submit">Go!</button>
-      </span>
+      <input name="query" type="text" class="form-control" 
+             data-toggle="tooltip" data-placement="bottom" 
+             title="Searches by title, subtitle, author and editor" placeholder="Search BIAS">
+
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit">Go!</button>
+      </div>
     </div>
-    <a class="pull-xs-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
+    <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced search</small></a>
   </fieldset>
   </form>
   
 </div>
-

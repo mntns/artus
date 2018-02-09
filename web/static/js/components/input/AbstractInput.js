@@ -31,7 +31,7 @@ class AbstractInput extends React.Component {
           <label htmlFor={this.props.element.id}>{this.props.element.label} {this.props.element.required ? getLabelPill("required") : ""}</label>
           <HelpButton id={this.props.element.id} />
           <textarea value={this.props.fieldValue} id={this.props.element.id} className="form-control" onChange={this.handleChange.bind(this)}></textarea>
-          <p className="pull-xs-right">{this.state.count} / {limit} words</p>
+          <p className="float-right">{this.state.count} / {limit} words</p>
         </fieldset>
         )
   }

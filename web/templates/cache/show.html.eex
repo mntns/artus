@@ -48,7 +48,7 @@
 
   <h2>
     <%= @cache.name %>
-    <div class="actions pull-xs-right">
+    <div class="actions float-right">
       <a class="btn btn-primary" href="<%= input_path(@conn, :input_cache, @cache.id) %>" role="button">
         <i class="fa fa-plus" aria-hidden="true"></i> Add entry
       </a>

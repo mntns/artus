@@ -22,13 +22,13 @@
       <%= for cache <- @caches do %>
         <a class="list-group-item" href="<%= cache_path(@conn, :show, cache.id) %>">
           <%= cache.name %>
-          <span class="label label-default pull-xs-right"><%= length(cache.entries) %></span>
+          <span class="label label-default float-right"><%= length(cache.entries) %></span>
         </a>
       <% end %>
     </div>
   <% end %>
 
-  <div class="pull-xs-right">
+  <div class="float-right">
     <button type="button" class="btn btn-secondary add-button" data-toggle="modal" data-target="#cacheHelpModal">
       <i class="fa fa-question-circle" aria-hidden="true"></i> Help
     </button>

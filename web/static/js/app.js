@@ -1,5 +1,10 @@
 import "phoenix_html"
-import imports from "./imports"
+
+let jQuery = require('jquery');
+window.$ = window.jQuery = jQuery;
+
+import popper from "popper.js";
+import "bootstrap";
 
 //import socket from "./socket"
 //import Select from "react-select"
@@ -19,7 +24,7 @@ import AdvancedSearch from "./components/search/AdvancedSearch"
 // Enables tether
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
-})
+});
 
 // TODO: why only tag deletion? 
 $('#tagDeleteModal').on('show.bs.modal', function (event) {
@@ -28,7 +33,7 @@ $('#tagDeleteModal').on('show.bs.modal', function (event) {
   var modal = $(this);
   modal.find('.modal-body #tagToDelete').text(tagID);
   modal.find('.modal-footer #deleteButton').attr("href", "/admin/tags/" + tagID + "/delete")
-})
+});
 
 
 // Aims to fix newlines in text areas

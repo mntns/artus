@@ -28,7 +28,7 @@
   </table>
 
 
-  <div class="pull-xs-right">
+  <div class="float-right">
     <a class="btn btn-danger btn-lg" href="/input" role="button">
       <i class="fa fa-ban" aria-hidden="true"></i> Cancel
     </a>

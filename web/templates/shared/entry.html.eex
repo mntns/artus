@@ -279,5 +279,5 @@
 <% end %>
 
 <%= if @entry.system_type == 2 do %>
-  <span class="label label-primary pull-xs-right">Reprint</span>
+  <span class="label label-primary float-right">Reprint</span>
 <% end %>

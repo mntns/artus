@@ -27,7 +27,7 @@
       <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary pull-xs-right">Submit</button>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
     </form>
 
   <% else %>

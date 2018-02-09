@@ -69,7 +69,7 @@ class AdvancedSearch extends React.Component {
 
           <br />
           
-          <a href="#" role="button" onClick={this.runQuery.bind(this)} className="btn btn-lg btn-primary pull-xs-right">
+          <a href="#" role="button" onClick={this.runQuery.bind(this)} className="btn btn-lg btn-primary float-right">
             <i className="fa fa-rocket fa-fw"></i> Run query
           </a>
         </div>

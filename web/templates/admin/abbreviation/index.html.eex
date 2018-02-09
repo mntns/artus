@@ -16,7 +16,7 @@
     <% end %>
   </div>
 
-  <a class="btn btn-primary pull-xs-right add-button" href="<%= abbreviation_path(@conn, :new) %>" role="button">
+  <a class="btn btn-primary float-right add-button" href="<%= abbreviation_path(@conn, :new) %>" role="button">
     <i class="fa fa-plus"></i> New abbreviation
   </a>
   

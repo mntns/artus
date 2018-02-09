@@ -32,26 +32,26 @@
     </div>
   </div>
 
-  <h2>
-    <%= @shown_user.name %>
-    <div class="actions pull-xs-right">
-      <a class="btn btn-secondary" href="<%= user_path(@conn, :reset, @shown_user.id) %>" role="button">
-        <i class="fa fa-key" aria-hidden="true"></i> Reset password
-      </a>
-      <a class="btn btn-primary" href="<%= user_path(@conn, :caches, @shown_user.id) %>" role="button">
-        <i class="fa fa-database" aria-hidden="true"></i> Show working caches
-      </a>
-      <%= if @shown_user.admin do %>
-        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Admin accounts can't be deleted." disabled>
-          <i class="fa fa-trash" aria-hidden="true"></i> Delete
-        </button>
-      <% else %>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#userDeleteModal">
-          <i class="fa fa-trash" aria-hidden="true"></i> Delete
-        </button>
-      <% end %>
-    </div>
-  </h2>
+  <h1>
+  <%= @shown_user.name %>
+  </h1>
+  <div class="actions float-right">
+  <a class="btn btn-secondary" href="<%= user_path(@conn, :reset, @shown_user.id) %>" role="button">
+  <i class="fa fa-key" aria-hidden="true"></i> Reset password
+  </a>
+  <a class="btn btn-primary" href="<%= user_path(@conn, :caches, @shown_user.id) %>" role="button">
+  <i class="fa fa-database" aria-hidden="true"></i> Show working caches
+  </a>
+  <%= if @shown_user.admin do %>
+  <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Admin accounts can't be deleted." disabled>
+  <i class="fa fa-trash" aria-hidden="true"></i> Delete
+  </button>
+  <% else %>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#userDeleteModal">
+  <i class="fa fa-trash" aria-hidden="true"></i> Delete
+  </button>
+  <% end %>
+  </div>
 
   <table class="table table-hover">
     <thead></thead>
