@@ -8,11 +8,27 @@
 
 > Phoenix application used to run the [bibliographical database](https://bias.internationalarthuriansociety.com) of the [International Arthurian Society](http://internationalarthuriansociety.com/)
 
-Note, the application is currently undergoing major refactoring.
+## Building
 
+Building the application for development is straightforward:
+```shell
+https://github.com/EddyShure/artus
+cd artus/
+mix do deps.get, compile
+```
+
+Setup the database:
+```
+mix ecto.setup
+```
+
+Install JS dependencies:
+```
+yarn install
+```
 
 ## Deployment
 TODO
 
 ## Maintainers
-TODO
+* [Eddy Shure](https://github.com/EddyShure)
