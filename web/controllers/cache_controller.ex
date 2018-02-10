@@ -53,21 +53,22 @@ defmodule Artus.CacheController do
     render conn, "down.html", %{cache: cache, subordinates: subordinates}
   end
 
-  def send(conn, %{"id" => id, "direction" => "up", "receiver" => receiver_id, "comment" => comment}) do
+  @doc "Send working cache to recipient"
+  def send(conn, %{"id" => id, "direction" => direction, "recipient" => recipient, "comment" => comment}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
-    receiver = Repo.get!(User, receiver_id)
+    r_user = Repo.get!(User, recipient)
 
-    Enum.each(cache.entries, &move_entry(&1, receiver))
-    send_transfer_mail(conn.assigns.user, receiver, cache, comment)
-    reassign_cache(cache, receiver)
+    Enum.each(cache.entries, &move_entry(&1, r_user))
+    send_transfer_mail(conn.assigns.user, r_user, cache, comment)
+    reassign_cache(cache, r_user)
 
-    Logger.info("Sent cache to user ##{receiver_id}", cache.id, conn.assigns.user.id)
+    Logger.info("Sent cache to user ##{recipient}", cache.id, conn.assigns.user.id)
 
     conn
     |> put_flash(:info, "Working Cache was sent successfully.")
     |> redirect(to: cache_path(conn, :index))
   end
-  
+
   @doc "Publish all entries in cache and delete it"
   def publish(conn, %{"id" => id}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
@@ -150,7 +151,11 @@ defmodule Artus.CacheController do
   end
 
   @doc "Change owner of entry"
-  defp move_entry(entry, target_user) do
-
+  defp move_entry(entry, recipient) do
+    entry
+    |> Repo.preload(:user)
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:user, recipient)
+    |> Repo.update!()
   end
 end

@@ -12,10 +12,10 @@
       You're about to send your Working Cache to a lower level of your branch. Please select a subordinate bibliographer.
     </div>
 
-    <%# <%= form_tag(cache_path(@conn, :send_down, @cache.id)) %1> %>
+    <%= form_tag(cache_path(@conn, :send, @cache.id, :down)) %>
     <div class="form-group">
       <label for="subordinate">Subordinate / Recipient</label>
-      <select class="form-control" id="subordinate" name="subordinate">
+      <select class="form-control" id="recipient" name="recipient">
         <%= for subordinate <- @subordinates do %>
           <option value="<%= subordinate.id %>"><%= subordinate.name %></option>
         <% end %>

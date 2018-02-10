@@ -4,26 +4,31 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/caches">Working Caches</a></li>
     <li class="breadcrumb-item"><a href="<%= cache_path(@conn, :show, @cache.id) %>"><%= @cache.name %></a></li>
-    <li class="breadcrumb-item active">Submit Cache</li>
+    <li class="breadcrumb-item active">Send Cache upward</li>
   </ol>
 
   <%= if @supervisor do %>
-    <p>You are about to submit this Working Cache to:</p>
-
-    <div class="card">
-      <div class="card-block">
+    <div class="alert alert-info">
+      You're about to submit this Working Cache to your supervising bibliographer.
+    
+    </div>
+    
+    <div class="card mb-3">
+      <div class="card-body">
         <h3 class="card-title"><%= @supervisor.name %></h3>
         <p class="card-text"><%= lookup_role(@supervisor.level) %></p>
       </div>
     </div>
 
-    <%= form_tag(cache_path(@conn, :supervisor_submit, @cache.id)) %>
-      <input type="hidden" value="<%= @supervisor.id %>" name="supervisor">
+    <%= form_tag(cache_path(@conn, :send, @cache.id, :up)) %>
+      <input type="hidden" value="<%= @supervisor.id %>" name="recipient">
 			<div class="form-group">
 				<label for="comment">Comment</label>
 				<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
 			</div>
-			<button type="submit" class="btn btn-primary float-right">Submit</button>
+			<button type="submit" class="btn btn-primary float-right">
+        <i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i> Submit
+      </button>
     </form>
 
   <% else %>

@@ -31,18 +31,18 @@
     <%= if @is_owner do %>
       <%= if @entry.user.caches != [] do %>
         <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#entryMoveModal" >
-          <i class="fa fa-share" aria-hidden="true"></i> Move to another working cache
+          <i class="fa fa-fw fa-share" aria-hidden="true"></i> Move to another working cache
         </button>
       <% end %>
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#entryDeleteModal">
-        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+        <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
       </button>
       <a class="btn btn-primary" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
-        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
       <%= end %>
       <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
-        <i class="fa fa-share-alt" aria-hidden="true"></i> Export
+        <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
       </a>
     </div>
 
