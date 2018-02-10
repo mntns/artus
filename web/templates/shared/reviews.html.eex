@@ -1,8 +1,8 @@
 <div class="card">
   <h4 class="card-header">Reviews</h4>
-  <div class="card-block">
+  <div class="card-body">
     <%= if @reviews == [] do %>
-      <div class="text-xs-center text-muted">
+      <div class="mx-auto text-muted">
         <p>This entry has no reviews attached to it.</p>
         <%= if @conn.assigns.user do %>
           <a href="<%= entry_path(@conn, :review, @entry_id) %>">

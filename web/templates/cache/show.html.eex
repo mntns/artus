@@ -5,58 +5,15 @@
     <li class="breadcrumb-item"><a href="/caches">Working Caches</a></li>
     <li class="breadcrumb-item active"><%= @cache.name %></li>
   </ol>
-  
-  <div class="modal fade" id="cacheDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Delete Cache</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>You're about to delete this cache.<br>
-          <b>The cache and its entries will be irrevocably deleted!</b><br>
-          Please confirm your action by clicking the button below.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            <i class="fa fa-fw fa-times" aria-hidden="true"></i> Cancel
-          </button>
-          <a class="btn btn-danger" href="<%= cache_path(@conn, :delete, @cache.id) %>" role="button">
-            <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" id="cachePublishModal" tabindex="-1" role="dialog" aria-labelledby="publishModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">Publish cache</h4>
-        </div>
-        <div class="modal-body">
-          <p>You're about to publish this cache. Are you sure?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-success" href="<%= cache_path(@conn, :publish, @cache.id) %>" role="button">Publish!</a>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <%= render Artus.CacheView, "delete_modal.html", assigns %>
+  <%= render Artus.CacheView, "publish_modal.html", assigns %>
 
   <h1 class="display-3">
     <%= @cache.name %>
   </h1>
-  
-  <div class="mb-3">
+
+  <div class="mb-4">
     <a class="btn btn-primary" href="<%= input_path(@conn, :input_cache, @cache.id) %>" role="button">
       <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add entry
     </a>
@@ -67,11 +24,11 @@
     <% end %>
 
     <%= if @user.level == 1 do %>
-      <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#cachePublishModal">
+      <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cachePublishModal">
         <i class="fa fa-fw fa-check" aria-hidden="true"></i> Publish
       </button>
     <% else %>
-      <a class="btn btn-secondary" href="<%= cache_path(@conn, :submit, @cache.id) %>" role="button">
+      <a class="btn btn-secondary" href="<%= cache_path(@conn, :up, @cache.id) %>" role="button">
         <i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i> Submit
       </a>
     <% end %>
@@ -80,10 +37,10 @@
     </button>
   </div>
 
-  <br>
-
   <%= if @cache.entries == [] do %>
-    <p class="text-xs-center text-muted">This cache contains no entries.</p>
+    <div class="alert alert-info">
+      This Working Cache contains no entries.
+    </div>
   <% else %>
     <div class="list-group">
       <%= for entry <- @cache.entries do %>

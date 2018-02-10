@@ -20,4 +20,8 @@ defmodule Artus.Cache do
     |> validate_required([:name])
     |> cast_assoc(:user, required: true)
   end
+
+  def with_entries(query) do
+    from q in query, preload: [:entries]
+  end
 end

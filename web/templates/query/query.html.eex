@@ -3,56 +3,59 @@
 <div class="container main">
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
-  <div class="alert alert-info query-time">
-    <%= form_tag(query_path(@conn, :query_sort, @query_id), class: "form-group row", style: "margin-bottom: 0;") %>
+  <div class="mb-2 card">
+    <div class="card-body p-3">
+      
+      <%= form_tag(query_path(@conn, :query_sort, @query_id), class: "form-group row", style: "margin-bottom: 0;") %>
 
       <span class="col-sm-12 col-md-8 col-form-label">
         <%= query_info(length(@results), @query_time) %>
       </span>
 
       <%= if length(@results) > 0 do %>
-      <label class="col-sm-3 col-md-1 col-form-label"><span class="float-right">Sort by</span></label>
-      <div class="col-sm-3 col-md-3">
-        <select id="sortSelect" name="sort" onchange="this.form.submit();" class="form-control float-right" style="border-radius: 0px; border: none;">
-          <option value="titl_title">Title</option>
-          <option value="author">Author</option>
-          <option value="editor">Editor</option>
-          <option value="ser_year_pub">Year</option>
-        </select>
-      </div>
+        <label class="col-sm-3 col-md-1 col-form-label"><span class="float-right">Sort by</span></label>
+        <div class="col-sm-3 col-md-3">
+          <select id="sortSelect" name="sort" onchange="this.form.submit();" class="form-control float-right" style="border-radius: 0px;">
+            <option value="titl_title">Title</option>
+            <option value="author">Author</option>
+            <option value="editor">Editor</option>
+            <option value="ser_year_pub">Year</option>
+          </select>
+        </div>
 
-      <script>
-if ("<%= @sort %>".length != 0) {
-document.getElementById("sortSelect").value = "<%= @sort %>";
-} else {
-document.getElementById("sortSelect").value = "titl_title";
-}
+        <script>
+          if ("<%= @sort %>".length != 0) {
+            document.getElementById("sortSelect").value = "<%= @sort %>";
+          } else {
+            document.getElementById("sortSelect").value = "titl_title";
+          }
 
-      </script>
-    <% end %>
-
+        </script>
+      <% end %>
     </form>
-  </div>
 
-  <div class="list-group">
-    <%= for item <- @results do %>
-      <div class="list-group-item"> 
-        <a href="<%= entry_path(@conn, :show, item.id) %>">
-          <%= render Artus.SharedView, "entry.html", %{entry: item} %>
+    </div>
+</div>
+
+<div class="list-group">
+  <%= for item <- @results do %>
+    <div class="list-group-item"> 
+      <a href="<%= entry_path(@conn, :show, item.id) %>">
+        <%= render Artus.SharedView, "entry.html", %{entry: item} %>
+      </a>
+
+      <%= if item.reviews != [] do %>
+        <a style="z-index: 0;" class="float-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
+          <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
         </a>
+        <div class="collapse" id="reviews<%= item.id %>">
+          <br>
+          <%= render Artus.SharedView, "reviews.html", %{entry_id: item.id, conn: @conn, reviews: item.reviews} %>
+        </div>
+      <% end %>
 
-        <%= if item.reviews != [] do %>
-          <a style="z-index: 0;" class="float-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
-            <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
-          </a>
-          <div class="collapse" id="reviews<%= item.id %>">
-            <br>
-            <%= render Artus.SharedView, "reviews.html", %{entry_id: item.id, conn: @conn, reviews: item.reviews} %>
-          </div>
-        <% end %>
-
-      </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
+</div>
 </div>
 

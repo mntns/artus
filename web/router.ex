@@ -86,14 +86,14 @@ defmodule Artus.Router do
       get "/review/:id/submit", InputController, :submit
       get "/review/:id/submit_edit", InputController, :submit_edit
 
-      # Caches
+      # Working caches
       resources "/caches", CacheController, except: [:delete]
       get "/caches/:id/delete", CacheController, :delete
-      get "/caches/:id/submit", CacheController, :submit
-      post "/caches/:id/send_up", CacheController, :supervisor_submit
+      get "/caches/:id/up", CacheController, :up
       get "/caches/:id/down", CacheController, :down
-      post "/caches/:id/send_down", CacheController, :send_down
       get "/caches/:id/publish", CacheController, :publish
+      post "/caches/:id/send/:direction", CacheController, :send
+      post "/caches/:id/send/:direction", CacheController, :send
     end
 
     # Admin routes

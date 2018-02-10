@@ -1,11 +1,9 @@
 defmodule Artus.EntryController do
   use Artus.Web, :controller
-
   import Ecto.Query
-  alias Artus.Entry
-  alias Artus.Cache
-  alias Artus.User
+  alias Artus.{Entry, Cache, User}
 
+  @doc "Show entry by ID"
   def show(conn, %{"id" => id}) do
     entry = Entry 
             |> Repo.get!(id) 

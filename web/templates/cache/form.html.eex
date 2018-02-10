@@ -6,7 +6,7 @@
   <% end %>
 
   <fieldset class="form-group <%= inject_danger(f, :abbr) %>">
-    <%= label f, :name, "Name of the working cache" %>
+    <%= label f, :name, "Name of the new Working Cache" %>
     <%= text_input f, :name, class: "form-control", placeholder: "" %>
     <%= error_tag f, :name %>
   </fieldset>

@@ -4,17 +4,17 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/caches">Working Caches</a></li>
     <li class="breadcrumb-item"><a href="<%= cache_path(@conn, :show, @cache.id) %>"><%= @cache.name %></a></li>
-    <li class="breadcrumb-item active">Send cache downwards</li>
+    <li class="breadcrumb-item active">Send Cache downward</li>
   </ol>
 
   <%= if @subordinates != [] do %>
-    <p>You're about to send your cache to a lower level of your branch. Please select a subordinate bibliographer.</p>
+    <div class="alert alert-info">
+      You're about to send your Working Cache to a lower level of your branch. Please select a subordinate bibliographer.
+    </div>
 
-    <br>
-
-    <%= form_tag(cache_path(@conn, :send_down, @cache.id)) %>
+    <%# <%= form_tag(cache_path(@conn, :send_down, @cache.id)) %1> %>
     <div class="form-group">
-      <label for="subordinate">Select subordinate/recipient</label>
+      <label for="subordinate">Subordinate / Recipient</label>
       <select class="form-control" id="subordinate" name="subordinate">
         <%= for subordinate <- @subordinates do %>
           <option value="<%= subordinate.id %>"><%= subordinate.name %></option>
@@ -27,20 +27,13 @@
       <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary float-right">Submit</button>
+    <button type="submit" class="btn btn-primary float-right">
+      <i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i> Send down
+    </button>
     </form>
-
   <% else %>
     <div class="alert alert-danger" role="alert">
       There is no person of your branch registered who represents a lower level.
     </div>
   <% end %>
-
-
-
-
-
-  
-
-
 </div>

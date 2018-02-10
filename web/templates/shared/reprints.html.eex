@@ -1,6 +1,6 @@
 <div class="card">
   <h4 class="card-header">Reprints</h4>
-  <div class="card-block">
+  <div class="card-body">
     <%= if @reprints == [] do %>
       <div class="text-xs-center text-muted">
         <p>This entry has no reprints attached to it.</p>

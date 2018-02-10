@@ -1,10 +1,11 @@
 <%= render Artus.SharedView, "navbar.html", %{user: nil} %>
 
 <div class="container main">
-
-  <div class="mx-auto" style="width: 33vw;">
+  <div class="row justify-content-md-center">
+  
+  <div class="col-md-6 mt-5">
     <div class="login-form">
-      <h2>Login for bibliographers</h2>
+      <h2 class="mx-auto">Login for bibliographers</h2>
       <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
       <%= form_tag("/auth") %>
       <fieldset class="form-group">
@@ -22,6 +23,7 @@
     <small class="text-muted">
       <a class="float-right" href="/forgot">Forgot password?</a>
     </small>
+  </div>
 
   </div>
 </div>

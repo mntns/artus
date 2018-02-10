@@ -10,7 +10,7 @@
 
   <%= if @caches == [] do %>
     <div class="alert alert-info">
-        You have no working caches.
+        You have no Working Caches.
     </div>
   <% else %>
     <div class="list-group">
