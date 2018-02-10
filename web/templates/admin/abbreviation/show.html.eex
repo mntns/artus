@@ -1,43 +1,25 @@
-<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
   <ol class="breadcrumb">
-    <li><a href="/admin">Admin</a></li>
-    <li><a href="<%= abbreviation_path(@conn, :index) %>">Abbreviations</a></li>
-    <li class="active"><%= @abbr.abbr %></li>
+    <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+    <li class="breadcrumb-item"><a href="<%= abbreviation_path(@conn, :index) %>">Abbreviations</a></li>
+    <li class="breadcrumb-item active"><%= @abbr.abbr %></li>
   </ol>
 
-  <div class="modal fade" id="abbrDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="myModalLabel">Delete abbreviation</h4>
-        </div>
-        <div class="modal-body">
-          <p>You're about to delete this abbreviation. Please confirm your action by clicking the button below.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-danger" href="<%= abbreviation_path(@conn, :delete, @abbr.id) %>" role="button">Delete</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render Artus.Admin.AbbreviationView, "delete_modal.html", assigns %>
 
-  <h2>
-    <b><%= @abbr.abbr %></b>: <%= @abbr.title %>
-    <div class="actions float-right">
-      <a role="button" class="btn btn-primary disabled" href="<%= abbreviation_path(@conn, :edit, @abbr.id) %>">
-        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-      </a> 
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#abbrDeleteModal" data-abbr="<%= @abbr.abbr %>: <%= @abbr.title %>">
-        <i class="fa fa-trash" aria-hidden="true"></i> Delete
-      </button>
-    </div>
-  </h2>
+  <h2 class="display-3"><%= @abbr.abbr %></h2>
+  <p class="lead"><%= @abbr.title %></p>
+  
+  <div class="actions mb-3">
+    <a role="button" class="btn btn-primary disabled" href="<%= abbreviation_path(@conn, :edit, @abbr.id) %>">
+      <i class="fa fa-fw fa-pencil" aria-hidden="true"></i> Edit
+    </a> 
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#abbrDeleteModal" data-abbr="<%= @abbr.abbr %>: <%= @abbr.title %>">
+      <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
+    </button>
+  </div>
 
   <table class="table table-hover">
     <thead></thead>
@@ -46,7 +28,7 @@
         <th scope="row">Place</th>
         <td>
           <%= for place <- split_places(@abbr.place) do %>
-            <span class="label label-default"><%= place %></span>
+            <span class="badge badge-primary"><%= place %></span>
           <% end %>
         </td>
       </tr>

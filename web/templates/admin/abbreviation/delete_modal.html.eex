@@ -1,0 +1,23 @@
+<div class="modal fade" id="abbrDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Delete abbreviation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You're about to delete this abbreviation. Please confirm your action by clicking the button below.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fa fa-fw fa-times" aria-hidden="true"></i> Cancel
+        </button>
+        <a class="btn btn-danger" href="<%= abbreviation_path(@conn, :delete, @abbr.id) %>" role="button">
+          <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,17 +7,5 @@
   </ol>
 
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
-
-  <div class="list-group">
-    <%= for abbr <- @abbreviations do %>
-      <a href="<%= abbreviation_path(@conn, :show, abbr.id) %>" class="list-group-item">
-        <b><%= abbr.abbr %></b>: <%= abbr.title %>
-      </a>
-    <% end %>
-  </div>
-
-  <a class="btn btn-primary float-right add-button" href="<%= abbreviation_path(@conn, :new) %>" role="button">
-    <i class="fa fa-plus"></i> New abbreviation
-  </a>
-  
+  <div id="reactAbbreviation"></div>
 </div>

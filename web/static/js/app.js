@@ -25,6 +25,7 @@ import EditForm from "./components/EditForm"
 
 // Admin components
 import TagContainer from "./admin/TagContainer"
+import AbbreviationContainer from "./admin/AbbreviationContainer"
 
 // Enables tooltips globally 
 $(function () {
@@ -46,6 +47,9 @@ Array.prototype.forEach.call(textAreas, function(elem) {
 
 if (document.getElementById("reactTag")) {
   ReactDOM.render(<TagContainer />, document.getElementById("reactTag"));
+}
+if (document.getElementById("reactAbbreviation")) {
+  ReactDOM.render(<AbbreviationContainer />, document.getElementById("reactAbbreviation"));
 }
 
 

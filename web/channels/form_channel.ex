@@ -48,12 +48,14 @@ defmodule Artus.FormChannel do
     payload = %{abbr: abbr.abbr, title: abbr.title, issn: abbr.issn, place: abbr.place, publisher: abbr.publisher}
     {:reply, {:ok, payload}, socket}
   end
+
   def handle_in("abbreviations", _, socket) do
     abbr = Abbreviation
            |> Repo.all
            |> Enum.map(fn(x) -> %{id: x.id, abbr: x.abbr, title: x.title} end)
-    {:reply, {:ok, %{abbr: abbr}}, socket}
+    {:reply, {:ok, %{abbreviations: abbr}}, socket}
   end
+
   def handle_in("caches", _, socket) do
     user = Repo.get!(Artus.User, socket.assigns.user)
     query = user
