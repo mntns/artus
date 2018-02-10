@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mt-3">
   <h4 class="card-header">Reprints</h4>
   <div class="card-body">
     <%= if @reprints == [] do %>

@@ -1,17 +1,20 @@
 import "phoenix_html"
 
-let jQuery = require('jquery');
+// Imports jQuery and assign to window 
+import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
+// Imports popper.js and Bootstrap
 import popper from "popper.js";
 import "bootstrap";
 
-//import socket from "./socket"
-//import Select from "react-select"
+import R from "ramda";
 
+// Imports React
 import React from "react"
 import ReactDOM from "react-dom"
 
+// Imports components
 import InputForm from "./components/InputForm"
 import ReviewForm from "./components/ReviewForm"
 import ReprintForm from "./components/ReprintForm"
@@ -19,28 +22,32 @@ import ChildForm from "./components/ChildForm"
 import ReviewEditForm from "./components/ReviewEditForm"
 import EditForm from "./components/EditForm"
 
-import AdvancedSearch from "./components/search/AdvancedSearch"
 
-// Enables tether
+// Admin components
+import TagContainer from "./admin/TagContainer"
+
+// Enables tooltips globally 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
 
-// TODO: why only badge deletion? 
-$('#badgeDeleteModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget); // Button that triggered the modal
-  var badgeID = button.data('badge-id'); // Extract info from data-* attributes
-  var modal = $(this);
-  modal.find('.modal-body #badgeToDelete').text(badgeID);
-  modal.find('.modal-footer #deleteButton').attr("href", "/admin/badges/" + badgeID + "/delete")
-});
 
+// TODO: React UI for badges
 
-// Aims to fix newlines in text areas
+// Workaround for newlines in text areas
 var textAreas = document.getElementsByTagName('textarea');
 Array.prototype.forEach.call(textAreas, function(elem) {
     elem.placeholder = elem.placeholder.replace(/\\n/g, '\n');
 });
+
+// if (systemTpye)
+//   ReactDOm FormCOntainer
+//
+
+if (document.getElementById("reactTag")) {
+  ReactDOM.render(<TagContainer />, document.getElementById("reactTag"));
+}
+
 
 // Invokes ReactDOM render calls based on injected systemType
 switch(window.systemType) {

@@ -18,4 +18,13 @@ defmodule Artus.Tag do
     |> validate_required([:tag, :type, :user_tag])
     |> foreign_key_constraint(:entries_tags_tag_id_fkey)
   end
+  
+end
+
+defimpl Poison.Encoder, for: Artus.Tag do
+  def encode(model, opts) do
+    model
+    |> Map.take([:tag, :type, :id])
+    |> Poison.Encoder.encode(opts)
+  end
 end

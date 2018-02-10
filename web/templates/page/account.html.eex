@@ -1,14 +1,35 @@
-<%= render Artus.SharedView, "navbar.html", user: @user %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
-  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "alert.html", assigns %>
 
   <h1 class="display-2"><%= @user.name %></h1>
-  <hr>
-  <p>Mail: <%= @user.mail %></p>
 
+  <table class="table table-hover">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <th scope="row">Email address</th>
+        <td><%= @user.mail %></td>
+      </tr>
+      <tr>
+        <th scope="row">Branch</th>
+        <td>
+          <% branch = get_branch(@user.branch) %>
+          <%= for flag <- branch["flags"] do %>
+            <span class="flag-icon flag-icon-<%= flag %>"></span>
+          <% end %>
+           (<%= branch["name"] %>)
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Role</th>
+        <td><%= get_role(@user.level) %></td>
+      </tr>
+    </tbody>
+  </table>
+  
   <div class="alert alert-info">
     If you want to change any account-related information, please contact an administrator.
   </div>
-
 </div>
