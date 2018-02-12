@@ -1,21 +1,17 @@
-<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
-<%= render Artus.SharedView, "nojs.html", %{conn: @conn} %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
+<%= render Artus.SharedView, "nojs.html", assigns %>
 
 <div class="container main">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active">New Entry</li>
   </ol>
-
+  
   <script>window.userToken = "<%= assigns[:user_token] %>";</script>
-  <script>window.systemType = 0;</script>
-
   <%= if @cache do %>
     <script>window.workingCacheID = <%= @cache.id %>;</script>
   <% else %>
     <script>window.workingCacheID = null;</script>
   <% end %>
 
-  <%= form_tag("/submit") %>
-  <div id="input-form"></div>
-</form>
+  <div id="reactInput"></div>
 </div>

@@ -14,7 +14,7 @@
   </h1>
 
   <div class="mb-4">
-    <a class="btn btn-primary" href="<%= input_path(@conn, :input_cache, @cache.id) %>" role="button">
+    <a class="btn btn-primary" href="<%= input_path(@conn, :input, @cache.id) %>" role="button">
       <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add entry
     </a>
     <%= if @user.level == 1 || @user.level == 2 do %>

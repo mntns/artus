@@ -7,7 +7,7 @@
   "author": {
     "label": "Author(s) of Primary or Secondary Text", 
     "type": "text", 
-    "sample": "'Chrétien de Troyes'   OR    'Bumke, Joachim; Vinaver, Eugène'"
+    "sample": "'Chrétien de Troyes' or 'Bumke, Joachim; Vinaver, Eugène'"
   },
   "editor": {
     "label": "Editor(s) (in case of an edition click the help button)", 

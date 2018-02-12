@@ -58,6 +58,9 @@ defmodule Artus.Router do
     post "/reset_pass/:code", AuthController, :reset_pass
     get "/reset/:code", AuthController, :reset
 
+    # TODO: User guardian for auth
+    # TODO: Refactor export (JSON export)
+
     # Entries
     get "/entries/:id", EntryController, :show
     get "/entries/:id/export", EntryController, :export
@@ -66,6 +69,7 @@ defmodule Artus.Router do
     scope "/" do
       pipe_through :artus_user
 
+      # Account
       get "/account", PageController, :account
 
       # Entries
@@ -79,12 +83,8 @@ defmodule Artus.Router do
       get "/entries/:id/remove_link/:target", EntryController, :remove_link
 
       # Input form
+      get "/input/:cache", InputController, :input
       get "/input", InputController, :input
-      get "/input/:cache_id", InputController, :input_cache
-      get "/review/:id", InputController, :review
-      get "/review/:id/edit", InputController, :edit
-      get "/review/:id/submit", InputController, :submit
-      get "/review/:id/submit_edit", InputController, :submit_edit
 
       # Working caches
       resources "/caches", CacheController, except: [:delete]
@@ -92,7 +92,6 @@ defmodule Artus.Router do
       get "/caches/:id/up", CacheController, :up
       get "/caches/:id/down", CacheController, :down
       get "/caches/:id/publish", CacheController, :publish
-      post "/caches/:id/send/:direction", CacheController, :send
       post "/caches/:id/send/:direction", CacheController, :send
     end
 

@@ -1,12 +1,9 @@
 defmodule Artus.FormChannel do
   @moduledoc "Main channel for form interaction"
+
   use Phoenix.Channel
-  alias Artus.DefinitionManager
   import Ecto.Query
-  alias Artus.Tag
-  alias Artus.Abbreviation
-  alias Artus.Repo
-  alias Artus.Cache
+  alias Artus.{Entry, EntryCache, DefinitionManager, Tag, Abbreviation, Repo, Cache}
 
   def join("input:form", _message, socket) do
     {:ok, socket}
@@ -45,8 +42,8 @@ defmodule Artus.FormChannel do
   end
   def handle_in("abbreviations", %{"id" => id}, socket) do
     abbr = Repo.get!(Abbreviation, id)
-    payload = %{abbr: abbr.abbr, title: abbr.title, issn: abbr.issn, place: abbr.place, publisher: abbr.publisher}
-    {:reply, {:ok, payload}, socket}
+    payload = %{title: abbr.title, issn: abbr.issn, place: abbr.place, publisher: abbr.publisher}
+    {:reply, {:ok, %{abbreviation: payload}}, socket}
   end
 
   def handle_in("abbreviations", _, socket) do
@@ -99,12 +96,16 @@ defmodule Artus.FormChannel do
             |> Map.take(to_take)
     {:reply, {:ok, %{entry: entry}}, socket}
   end
+  
   def handle_in("submit", %{"data" => data}, socket) do
-    id = data
-         |> Enum.filter(fn({k, v}) -> filter_element(v) end)
-         |> Enum.into(%{})
-         |> Artus.EntryCache.add()
-    {:reply, {:ok, %{id: id}}, socket}
+    user = Repo.get!(Artus.User, socket.assigns.user)
+    cache = Repo.get!(Artus.Cache, data["cache"]["value"])
+    changeset = Entry.submit_changeset(%Entry{}, user, cache, data)
+
+    case Repo.insert(changeset) do
+      {:ok, entry} -> {:reply, {:ok, %{id: entry.id}}, socket}
+      {:error, changeset} -> {:reply, {:err, %{}}, socket}
+    end
   end
 
   def handle_in("advanced", query_data, socket) do
@@ -137,12 +138,4 @@ defmodule Artus.FormChannel do
   defp render_tags(tags) do
     tags |> Enum.map(fn(x) -> %{id: x.id, raw: x.tag, rendered: Artus.NotMarkdown.to_html(x.tag)} end)
   end
-
-  defp filter_element(v) when is_binary(v) do
-    String.trim(v) != ""
-  end
-  defp filter_element(v) do
-    !is_nil(v)
-  end
-
 end

@@ -19,26 +19,26 @@ class HelpModal extends React.Component {
   }
   componentDidMount() {
     let modalDOMNode = ReactDOM.findDOMNode(this);
-    
+
     $(modalDOMNode).modal('show');
     $(modalDOMNode).on('hidden.bs.modal', this.props.handleHide);
   }
   render() {
-      return (
-          <div className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 className="modal-title">{this.state.data.title}</h4>
+    return (
+      <div className="modal fade" tabIndex="-1" role="dialog" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">{this.state.data.title}</h4>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body" dangerouslySetInnerHTML={createMarkup(this.state.data.body)}></div>
           </div>
-          <div className="modal-body" dangerouslySetInnerHTML={createMarkup(this.state.data.body)}></div>
-          </div>
-          </div>
-          </div>
-          );
+        </div>
+      </div>
+    );
   }
 }
 
@@ -57,11 +57,11 @@ class HelpButton extends React.Component {
   }
   render() {
     return (
-        <span className="float-right">
-          {this.state.show ? <HelpModal id={this.props.id} handleHide={this.handleHideModal.bind(this)} /> : ""}     
-          <i className="fa fa-info-circle fa-lg fa-fw" aria-hidden="true" onClick={this.handleShowModal.bind(this)}></i>
-        </span>
-        );
+      <span className="float-right">
+        {this.state.show ? <HelpModal id={this.props.id} handleHide={this.handleHideModal.bind(this)} /> : ""}     
+        <i className="fa fa-info-circle fa-lg fa-fw" aria-hidden="true" onClick={this.handleShowModal.bind(this)}></i>
+      </span>
+    );
   }
 }
 

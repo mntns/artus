@@ -20,7 +20,7 @@ nav {
   width: 33vw;
 }
 
-.alert {
+.btn-lg, .alert {
   border-radius: 0;
 }
 
@@ -114,24 +114,11 @@ nav {
   }
 
 
-$placeholder_color: rgba(0,0,0,0.3);
 
 .Select-control {
   border-radius: 0px;
 }
 
-::-webkit-input-placeholder {
-  color: $placeholder_color;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: $placeholder_color;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-  color: $placeholder_color;
-}
-
-:-ms-input-placeholder {  
-  color: $placeholder_color;
-}
+.form-control::placeholder {
+  opacity: 0.5;
+} 

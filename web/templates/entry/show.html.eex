@@ -69,9 +69,6 @@
                       <% :part -> %>
                         <th scope="row">Part</th>
                         <td><%= get_part(value) %></td>
-                        <% :language -> %>
-                          <th scope="row">Language</th>
-                          <td><%= get_language(value) %></td>
                           <% :type -> %>
                             <th scope="row">Type</th>
                             <td><%= get_type(value) %></td>
