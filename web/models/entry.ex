@@ -8,7 +8,7 @@ defmodule Artus.Entry do
     field :part, :integer
 
     # Metadata
-    field :submit_date, Ecto.DateTime
+    field :submit_date, :naive_datetime
     field :system_type, :integer
     field :public, :boolean
 

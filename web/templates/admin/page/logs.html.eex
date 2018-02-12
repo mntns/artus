@@ -1,13 +1,12 @@
-<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
-
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
     <li class="breadcrumb-item active">Logs</li>
   </ol>
 
-  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "alert.html", assigns %>
 
   <%= if @logs == [] do %>
     <div class="alert alert-warning" role="alert" style="margin-bottom: 10vh;">
@@ -18,15 +17,8 @@
   <div class="list-group">
     <%= for log <- @logs do %>
       <div class="list-group-item">
-        <%= case log.type do %>
-          <%= :log_in -> %>
-            <i class="fa fa-fw fa-sign-in" aria-hidden="true"></i> <%= log.timestamp %>: <%= log.user.name %> signed in
-          <%= :log_out -> %>
-            <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> <%= log.timestamp %>: <%= log.user.name %> signed out
-          <%= _ -> %>
-        <% end %>
+        <%= inspect log %>
       </div>
     <% end %>
   </div>
-
 </div>

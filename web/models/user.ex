@@ -16,15 +16,10 @@ defmodule Artus.User do
     has_many :caches, Artus.Cache, on_delete: :delete_all
     has_many :entries, Artus.Entry
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(name hash mail branch admin activated)
-  @optional_fields ~w(activation_code)
-
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
+  @doc "Builds default changeset"
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :hash, :mail, :branch, :admin, :activated, :activation_code, :level])

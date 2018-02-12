@@ -9,18 +9,10 @@ defmodule Artus.Abbreviation do
     field :publisher, :string
     field :issn, :string
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(abbr title place publisher issn)
-  @optional_fields ~w()
-
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If no params are provided, an invalid changeset is returned
-  with no validation performed.
-  """
+  @doc "Creates changeset for abbreviations"
   def changeset(model, params \\ %{}) do
     model
     |> cast(params, [:abbr, :title, :place, :publisher, :issn])

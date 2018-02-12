@@ -5,7 +5,7 @@ defmodule Artus.Query do
   schema "queries" do
     field :uuid, :string
     field :request, :string
-    field :created_at, Ecto.DateTime
+    field :created_at, :naive_datetime
     field :views, :integer
 
     timestamps()

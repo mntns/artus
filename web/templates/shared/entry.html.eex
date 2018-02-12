@@ -70,7 +70,7 @@
     <% end %>
 
     <%= if ser_title = @entry.ser_title do %>
-      <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+      <%= ser_title %><%= if @entry.ser_volume do %>,<% else %>.<% end %>
     <% end %>
 
     <%= if ser_volume = @entry.ser_volume do %>
@@ -110,7 +110,7 @@
     <% end %>
 
     <%= if ser_title = @entry.ser_title do %>
-      <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+      <%= ser_title %><%= if @entry.ser_volume do %>,<% else %>.<% end %>
     <% end %>
 
     <%= if ser_volume = @entry.ser_volume do %>
@@ -150,7 +150,7 @@
       <% end %>
 
       <%= if ser_title = @entry.ser_title do %>
-        <%= ser_title %><%= if @entry.ser_volume do %>,<%= else %>.<% end %>
+        <%= ser_title %><%= if @entry.ser_volume do %>,<% else %>.<% end %>
       <% end %>
 
       <%= if ser_volume = @entry.ser_volume do %>

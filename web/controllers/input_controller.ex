@@ -1,6 +1,6 @@
 defmodule Artus.InputController do
   use Artus.Web, :controller
-  alias Artus.{Entry, Cache}
+  alias Artus.Cache
 
   @doc "Renders input form with fixed cache"
   def input(conn, %{"cache" => cache_id}) do

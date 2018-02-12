@@ -54,7 +54,7 @@ defmodule Artus.CacheController do
   end
 
   @doc "Send working cache to recipient"
-  def send(conn, %{"id" => id, "direction" => direction, "recipient" => recipient, "comment" => comment}) do
+  def send(conn, %{"id" => id, "direction" => _direction, "recipient" => recipient, "comment" => comment}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     r_user = Repo.get!(User, recipient)
 
@@ -95,7 +95,6 @@ defmodule Artus.CacheController do
     |> redirect(to: cache_path(conn, :index))
   end
 
-  @doc "Get caches by user"
   defp get_caches_by_user(user) do
     user
     |> Ecto.assoc(:caches)
@@ -103,14 +102,12 @@ defmodule Artus.CacheController do
     |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
   end
 
-  @doc "Send transfer notification to receiver"
   defp send_transfer_mail(from_user, user, cache, comment) do
     from_user
     |> Artus.Email.transfer_cache_email(user, cache, comment)
     |> Artus.Mailer.deliver_now
   end
 
-  @doc "Reassign cache to target_user"
   defp reassign_cache(cache, target_user) do
     cache 
     |> Repo.preload(:user)
@@ -119,7 +116,6 @@ defmodule Artus.CacheController do
     |> Repo.update!()
   end
 
-  @doc "Get supervising bibliographers"
   defp get_supervisor(user) do
     query = case user.level do
       x when x == 2 ->
@@ -131,7 +127,6 @@ defmodule Artus.CacheController do
     Repo.one(query)
   end
 
-  @doc "Get subordinate bibliographers"
   defp get_subordinates(user) do
     query = case user.level do
       x when x == 1 -> 
@@ -143,14 +138,12 @@ defmodule Artus.CacheController do
     Repo.all(query)
   end
 
-  @doc "Disassociate entry from cache and set it to public"
   defp publish_entry(entry) do
     p_entry = Repo.preload(entry, :cache)
     changeset = Entry.changeset(p_entry, %{cache: nil, public: true})
     Repo.update!(changeset)
   end
 
-  @doc "Change owner of entry"
   defp move_entry(entry, recipient) do
     entry
     |> Repo.preload(:user)
