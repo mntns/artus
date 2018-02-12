@@ -59,12 +59,24 @@ defmodule Artus.EntryController do
     entry = Repo.get!(Entry, id)
     render conn, "edit.html", entry: entry
   end
+  
+  @doc "Deletes entry"
+  def delete(conn, %{"id" => id}) do
+    entry = Repo.get!(Entry, id)
+    Repo.delete!(entry)
 
+    conn 
+    |> put_flash(:info, "Entry deleted successfully.")
+    |> redirect(to: page_path(conn, :index))
+  end
+
+  @doc "Renders export page"
   def export(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
     render conn, "export.html", entry: entry
   end
 
+  @doc "Exports entry as file"
   def export_type(conn, %{"id" => id, "type" => type}) do
     entry = Repo.get!(Entry, id)
     export_root = "~/artus/artus/export/"
@@ -93,14 +105,4 @@ defmodule Artus.EntryController do
   defp convert_file(filename, id) do
     System.cmd("pandoc", ["-s", "-o", filename, "bias_export_#{id}.html"], cd: "/home/mono/artus/artus/export")
   end
-    
-  def delete(conn, %{"id" => id}) do
-    entry = Repo.get!(Entry, id)
-    Repo.delete!(entry)
-
-    conn 
-    |> put_flash(:info, "Entry deleted successfully.")
-    |> redirect(to: page_path(conn, :index))
-  end
-
 end

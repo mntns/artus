@@ -63,5 +63,63 @@ defmodule Artus.EntryView do
             select: c.entries
     query |> Repo.all |> List.flatten |> Enum.member?(entry_id)
   end
+  
+  # <%= case key do %>
+  #               <% :doi -> %>
+  #                 <th scope="row">Digital Object Identifier</th>
+  #                 <td>
+  #                   <a target="_blank" href="<%= doi_link(@entry.doi) %>"><%= @entry.doi %></a>
+  #                 </td>
+
+  #                 <% :links -> %>
+  #                   <th scope="row">Links</th>
+  #                   <td>
+  #                     <%= for line <- String.split(value, "\n", trim: true) do %>
+  #                       <% link_set = String.split(line, " ") %>
+  #                       <a href="<%= hd(link_set) %>"><%= List.last(link_set) %></a>
+  #                     <% end %>
+  #                   </td>
+  #                   <% :part -> %>
+  #                     <th scope="row">Part</th>
+  #                     <td><%= get_part(value) %></td>
+  #                     <% :type -> %>
+  #                       <th scope="row">Type</th>
+  #                       <td><%= get_type(value) %></td>
+  #                       <% :branch -> %>
+  #                         <th scope="row">Branch</th>
+  #                         <td>
+  #                           <% branch = get_branch(@entry.branch) %>
+  #                           <%= for flag <- branch["flags"] do %>
+  #                             <span class="flag-icon flag-icon-<%= flag %>"></span>
+  #                           <% end %>
+  #                           (<%= branch["name"] %>)
+  #                         </td>
+  #                         <% _ -> %>
+  #                           <th scope="row"><%= key |> Atom.to_string |> get_label %></th>
+  #                           <td><%= value %></td>
+  #                         <% end %>
+  #
+  #                         
+  
+  def prepare_entry(entry) do
+      # <% shown = [:doi, :publ_pub_house, :ser_title, :publ_pub_place, :biblio_id, :branch, :section, :type, :issn, :isbn, :links, :language, :part] %> 
+    entry
+    |> Map.from_struct()
+  end
+
+
+  def render_label(:part), do: "Part"
+  def render_label(:type), do: "Type"
+  def render_label(key) do
+    key |> Atom.to_string |> get_label()
+  end
+
+  def render_value(:part, value) do
+    get_part(value)
+  end
+  def render_value(key, value) do
+    inspect value
+  end
+
 
 end

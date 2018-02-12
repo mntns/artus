@@ -5,7 +5,7 @@
 
   <!-- Rendered entry -->
   <div class="card">
-    <div class="card-body">
+    <div class="card-body lead">
       <%= render Artus.SharedView, "entry.html", %{entry: @entry} %>
     </div>
   </div>
@@ -27,7 +27,7 @@
   </h2>
 
   <!-- Actions -->
-  <div class="mb-2">
+  <div class="pull-right mb-4">
     <%= if @is_owner do %>
       <%= if @entry.user.caches != [] do %>
         <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#entryMoveModal" >
@@ -40,135 +40,40 @@
       <a class="btn btn-primary" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
-      <%= end %>
-      <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
-        <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
-      </a>
-    </div>
+    <% end %>
+    <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
+      <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
+    </a>
+  </div>
 
-    <% entry_map = Map.from_struct(@entry) %>
+  <!-- Table with fields -->
+  <table class="table table-hover">
+    <thead></thead>
+    <tbody>
+      <%= for {key, value} <- prepare_entry(@entry) do %>
+        <tr>
+          <th><%= render_label(key) %></th>
+          <td><%= render_value(key, value) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-    <div class="row">
-      <div class="col-md-6">
-        <table class="table table-hover">
-          <thead></thead>
-          <tbody>
-            <% shown = [:publ_pub_house, :ser_title, :publ_pub_place, :biblio_id, :branch, :section, :type, :issn, :isbn, :links, :language, :part] %> 
-            <%= for {key, value} <- entry_map do %>
-              <%= if Enum.member?(shown, key) and value do %>
-                <tr>
-                  <%= case key do %>
-                    <% :links -> %>
-                      <th scope="row">Links</th>
-                      <td>
-                        <%= for line <- String.split(value, "\n", trim: true) do %>
-                          <% link_set = String.split(line, " ") %>
-                          <a href="<%= hd(link_set) %>"><%= List.last(link_set) %></a>
-                        <% end %>
-                      </td>
-                      <% :part -> %>
-                        <th scope="row">Part</th>
-                        <td><%= get_part(value) %></td>
-                          <% :type -> %>
-                            <th scope="row">Type</th>
-                            <td><%= get_type(value) %></td>
-                            <% :branch -> %>
-                              <th scope="row">Branch</th>
-                              <td>
-                                <% branch = get_branch(@entry.branch) %>
-                                <%= for flag <- branch["flags"] do %>
-                                  <span class="flag-icon flag-icon-<%= flag %>"></span>
-                                <% end %>
-                                (<%= branch["name"] %>)
-                              </td>
-                              <% _ -> %>
-                                <th scope="row"><%= key |> Atom.to_string |> get_label %></th>
-                                <td><%= value %></td>
-                              <% end %>
-                            </tr>
-                          <% end %>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
+  <!-- Abstract -->
+  <%= if @entry.abstract do %>
+    <label for="abstract"><b>Abstract</b></label>
+    <blockquote class="blockquote" id="abstract"><%= @entry.abstract |> Artus.NotMarkdown.to_html |> raw %></blockquote>
+  <% end %>
 
-                  <div class="col-md-6">
+  <!-- Boxes for linked -->
+  <%= if @entry.system_type != 1 do %>
+    <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
+    <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
+    <%= if @entry.type == "b" do %>
+      <%= render Artus.SharedView, "articles.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
+    <% end %>
+  <% end %>
 
-                    <!--
-                    <table class="table table-hover">
-                      <thead></thead>
-                      <tbody>
-                        <%= if @entry.doi do %>
-                          <tr>
-                            <th scope="row">Digital Object Identifier</th>
-                            <td>
-                              <a target="_blank" href="<%= doi_link(@entry.doi) %>"><%= @entry.doi %></a>
-                            </td>
-                          </tr>
-                        <% end %>
-
-                        <% subject_things = Enum.filter(@entry.tags, fn(x) -> x.type == 1 end) %>
-                        <% subject_works = Enum.filter(@entry.tags, fn(x) -> x.type == 2 end) %>
-
-                        <tr>
-                          <th scope="row"><%= get_label("subject_things") %></th>
-                          <td>
-                            <%= for tag <- subject_things do %>
-                              <span class="tag tag-default"><%= tag |> render_tag |> raw %></span>
-                            <% end %>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <th scope="row"><%= get_label("subject_works")  %></th>
-                          <td>
-                            <%= for tag <- subject_works do %>
-                              <span class="tag tag-default"><%= tag |> render_tag |> raw %></span>
-                            <% end %>
-                          </td>
-                        </tr>
-
-
-                      </tbody>
-                    </table>
-                    -->
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <table class="table table-hover">
-                      <thead></thead>
-                      <tbody>
-                        <%= for selected_key <- [:additional_info, :internal_comment] do %>
-                          <%= for {key, value} <- entry_map do %>
-                            <%= if key == selected_key do %>
-                              <%= if value do %>
-                                <tr>
-                                  <th scope="row"><%= key %></th>
-                                  <td><%= value %></td>
-                                </tr>
-                              <% end %>
-                            <% end %>
-                          <% end %>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <%= if @entry.abstract do %>
-                  <label for="abstract"><b>Abstract</b></label>
-                  <blockquote class="blockquote" id="abstract"><%= @entry.abstract |> Artus.NotMarkdown.to_html |> raw %></blockquote>
-                <% end %>
-
-                <%= if @entry.system_type != 1 do %>
-                  <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
-                  <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
-                  <%= if @entry.type == "b" do %>
-                    <%= render Artus.SharedView, "articles.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
-                  <% end %>
-                <% end %>
-
-                <p class="text-muted float-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
-              </div>
+  <!-- Creation notice -->
+  <p class="text-muted float-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
+</div>

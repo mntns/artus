@@ -1,7 +1,10 @@
-<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
-  <h2>Export entry</h2>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="<%= entry_path(@conn, :show, @entry.id) %>">Entry #<%= @entry.id %></a></li>
+    <li class="breadcrumb-item active">Export entry</li>
+  </ol>
 
   <div class="list-group">
     <a href="<%= entry_path(@conn, :export_type, @entry.id, "rtf") %>" class="list-group-item list-group-item-action" download>
@@ -14,8 +17,4 @@
       <i class="fa fa-fw fa-download" aria-hidden="true"></i> OpenDocument Format (.odt)
     </a>
   </div>
-
-  <br>
-  
-  <a href="<%= entry_path(@conn, :show, @entry.id) %>">Back to entry</a>
 </div>
