@@ -27,17 +27,17 @@ defmodule Artus.EntryController do
 
   def review(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
-    render conn, "review.html", parent_id: entry.id
+    render conn, "review.html", %{entry: entry}
   end
 
   def reprint(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
-    render conn, "reprint.html", parent_id: entry.id
+    render conn, "reprint.html", %{entry: entry}
   end
 
   def article(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
-    render conn, "article.html", parent_id: entry.id
+    render conn, "article.html", %{entry: entry}
   end
 
   def move(conn, %{"id" => id, "target" => target}) do
@@ -77,32 +77,33 @@ defmodule Artus.EntryController do
   end
 
   @doc "Exports entry as file"
-  def export_type(conn, %{"id" => id, "type" => type}) do
-    entry = Repo.get!(Entry, id)
-    export_root = "~/artus/artus/export/"
-
-    input = Phoenix.View.render_to_string(Artus.SharedView, "entry.html", entry: entry)
-    {:ok, file} = File.open(Path.expand(export_root <> "bias_export_#{id}.html"), [:write, :utf8])
-    IO.write file, input
-    File.close file
+  # def export_type(conn, %{"id" => id, "type" => type}) do
+  #   entry = Repo.get!(Entry, id)
+  #   entry_html = Phoenix.View.render_to_string(Artus.SharedView, "entry.html", entry: entry)
+  #   base_name = "bias_export_#{entry.id}"
     
-    filename = "bias_export_#{id}.#{type}"
-    case type do
-      "rtf" ->
-        convert_file(filename, id)
-      "latex" ->
-        convert_file(filename, id)
-      "odt" ->
-        convert_file(filename, id)
-    end
+  #   {fd, file_path} = Temp.open!(base_name <> ".html", [:write, :utf8])
+  #   IO.write(fd, entry_html)
+  #   File.close(fd)
+    
+  #   out_filename = base_name <> "." <> type
+  #   case type do
+  #     "rtf" -> convert_file(out_filename)
+  #     "latex" -> convert_file(out_filename)
+  #     "odt" -> convert_file(out_filename)
+  #   end
 
-    conn
-    |> put_resp_header("content-disposition", 
-                       ~s(attachment; filename="#{filename}"))
-    |> send_file(200, Path.expand(export_root <> filename))
-  end
+  #   conn
+  #   |> put_resp_header("content-disposition", ~s(attachment; filename="#{out_filename}"))
+  #   |> send_file(200, Path.expand())
+  #   |> send_file(200, Path.expand(export_root <> filename))
+  # end
 
-  defp convert_file(filename, id) do
-    System.cmd("pandoc", ["-s", "-o", filename, "bias_export_#{id}.html"], cd: "/home/mono/artus/artus/export")
-  end
+  # defp convert_file(filename) do
+  #   System.cmd(
+  #     "pandoc",
+  #     ["-s", "-o", filename]
+  #   )
+  #   System.cmd("pandoc", ["-s", "-o", filename, "bias_export_#{id}.html"], cd: "/home/mono/artus/artus/export")
+  # end
 end

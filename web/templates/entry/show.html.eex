@@ -41,9 +41,11 @@
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
     <% end %>
+    <!--
     <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
       <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
     </a>
+    -->
   </div>
 
   <!-- Table with fields -->
@@ -75,5 +77,9 @@
   <% end %>
 
   <!-- Creation notice -->
-  <p class="text-muted float-right">Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %></p>
+  <p class="text-muted float-right">
+    <small>
+      Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %>
+    </small>
+  </p>
 </div>

@@ -1,15 +1,13 @@
 <%= render Artus.SharedView, "navbar.html", %{user: @user} %>
 
 <div class="container main">
-  <h2>
-    <i class="fa fa-pencil-square" aria-hidden="true"></i> Edit entry
-  </h2>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="<%= entry_path(@conn, :show, @entry.id) %>">Entry #<%= @entry.id %></a></li>
+    <li class="breadcrumb-item active">Edit entry</li>
+  </ol>
 
   <script>window.userToken = "<%= assigns[:user_token] %>";</script>
-  <script>window.systemType = 5;</script>
   <script>window.entryID = "<%= @entry.id %>";</script>
 
-  <%= form_tag("/submit") %>
-    <div id="edit-form"></div>
-  </form>
+  <div id="reactInput"></div>
 </div>

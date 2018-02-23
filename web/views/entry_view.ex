@@ -102,9 +102,13 @@ defmodule Artus.EntryView do
   #                         
   
   def prepare_entry(entry) do
-      # <% shown = [:doi, :publ_pub_house, :ser_title, :publ_pub_place, :biblio_id, :branch, :section, :type, :issn, :isbn, :links, :language, :part] %> 
+    field_keys = Artus.DefinitionManager.field_defs()
+                 |> Map.keys()
+                 |> Enum.map(&String.to_atom(&1))
+
     entry
     |> Map.from_struct()
+    |> Enum.filter(fn({k,v}) -> Enum.member?(field_keys, k) && !is_nil(v) end)
   end
 
 
@@ -118,7 +122,7 @@ defmodule Artus.EntryView do
     get_part(value)
   end
   def render_value(key, value) do
-    inspect value
+    value
   end
 
 

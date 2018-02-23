@@ -42,6 +42,7 @@ defmodule Artus.Mixfile do
      {:exjsx, "~> 3.2.1"},
      {:bamboo, "~> 0.8"},
      {:uuid, "~> 1.1"},
+     {:temp, "~> 0.4"},
      {:credo, "~> 0.8", only: [:dev, :test]},
      {:distillery, "~> 1.5", runtime: false},
      {:inch_ex, "~> 0.5.6", only: :docs}]

@@ -15,6 +15,9 @@ export const RECEIVE_FORM_SUBMIT = 'RECEIVE_FORM_SUBMIT'
 export const REQUEST_AUTOCOMPLETE = 'REQUEST_AUTOCOMPLETE'
 export const RECEIVE_AUTOCOMPLETE = 'RECEIVE_AUTOCOMPLETE'
 
+export const REQUEST_ENTRY = 'REQUEST_ENTRY'
+export const RECEIVE_ENTRY = 'RECEIVE_ENTRY'
+
 function requestCaches() {
   return {
     type: REQUEST_CACHES
@@ -122,7 +125,14 @@ function receiveFormSubmit(data) {
 export function submitForm(formData) {
   return dispatch => {
     dispatch(requestFormSubmit());
-    return channel.push("submit", {data: formData})
+    let opts = {data: formData};
+
+    if (window.entryID) {
+      console.log("edit");
+      opts = {data: formData, entry: entryID};
+    }
+
+    return channel.push("submit", opts)
                   .receive("ok", (data) => dispatch(receiveFormSubmit(data)))
   }
 }
@@ -146,5 +156,33 @@ export function getAutoComplete(abbreviation_id, callback) {
     dispatch(requestAutoComplete());
     return channel.push("abbreviations", {id: abbreviation_id})
                 .receive("ok", (data) => dispatch(receiveAutoComplete(data, callback)))
+  }
+}
+
+function requestEntry() {
+  return {
+    type: REQUEST_ENTRY
+  }
+}
+
+function receiveEntry(data) {
+  return {
+    type: RECEIVE_ENTRY,
+    entry: data.entry
+  }
+}
+
+function processEntry(data) {
+  return dispatch => {
+    dispatch(fetchFields(data.entry.type.value));
+    dispatch(receiveEntry(data));
+  }
+}
+
+export function fetchEntry(entry_id) {
+  return dispatch => {
+    dispatch(requestEntry());
+    return channel.push("entries", {id: entry_id})
+                  .receive("ok", (data) => dispatch(processEntry(data)))
   }
 }

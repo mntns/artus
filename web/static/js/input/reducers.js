@@ -7,8 +7,28 @@ import {
   REQUEST_FIELDS, RECEIVE_FIELDS,
   REQUEST_ABBREVIATION, RECEIVE_ABBREVIATIONS,
   REQUEST_FORM_SUBMIT, RECEIVE_FORM_SUBMIT,
-  REQUEST_AUTOCOMPLETE, RECEIVE_AUTOCOMPLETE
+  REQUEST_AUTOCOMPLETE, RECEIVE_AUTOCOMPLETE,
+  REQUEST_ENTRY, RECEIVE_ENTRY
 } from './actions';
+
+function editEntry(state = {
+  isFetching: false,
+  entry: {}
+}, action) {
+  switch(action.type) {
+    case REQUEST_ENTRY:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case RECEIVE_ENTRY:
+      return Object.assign({}, state, {
+        isFetching: false,
+        entry: action.entry
+      });
+    default:
+      return state;
+  }
+}
 
 function autoComplete(state = {
   isFetching: false,
@@ -82,6 +102,7 @@ function formDefinitions(state = {
 const rootReducer = combineReducers({
   formDefinitions,
   autoComplete,
+  editEntry,
   form: formReducer
 });
 

@@ -82,7 +82,7 @@ const renderTypeBlock = ({part, dispatch, options}) => {
 const renderFieldBlock = (props) => (
   <div className="mb-5">
     <FieldArray {...props} name="members" component={renderMembers}/>
-    <SubmitButton />
+    <SubmitButton isEdit={window.entryID ? true : false} />
   </div>
 )
 
@@ -120,6 +120,11 @@ ContactForm = connect(state => {
   let initialCache = {
     cache: (state.formDefinitions.cacheCount == 1) ? state.formDefinitions.caches[0] : workingCache
   }
+
+  if (window.entryID) {
+    initialCache = state.editEntry.entry;
+  }
+
 
   return {
     workingCache,

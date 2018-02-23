@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCaches, fetchOptions, fetchFields, submitForm } from '../actions';
+import { fetchEntry, fetchCaches, fetchOptions, fetchFields, submitForm } from '../actions';
 import ContactForm from "../components/ContactForm"
 
 class AsyncApp extends Component {
@@ -10,12 +10,18 @@ class AsyncApp extends Component {
     // this.handleRefreshClick = this.handleRefreshClick.bind(this);
   }
   componentDidMount() {
-    // Force scrollbar to appear
+    // Forces scrollbar to appear
     $("body").css("overflow-y", "scroll");
     
+    // Fetches caches and options
     const { dispatch } = this.props;
     dispatch(fetchCaches());
     dispatch(fetchOptions());
+
+    // Fetches entry if edit view
+    if (window.entryID) {
+      dispatch(fetchEntry(window.entryID));
+    }
   }
 
   // componentWillReceiveProps(nextProps) {
