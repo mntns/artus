@@ -25,7 +25,7 @@ class AsyncApp extends Component {
   }
   
   submitCallback(path) {
-    window.location.href = path + "#success";
+    window.location.href = path;
   }
   render () {
     const { dispatch, fetching, cacheCount, caches, options, fields } = this.props;

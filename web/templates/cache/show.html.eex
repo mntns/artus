@@ -5,7 +5,8 @@
     <li class="breadcrumb-item"><a href="/caches">Working Caches</a></li>
     <li class="breadcrumb-item active"><%= @cache.name %></li>
   </ol>
-
+  
+  <%= render Artus.SharedView, "alert.html", assigns %>
   <%= render Artus.CacheView, "delete_modal.html", assigns %>
   <%= render Artus.CacheView, "publish_modal.html", assigns %>
 

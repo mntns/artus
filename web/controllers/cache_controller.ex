@@ -33,6 +33,19 @@ defmodule Artus.CacheController do
     end
   end
 
+  @doc "Show working cache by ID with redirect alert"
+  def show(conn, %{"id" => id, "success" => type}) do
+    message = case type do
+      "edit" -> "Successfully edited entry!"
+      "create" -> "Successfully created entry!"
+    end
+
+    cache = Cache |> Cache.with_entries() |> Repo.get!(id)
+    conn
+    |> put_flash(:info, message)
+    |> render("show.html", %{cache: cache})
+  end
+
   @doc "Show working cache by ID"
   def show(conn, %{"id" => id}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)

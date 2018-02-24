@@ -141,7 +141,7 @@ defmodule Artus.FormChannel do
     
     case Repo.update(changeset) do
       {:ok, entry} -> 
-        data = %{id: entry.id, url: Artus.Router.Helpers.entry_path(socket, :show, entry.id)}
+        data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "edit")}
         {:reply, {:ok, data}, socket}
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end
@@ -154,7 +154,7 @@ defmodule Artus.FormChannel do
     
     case Repo.insert(changeset) do
       {:ok, entry} -> 
-        data = %{id: entry.id, url: Artus.Router.Helpers.entry_path(socket, :show, entry.id)}
+        data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "create")}
         {:reply, {:ok, data}, socket}
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end
@@ -167,18 +167,10 @@ defmodule Artus.FormChannel do
     end
   end
 
-  #def handle_in("tags", %{"search" => search}, socket) do
-  #  query = from t in Tag, where: ilike(t.tag, ^"%#{search}%")
-  #  tags = query |> Repo.all() 
-  #  {:reply, {:ok, %{tags: tags}}, socket}
-  #end
-  
   def handle_in("tags", _params, socket) do
-    tags = Repo.all(Tag) |> render_tags()
+    tags = Tag |> Repo.all() |> render_tags()
     {:reply, {:ok, %{tags: tags}}, socket}
   end
-
-
 
   defp fetch_tags(type_int) do
     query = from t in Tag, 
