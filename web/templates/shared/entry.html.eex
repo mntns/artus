@@ -278,6 +278,6 @@
   <% end %>
 <% end %>
 
-<%= if length(@entry.reprints) > 0 do %>
-  <span class="label label-primary float-right">Reprint</span>
+<%= if @entry.reprint_parent_id do %>
+  <span class="badge badge-primary float-right">Reprint</span>
 <% end %>

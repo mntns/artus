@@ -47,7 +47,7 @@ const renderCacheBlock = (caches, cacheCount) => {
       <Field 
         name="cache"
         options={caches}
-        element={{id: "cache", label: "Working Cache", disabled: (window.inputType == "edit")}}
+        element={{required: true, id: "cache", label: "Working Cache", disabled: (window.inputType == "edit")}}
         component={SelectInput}
       />
       <hr />
@@ -61,14 +61,14 @@ const renderTypeBlock = ({type, part, dispatch, options}) => {
       <Field 
         name="part"
         options={options.parts}
-        element={{id: "part", label: "Section of Bibliography", disabled: (window.inputType == "edit")}}
+        element={{required: true, id: "part", label: "Section of Bibliography", disabled: (window.inputType == "edit")}}
         component={SelectInput}
       />
       {part != undefined ?
       <Field 
         name="type"
         options={options.types}
-        element={{id: "type", label: "Type", disabled: (window.inputType == "edit" || window.inputType == "article")}}
+        element={{required: true, id: "type", label: "Type", disabled: (window.inputType == "edit" || window.inputType == "article" || window.inputType == "review")}}
         onChange={(e) => dispatch(fetchFields(e.value))}
         component={SelectInput}
       />

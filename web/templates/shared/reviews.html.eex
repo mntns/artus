@@ -1,11 +1,11 @@
 <div class="card">
   <h4 class="card-header">Reviews</h4>
   <div class="card-body">
-    <%= if @reviews == [] do %>
+    <%= if @entry.reviews == [] do %>
       <div class="mx-auto text-muted">
         <p>This entry has no reviews attached to it.</p>
         <%= if @conn.assigns.user do %>
-          <a href="<%= entry_path(@conn, :review, @entry_id) %>">
+          <a href="<%= entry_path(@conn, :review, @entry.id) %>">
             <b>
               <i class="fa fa-plus" aria-hidden="true"></i> Add review
             </b>
@@ -14,14 +14,14 @@
       </div>
     <% else %>
       <div class="list-group">
-        <%= for review <- @reviews do %>
+        <%= for review <- @entry.reviews do %>
           <a class="list-group-item" href="<%= entry_path(@conn, :show, review.id) %>">
             <%= render Artus.SharedView, "entry.html", %{entry: review} %>
           </a>
         <% end %>
 
         <%= if @conn.assigns.user do %>
-          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :review, @entry_id) %>">
+          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :review, @entry.id) %>">
             <b>
             <i class="fa fa-plus" aria-hidden="true"></i> Add review
             </b>

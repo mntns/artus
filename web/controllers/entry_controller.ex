@@ -8,21 +8,12 @@ defmodule Artus.EntryController do
             |> Repo.get!(id) 
             |> Repo.preload([{:user, :caches}, :tags, :bibliograph, :cache, :reviews, :reprints, :children])
 
-    conn_user_id = fetch_user_id(conn)
-    
-    case entry.user.id do
-      ^conn_user_id ->
-        render conn, "show.html", %{entry: entry, is_owner: true}
-      _ ->
-        render conn, "show.html", %{entry: entry, is_owner: false}
+    is_owner = case conn.assigns.user do
+      nil -> false
+      x -> (x.id == entry.user.id)
     end
-  end
 
-  defp fetch_user_id(conn) do
-    case conn.assigns.user do
-      nil -> 0
-      x -> x.id
-    end
+    render conn, "show.html", %{entry: entry, is_owner: is_owner}
   end
 
   def review(conn, %{"id" => id}) do

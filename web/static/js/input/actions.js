@@ -79,7 +79,7 @@ export function fetchFields(field_type) {
   return dispatch => {
     dispatch(requestFields(field_type));
 
-    if (field_type == "z") {
+    if (field_type == "z" || field_type == "r") {
       dispatch(fetchAbbreviations());
     }
 

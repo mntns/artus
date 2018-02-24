@@ -9,8 +9,8 @@
       </div>
       <div class="modal-body">
         <div class="list-group">
-          <%= for cache <- @caches do %>
-            <a class="list-group-item" href="<%= entry_path(@conn, :move, @entry_id, cache.id) %>"><%= cache.name %></a>
+          <%= for cache <- @entry.user.caches do %>
+            <a class="list-group-item" href="<%= entry_path(@conn, :move, @entry.id, cache.id) %>"><%= cache.name %></a>
           <% end %>
         </div>
       </div>

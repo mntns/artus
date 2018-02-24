@@ -1,11 +1,11 @@
 <div class="card mt-3">
   <h4 class="card-header">Reprints</h4>
   <div class="card-body">
-    <%= if @reprints == [] do %>
+    <%= if @entry.reprints == [] do %>
       <div class="text-xs-center text-muted">
         <p>This entry has no reprints attached to it.</p>
         <%= if @conn.assigns.user do %>
-          <a href="<%= entry_path(@conn, :reprint, @entry_id) %>">
+          <a href="<%= entry_path(@conn, :reprint, @entry.id) %>">
             <b>
               <i class="fa fa-plus" aria-hidden="true"></i> Add reprint
             </b>
@@ -14,14 +14,14 @@
       </div>
     <% else %>
       <div class="list-group">
-        <%= for reprint <- @reprints do %>
+        <%= for reprint <- @entry.reprints do %>
           <a class="list-group-item" href="<%= entry_path(@conn, :show, reprint.id) %>">
             <%= render Artus.SharedView, "entry.html", %{entry: reprint} %>
           </a>
         <% end %>
 
         <%= if @conn.assigns.user do %>
-          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :reprint, @entry_id) %>">
+          <a class="list-group-item text-xs-center" href="<%= entry_path(@conn, :reprint, @entry.id) %>">
             <b>
               <i class="fa fa-plus" aria-hidden="true"></i> Add reprint
             </b>

@@ -3,29 +3,29 @@
 <div class="container main">
   <%= render Artus.SharedView, "alert.html", assigns %>
 
+  <%= if parent_id = @entry.review_parent_id do %>
+    <small>
+      Review of <a href="<%= entry_path(@conn, :show, parent_id) %>">#<%= parent_id %></a>
+    </small>
+  <% end %>
+  
   <!-- Rendered entry -->
   <div class="card">
     <div class="card-body lead">
-      <%= render Artus.SharedView, "entry.html", %{entry: @entry} %>
+      <%= render Artus.SharedView, "entry.html", assigns %>
     </div>
   </div>
 
   <!-- Modals -->
   <%= if @is_owner do %>
-    <%= render Artus.EntryView, "delete_modal.html", %{conn: @conn, entry_id: @entry.id} %>
+    <%= render Artus.EntryView, "delete_modal.html", assigns %>
     <%= if @entry.user.caches != [] do %>
-      <%= render Artus.EntryView, "move_modal.html", %{conn: @conn, entry_id: @entry.id, caches: @entry.user.caches} %>
+      <%= render Artus.EntryView, "move_modal.html", assigns %>
     <% end %>
   <% end %>
 
-  <h2>
-    <%= if parent_id = @entry.review_parent_id do %>
-      Review of <a href="<%= entry_path(@conn, :show, parent_id) %>">#<%= parent_id %></a>
-    <% end %>
-  </h2>
-
   <!-- Actions -->
-  <div class="mb-4 btn-group d-flex" role="group">
+  <div class="mt-2 mb-4 btn-group d-flex" role="group">
     <%= if @is_owner do %>
       <%= if @entry.user.caches != [] do %>
         <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#entryMoveModal" >
@@ -65,10 +65,10 @@
 
   <!-- Boxes for linked -->
   <%= if @entry.type != "r" do %>
-    <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
-    <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
+    <%= render Artus.SharedView, "reviews.html", assigns %> 
+    <%= render Artus.SharedView, "reprints.html", assigns %>
     <%= if @entry.type == "b" do %>
-      <%= render Artus.SharedView, "articles.html", %{entry_id: @entry.id, conn: @conn, children: @entry.children} %>
+      <%= render Artus.SharedView, "articles.html", assigns %>
     <% end %>
   <% end %>
 
