@@ -124,7 +124,6 @@ ContactForm = connect(state => {
     initialCache = state.editEntry.entry;
   }
 
-
   return {
     workingCache,
     part,

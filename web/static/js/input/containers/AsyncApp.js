@@ -38,7 +38,6 @@ class AsyncApp extends Component {
       )
     }
 
-
     return (
       <div> 
         <ContactForm onSubmit={(v) => dispatch(submitForm(v, this.submitCallback))} {...this.props} />
@@ -65,7 +64,8 @@ function mapStateToProps(state) {
     caches: caches,
     options: options,
     abbreviations: abbreviations,
-    fields: fields
+    fields: fields,
+    inputType: window.inputType
   }
   return nProps;
 }
