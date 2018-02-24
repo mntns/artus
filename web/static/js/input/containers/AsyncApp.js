@@ -23,13 +23,10 @@ class AsyncApp extends Component {
       dispatch(fetchEntry(window.entryID));
     }
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.selectedReddit !== this.props.selectedReddit) {
-  //     const { dispatch, selectedReddit } = nextProps;
-  //     dispatch(fetchPostsIfNeeded(selectedReddit));
-  //   }
-  // }
+  
+  submitCallback(path) {
+    window.location.href = path + "#success";
+  }
   render () {
     const { dispatch, fetching, cacheCount, caches, options, fields } = this.props;
     
@@ -44,10 +41,8 @@ class AsyncApp extends Component {
 
     return (
       <div> 
-        <ContactForm onSubmit={(v) => dispatch(submitForm(v))} {...this.props} />
+        <ContactForm onSubmit={(v) => dispatch(submitForm(v, this.submitCallback))} {...this.props} />
       </div>
-
-
     );
   }
 }

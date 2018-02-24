@@ -55,9 +55,10 @@ defmodule Artus.EntryController do
     |> redirect(to: entry_path(conn, :show, id))
   end
 
+  @doc "Renders edit form"
   def edit(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
-    render conn, "edit.html", entry: entry
+    render conn, "edit.html", %{entry: entry}
   end
   
   @doc "Deletes entry"
@@ -99,14 +100,12 @@ defmodule Artus.EntryController do
         |> send_file(200, ofile_path)
       false ->
         conn
-        |> put_flash(:info, "Not an accepted filetype")
+        |> put_flash(:info, "Not an accepted export filetype!")
         |> redirect(to: entry_path(conn, :show, id))
     end
   end
 
   defp convert_file(input, output, type, id) do
     System.cmd("pandoc", [input, "-f", "html", "-t", type, "-s", "-o", output])
-    # :os.cmd('pandoc #{input} -f html -t #{type} -s -o #{output}')
-
   end
 end

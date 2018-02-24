@@ -7,7 +7,6 @@ import { SubmitButton } from "./Helpers"
 import { SelectInput } from "./Inputs"
 import R from "ramda"
 
-
 const handleAutoComplete = (v, dispatch, change) => {
   dispatch(getAutoComplete(v, ((c) => {
     change("ser_title", c.title);

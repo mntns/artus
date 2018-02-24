@@ -27,21 +27,21 @@
   </h2>
 
   <!-- Actions -->
-  <div class="pull-right mb-4">
+  <div class="mb-4 btn-group d-flex" role="group">
     <%= if @is_owner do %>
       <%= if @entry.user.caches != [] do %>
-        <button type="button" class="btn btn-secondary " data-toggle="modal" data-target="#entryMoveModal" >
-          <i class="fa fa-fw fa-share" aria-hidden="true"></i> Move to another working cache
+        <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#entryMoveModal" >
+          <i class="fa fa-fw fa-share" aria-hidden="true"></i> Move 
         </button>
       <% end %>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#entryDeleteModal">
+      <button type="button" class="btn btn-danger w-100" data-toggle="modal" data-target="#entryDeleteModal">
         <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
       </button>
-      <a class="btn btn-primary" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
+      <a class="btn btn-primary w-100" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
     <% end %>
-    <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
+    <a class="btn btn-secondary w-100" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
       <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
     </a>
   </div>

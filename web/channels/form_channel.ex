@@ -133,13 +133,16 @@ defmodule Artus.FormChannel do
   
   def handle_in("submit", %{"data" => data, "entry" => entry_id}, socket) do
     user = Repo.get!(Artus.User, socket.assigns.user)
-    entry = Repo.get!(Artus.Entry, entry_id)
+    entry = Artus.Entry
+            |> Repo.get!(entry_id)
             |> Repo.preload([:cache, :user, :bibliograph])
     cache = Repo.get!(Artus.Cache, data["cache"]["value"])
     changeset = Entry.submit_changeset(entry, user, cache, data)
     
     case Repo.update(changeset) do
-      {:ok, entry} -> {:reply, {:ok, %{id: entry.id}}, socket}
+      {:ok, entry} -> 
+        data = %{id: entry.id, url: Artus.Router.Helpers.entry_path(socket, :show, entry.id)}
+        {:reply, {:ok, data}, socket}
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end
   end
@@ -150,7 +153,9 @@ defmodule Artus.FormChannel do
     changeset = Entry.submit_changeset(%Entry{}, user, cache, data)
     
     case Repo.insert(changeset) do
-      {:ok, entry} -> {:reply, {:ok, %{id: entry.id}}, socket}
+      {:ok, entry} -> 
+        data = %{id: entry.id, url: Artus.Router.Helpers.entry_path(socket, :show, entry.id)}
+        {:reply, {:ok, data}, socket}
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end
   end

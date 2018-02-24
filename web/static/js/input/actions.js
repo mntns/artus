@@ -115,14 +115,17 @@ function requestFormSubmit() {
   }
 }
 
-function receiveFormSubmit(data) {
+function receiveFormSubmit(data, callback) {
+  callback(data.url);
+  console.log(data.url);
   return {
     type: RECEIVE_FORM_SUBMIT,
-    id: data.id
+    id: data.id,
+    url: data.url
   }
 }
 
-export function submitForm(formData) {
+export function submitForm(formData, callback) {
   return dispatch => {
     dispatch(requestFormSubmit());
     let opts = {data: formData};
@@ -133,7 +136,7 @@ export function submitForm(formData) {
     }
 
     return channel.push("submit", opts)
-                  .receive("ok", (data) => dispatch(receiveFormSubmit(data)))
+                  .receive("ok", (data) => dispatch(receiveFormSubmit(data, callback)))
   }
 }
 
