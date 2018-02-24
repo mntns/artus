@@ -19,8 +19,12 @@ class AsyncApp extends Component {
     dispatch(fetchOptions());
 
     // Fetches entry if edit view
-    if (window.entryID) {
+    if ((window.inputType == "edit" || window.inputType == "article") && window.entryID) {
       dispatch(fetchEntry(window.entryID));
+    }
+
+    if (window.inputType == "review") {
+      dispatch(fetchFields("r"));
     }
   }
   

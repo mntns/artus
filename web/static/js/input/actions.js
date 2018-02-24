@@ -130,9 +130,12 @@ export function submitForm(formData, callback) {
     dispatch(requestFormSubmit());
     let opts = {data: formData};
 
-    if (window.entryID) {
-      console.log("edit");
+    if (window.entryID && window.inputType == "edit") {
       opts = {data: formData, entry: entryID};
+    } else {
+      if (window.entryID) {
+        opts = {data: formData, parent: window.entryID, type: window.inputType};
+      }
     }
 
     return channel.push("submit", opts)
@@ -177,7 +180,11 @@ function receiveEntry(data) {
 
 function processEntry(data) {
   return dispatch => {
-    dispatch(fetchFields(data.entry.type.value));
+    if (window.inputType == "article") {
+      dispatch(fetchFields("a"));
+    } else {
+      dispatch(fetchFields(data.entry.type.value));
+    }
     dispatch(receiveEntry(data));
   }
 }

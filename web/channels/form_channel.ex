@@ -94,9 +94,11 @@ defmodule Artus.FormChannel do
     part_map = options["parts"] |> Enum.find(fn(x) -> x["value"] == entry[:part] end)
 
     # Update ser_code
-    query = from a in Abbreviation, where: a.abbr == ^entry[:ser_code]
-    abbreviation = Repo.one(query)
-    entry = %{entry | ser_code: %{id: abbreviation.id, title: abbreviation.title, abbr: abbreviation.abbr}}
+    if (!is_nil(entry[:ser_code])) do
+      query = from a in Abbreviation, where: a.abbr == ^entry[:ser_code]
+      abbreviation = Repo.one(query)
+      entry = %{entry | ser_code: %{id: abbreviation.id, title: abbreviation.title, abbr: abbreviation.abbr}}
+    end
 
     entry = %{entry | type: type_map}
     entry = %{entry | part: part_map}
@@ -131,6 +133,28 @@ defmodule Artus.FormChannel do
     case Repo.update(changeset) do
       {:ok, entry} -> 
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "edit")}
+        {:reply, {:ok, data}, socket}
+      {:error, changeset} -> {:reply, {:err, %{}}, socket}
+    end
+  end
+
+  @doc "Creates linked entry (article, review or reprint)"
+  def handle_in("submit", %{"data" => data, "parent" => parent_id, "type" => type}, socket) do
+    user = Repo.get!(Artus.User, socket.assigns.user)
+    cache = Repo.get!(Artus.Cache, data["cache"]["value"])
+    parent = Repo.get!(Artus.Entry, parent_id)
+
+    original = case type do
+      "article" -> %Entry{children_parent_id: parent.id}
+      "review" -> %Entry{review_parent_id: parent.id}
+      "reprint" -> %Entry{reprint_parent_id: parent.id}
+    end
+    changeset = Entry.submit_changeset(original, user, cache, data)
+    
+    IO.inspect changeset
+    case Repo.insert(changeset) do
+      {:ok, entry} -> 
+        data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "create")}
         {:reply, {:ok, data}, socket}
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end

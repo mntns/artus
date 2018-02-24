@@ -44,9 +44,9 @@ defmodule Artus.Entry do
     many_to_many :tags, Artus.Tag, join_through: "entries_tags", on_delete: :delete_all
 
     # Associated entries (reviews, reprints, children)
-    has_many :reviews, Artus.Entry, foreign_key: :review_parent_id
-    has_many :reprints, Artus.Entry, foreign_key: :reprint_parent_id
-    has_many :children, Artus.Entry, foreign_key: :children_parent_id
+    has_many :reviews, Artus.Entry, foreign_key: :review_parent_id, on_delete: :delete_all
+    has_many :reprints, Artus.Entry, foreign_key: :reprint_parent_id, on_delete: :delete_all
+    has_many :children, Artus.Entry, foreign_key: :children_parent_id, on_delete: :delete_all
     belongs_to :review_parent, Artus.Entry, foreign_key: :review_parent_id
     belongs_to :reprint_parent, Artus.Entry, foreign_key: :reprint_parent_id
     belongs_to :children_parent, Artus.Entry, foreign_key: :children_parent_id, on_replace: :nilify

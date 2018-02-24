@@ -47,7 +47,7 @@ const renderCacheBlock = (caches, cacheCount) => {
       <Field 
         name="cache"
         options={caches}
-        element={{id: "cache", label: "Working Cache"}}
+        element={{id: "cache", label: "Working Cache", disabled: (window.inputType == "edit")}}
         component={SelectInput}
       />
       <hr />
@@ -55,20 +55,20 @@ const renderCacheBlock = (caches, cacheCount) => {
   )
 }
 
-const renderTypeBlock = ({part, dispatch, options}) => {
+const renderTypeBlock = ({type, part, dispatch, options}) => {
   return (
     <div>
       <Field 
         name="part"
         options={options.parts}
-        element={{id: "part", label: "Section of Bibliography"}}
+        element={{id: "part", label: "Section of Bibliography", disabled: (window.inputType == "edit")}}
         component={SelectInput}
       />
       {part != undefined ?
       <Field 
         name="type"
         options={options.types}
-        element={{id: "type", label: "Type"}}
+        element={{id: "type", label: "Type", disabled: (window.inputType == "edit" || window.inputType == "article")}}
         onChange={(e) => dispatch(fetchFields(e.value))}
         component={SelectInput}
       />
@@ -110,25 +110,37 @@ ContactForm = reduxForm({
 
 const selector = formValueSelector('input')
 ContactForm = connect(state => {
+  // Selects cache, part and type
   const workingCache = selector(state, 'cache');
   const part = selector(state, 'part');
   const type = selector(state, 'type');
 
-  // TODO: Add logic for default cache
+  let initialValues = {};
+  let cache = R.ifElse(R.equals(1), R.always(state.formDefinitions.caches[0]), R.always(workingCache));
 
-  let initialCache = {
-    cache: (state.formDefinitions.cacheCount == 1) ? state.formDefinitions.caches[0] : workingCache
+  // Sets cache
+  initialValues = R.assoc('cache', cache(state.formDefinitions.cacheCount), initialValues);
+
+  // Merges data of editEntry
+  if (window.inputType == "edit" && window.entryID) {
+    initialValues = R.merge(initialValues, state.editEntry.entry);
   }
 
-  if (window.entryID) {
-    initialCache = state.editEntry.entry;
+  // Set type to a for article
+  if (window.inputType == "article" && state.formDefinitions.options.types && window.entryID) {
+    initialValues = R.merge(initialValues, state.editEntry.entry);
+    initialValues = R.assoc('type', R.head(state.formDefinitions.options.types), initialValues);
+  }
+
+  if (window.inputType == "review" && state.formDefinitions.options.types && window.entryID) {
+    initialValues = R.assoc('type', {value: "r", label: "Review"}, initialValues);
   }
 
   return {
     workingCache,
     part,
     type,
-    initialValues: initialCache
+    initialValues: initialValues
   }
 })(ContactForm)
 

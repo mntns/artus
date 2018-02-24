@@ -19,6 +19,7 @@ export const SelectInput = (props) => (
     <label htmlFor={props.element.id}>{props.element.label}</label>
     <Select 
       {...props.input} 
+      disabled={props.element.disabled}
       value={props.input.value || ''} 
       onBlur={() => props.input.onBlur(props.input.value)} 
       options={props.options} 

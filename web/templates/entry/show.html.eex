@@ -66,7 +66,7 @@
   <% end %>
 
   <!-- Boxes for linked -->
-  <%= if @entry.system_type != 1 do %>
+  <%= if @entry.type != "r" do %>
     <%= render Artus.SharedView, "reviews.html", %{entry_id: @entry.id, conn: @conn, reviews: @entry.reviews} %>
     <%= render Artus.SharedView, "reprints.html", %{entry_id: @entry.id, conn: @conn, reprints: @entry.reprints} %>
     <%= if @entry.type == "b" do %>
