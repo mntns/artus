@@ -18,10 +18,8 @@
     <% end %>
   <% end %>
 
-  <!-- TODO: headline? -->
   <h2>
-    <%= if @entry.system_type == 1 do %>
-      <% parent_id = @entry.review_parent_id %>
+    <%= if parent_id = @entry.review_parent_id do %>
       Review of <a href="<%= entry_path(@conn, :show, parent_id) %>">#<%= parent_id %></a>
     <% end %>
   </h2>

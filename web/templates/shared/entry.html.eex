@@ -278,6 +278,6 @@
   <% end %>
 <% end %>
 
-<%= if @entry.system_type == 2 do %>
+<%= if length(@entry.reprints) > 0 do %>
   <span class="label label-primary float-right">Reprint</span>
 <% end %>

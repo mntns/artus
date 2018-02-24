@@ -9,7 +9,6 @@ defmodule Artus.Entry do
 
     # Metadata
     field :submit_date, :naive_datetime
-    field :system_type, :integer
     field :public, :boolean
 
     # Form fields
@@ -101,7 +100,7 @@ defmodule Artus.Entry do
     |> cast(params, ~w(biblio_record_id branch type part public author editor editor_primary_work reviewer
                        titl_title titl_subtitle titl_add ser_title ser_volume ser_code ser_year_pub 
                        publ_pub_house publ_pub_place biblio_issn biblio_isbn doi abstract language
-                       ser_issue ser_count additional_info links internal_comment system_type))
+                       ser_issue ser_count additional_info links internal_comment))
     |> cast_assoc(:cache, required: false)
     |> cast_assoc(:user, required: true)
     |> cast_assoc(:bibliograph, required: true)

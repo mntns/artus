@@ -22,6 +22,6 @@ defmodule Artus.Cache do
   end
 
   def with_entries(query) do
-    from q in query, preload: [:entries]
+    from q in query, preload: [{:entries, [:reprints, :reviews, :children]}]
   end
 end
