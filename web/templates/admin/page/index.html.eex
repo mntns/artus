@@ -24,6 +24,9 @@
     <a class="list-group-item disabled" disabled href="#">
       <i class="fa fa-comment fa-fw"></i> Notice
     </a>
+    <a class="list-group-item" href="<%= page_path(@conn, :backup) %>">
+      <i class="fa fa-download fa-fw"></i> Backup whole database
+    </a>
   </div>
   
 </div>

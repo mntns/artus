@@ -1,10 +1,12 @@
 defmodule Artus.Admin.PageController do
   use Artus.Web, :controller
 
+  @doc "Renders overview page / admin dashboard"
   def index(conn, _params) do
     render conn, "index.html"
   end
 
+  @doc "Fetches and renders statistics"
   def stats(conn, _params) do
     entry_count = Artus.Repo.one(from e in Artus.Entry, select: count("*"))
     user_count = Artus.Repo.one(from u in Artus.User, select: count("*"))
@@ -27,5 +29,19 @@ defmodule Artus.Admin.PageController do
 
   def notice(conn, _params) do
     render conn, "notice.html"
+  end
+
+  @doc "Returns SQL dump of whole database"
+  def backup(conn, _params) do
+    date_string = Date.utc_today() |> Date.to_string()
+    filename = "BIAS_backup_" <> date_string <> ".sql"
+
+    {fd, file_path} = Temp.open!(filename)
+    :os.cmd('pg_dump artus_prod > #{file_path}')
+    File.close(fd)
+    
+    conn
+    |> put_resp_header("content-disposition", ~s(attachment; filename="#{filename}"))
+    |> send_file(200, file_path)
   end
 end

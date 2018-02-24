@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card mt-3">
   <h4 class="card-header">Articles</h4>
-  <div class="card-block">
+  <div class="card-body">
     <%= if @children == [] do %>
       <div class="text-xs-center text-muted">
         <p>This entry has no articles attached to it.</p>

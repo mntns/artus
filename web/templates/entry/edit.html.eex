@@ -8,6 +8,7 @@
 
   <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   <script>window.entryID = "<%= @entry.id %>";</script>
+  <script>window.inputType = "edit";</script>
 
   <div id="reactInput"></div>
 </div>

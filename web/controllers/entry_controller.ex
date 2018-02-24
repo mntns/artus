@@ -77,33 +77,36 @@ defmodule Artus.EntryController do
   end
 
   @doc "Exports entry as file"
-  # def export_type(conn, %{"id" => id, "type" => type}) do
-  #   entry = Repo.get!(Entry, id)
-  #   entry_html = Phoenix.View.render_to_string(Artus.SharedView, "entry.html", entry: entry)
-  #   base_name = "bias_export_#{entry.id}"
-    
-  #   {fd, file_path} = Temp.open!(base_name <> ".html", [:write, :utf8])
-  #   IO.write(fd, entry_html)
-  #   File.close(fd)
-    
-  #   out_filename = base_name <> "." <> type
-  #   case type do
-  #     "rtf" -> convert_file(out_filename)
-  #     "latex" -> convert_file(out_filename)
-  #     "odt" -> convert_file(out_filename)
-  #   end
+  def export_type(conn, %{"id" => id, "type" => type}) do
+    entry = Repo.get!(Entry, id)
+    entry_html = Phoenix.View.render_to_string(Artus.SharedView, "entry.html", entry: entry)
+    base_name = "bias_export_#{entry.id}"
+  
+    file_path = Temp.path!(base_name <> ".html")
+    fd = File.open!(file_path, [:write, :utf8])
+    IO.write(fd, entry_html)
+    File.close(fd)
 
-  #   conn
-  #   |> put_resp_header("content-disposition", ~s(attachment; filename="#{out_filename}"))
-  #   |> send_file(200, Path.expand())
-  #   |> send_file(200, Path.expand(export_root <> filename))
-  # end
+    filetypes = ~w(rtf latex odt)
+    case Enum.member?(filetypes, type) do
+      true ->
+        out_filename = base_name <> "." <> type
+        ofile_path = Temp.path!(out_filename)
+        convert_file(file_path, ofile_path, type, id)
+        
+        conn
+        |> put_resp_header("content-disposition", ~s(attachment; filename="#{out_filename}"))
+        |> send_file(200, ofile_path)
+      false ->
+        conn
+        |> put_flash(:info, "Not an accepted filetype")
+        |> redirect(to: entry_path(conn, :show, id))
+    end
+  end
 
-  # defp convert_file(filename) do
-  #   System.cmd(
-  #     "pandoc",
-  #     ["-s", "-o", filename]
-  #   )
-  #   System.cmd("pandoc", ["-s", "-o", filename, "bias_export_#{id}.html"], cd: "/home/mono/artus/artus/export")
-  # end
+  defp convert_file(input, output, type, id) do
+    System.cmd("pandoc", [input, "-f", "html", "-t", type, "-s", "-o", output])
+    # :os.cmd('pandoc #{input} -f html -t #{type} -s -o #{output}')
+
+  end
 end

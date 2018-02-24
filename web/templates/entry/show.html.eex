@@ -41,11 +41,9 @@
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
     <% end %>
-    <!--
     <a class="btn btn-secondary" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
       <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
     </a>
-    -->
   </div>
 
   <!-- Table with fields -->
