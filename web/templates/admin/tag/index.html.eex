@@ -1,4 +1,4 @@
-<%= render Artus.SharedView, "navbar.html", %{user: @user} %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
   <ol class="breadcrumb">
@@ -6,6 +6,7 @@
     <li class="breadcrumb-item active">Tags</li>
   </ol>
 
-  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "alert.html", assigns%>
+
   <div id="reactTag"></div>
 </div>

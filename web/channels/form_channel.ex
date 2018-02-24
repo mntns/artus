@@ -105,7 +105,7 @@ defmodule Artus.FormChannel do
   end
 
   @doc "Returns parent entry by ID"
-  def handle_in("saved_parent_entry", %{"id" => id}, socket) do
+  def handle_in("parent_entry", %{"id" => id}, socket) do
     to_take = [:editor, :editor_primary_work, :reviewer,
                :titl_add, :ser_volume, :ser_code, :ser_issue,
                :ser_count, :ser_year_pub, :publ_pub_house,

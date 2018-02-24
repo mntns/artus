@@ -108,8 +108,6 @@ defmodule Artus.Router do
 
       # Tags
       get "/tags", TagController, :index
-      post "/tags/:type", TagController, :create
-      get "/tags/:id/delete", TagController, :delete
 
       # Users
       resources "/users", UserController, except: [:delete]
