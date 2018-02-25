@@ -28,7 +28,17 @@ yarn install
 ```
 
 ## Deployment
-TODO
+
+Deployment is straightforward. Contact [Eddy Shure](https://github.com/EddyShure) for the SSH key and then simply run:
+
+```sh
+./rel/deploy.sh
+```
+
+If you have migrations to run
+```sh
+bin/artus command Elixir.Release.Tasks migrate
+```
 
 ## Maintainers
 * [Eddy Shure](https://github.com/EddyShure)
