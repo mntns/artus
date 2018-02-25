@@ -19,7 +19,7 @@ defmodule Artus.Mixfile do
   def application do
     [mod: {Artus, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :uuid, :crypto, :comeonin, :exjsx, :bamboo]]
+                    :phoenix_ecto, :postgrex, :uuid, :crypto, :comeonin, :exjsx, :bamboo, :temp]]
   end
 
   # Specifies which paths to compile per environment.

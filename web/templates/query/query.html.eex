@@ -1,7 +1,7 @@
-<%= render Artus.SharedView, "navbar.html", user: @user %>
+<%= render Artus.SharedView, "navbar.html", assigns %>
 
 <div class="container main">
-  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "alert.html", assigns %>
 
   <div class="mb-2 card">
     <div class="card-body p-3">
@@ -50,7 +50,7 @@
         </a>
         <div class="collapse" id="reviews<%= item.id %>">
           <br>
-          <%= render Artus.SharedView, "reviews.html", %{entry_id: item.id, conn: @conn, reviews: item.reviews} %>
+          <%= render Artus.SharedView, "reviews.html", %{conn: @conn, entry: item} %>
         </div>
       <% end %>
 

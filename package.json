@@ -26,7 +26,7 @@
     "react-tag-input": "^4.6.2",
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
-    "redux-logger": "^3.0.6",
+    "redux-logger": "3.0.1",
     "redux-thunk": "^2.2.0",
     "sass-brunch": "^2.6.3",
     "uglify-js-brunch": "^2.0.1"
