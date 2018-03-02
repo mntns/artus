@@ -108,7 +108,7 @@ defmodule Artus.EntryView do
 
     entry
     |> Map.from_struct()
-    |> Enum.filter(fn({k,v}) -> Enum.member?(field_keys, k) && !is_nil(v) end)
+    |> Enum.filter(fn({k,v}) -> Enum.member?(field_keys, k) && !is_nil(v) && k != :abstract end)
   end
 
 

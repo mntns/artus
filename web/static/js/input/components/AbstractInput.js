@@ -10,6 +10,8 @@ class AbstractInput extends React.Component {
       count: 0,
       limit: 50
     }
+
+    let handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     // TODO: Set limit according to type
@@ -17,22 +19,17 @@ class AbstractInput extends React.Component {
     //  this.setState({limit: 100})
   }
   handleChange(e) {
-    this.setState({text: e.target.value});
-
     // Split and filter empty strings
     let count = e.target.value.split(" ").filter(function(el) {return el.length != 0}).length;
     this.setState({count: count});
-
-    // Pass value upwards to changeHandler prop
-    // this.props.changeHandler(e);
   }
   render() {
     return (
       <fieldset className="form-group">
-        <label htmlFor={this.props.element.id}>{this.props.element.label} {this.props.element.required ? getLabelPill("required") : ""}</label>
+        <label htmlFor={this.props.element.id}>{this.props.element.label} {this.props.element.required ? <LabelPill /> : ""}</label>
         <HelpButton id={this.props.element.id} />
-        <textarea value={this.props.fieldValue} id={this.props.element.id} className={"form-control" + ((this.state.count > this.state.limit) ? " is-invalid" : "")} 
-          onChange={this.handleChange.bind(this)}></textarea>
+        <textarea {...this.props.input} id={this.props.element.id} className={"form-control" + ((this.state.count > this.state.limit) ? " is-invalid" : "")} 
+          onChange={value => {this.props.input.onChange(value); this.handleChange(value);}}></textarea>
         <p className="float-right mb-0 text-muted">{this.state.count} / {this.state.limit} words</p>
       </fieldset>
     )

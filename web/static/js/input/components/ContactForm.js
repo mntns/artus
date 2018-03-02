@@ -124,6 +124,10 @@ ContactForm = connect(state => {
   // Merges data of editEntry
   if (window.inputType == "edit" && window.entryID) {
     initialValues = R.merge(initialValues, state.editEntry.entry);
+
+    if (state.editEntry.entry.reviewer) {
+      initialValues = R.assoc('type', {value: "r", label: "Review"}, initialValues);
+    }
   }
 
   // Set type to a for article

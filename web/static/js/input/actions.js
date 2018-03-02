@@ -180,10 +180,15 @@ function receiveEntry(data) {
 
 function processEntry(data) {
   return dispatch => {
+    console.log(data);
     if (window.inputType == "article") {
       dispatch(fetchFields("a"));
     } else {
-      dispatch(fetchFields(data.entry.type.value));
+      if (data.entry.reviewer) {
+        dispatch(fetchFields("r"));
+      } else {
+        dispatch(fetchFields(data.entry.type.value));
+      }
     }
     dispatch(receiveEntry(data));
   }

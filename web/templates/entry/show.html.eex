@@ -59,8 +59,12 @@
 
   <!-- Abstract -->
   <%= if @entry.abstract do %>
-    <label for="abstract"><b>Abstract</b></label>
-    <blockquote class="blockquote" id="abstract"><%= @entry.abstract |> Artus.NotMarkdown.to_html |> raw %></blockquote>
+    <div class="card">
+      <h4 class="card-header">Abstract</h4>
+      <div class="card-body">
+        <p class="lead text-justify" id="abstract"><%= @entry.abstract |> Artus.NotMarkdown.to_html() |> raw() %></p>
+      </div>
+    </div>
   <% end %>
 
   <!-- Boxes for linked -->
