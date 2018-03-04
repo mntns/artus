@@ -11,7 +11,7 @@ defmodule Artus.Email do
     if String.trim(comment) == "" do
     new_email(
               to: user.mail,
-              from: @admin_address,
+              from: from_user.mail,
               subject: @prefix <> "You received a working cache by #{from_user.name}",
               text_body: """
               Dear #{user.name},
@@ -25,7 +25,7 @@ defmodule Artus.Email do
   else
     new_email(
               to: user.mail,
-              from: @admin_address,
+              from: from_user.mail,
               subject: @prefix <> "You received a working cache by #{from_user.name}",
               text_body: """
               Dear #{user.name},

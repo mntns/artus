@@ -15,11 +15,25 @@
       This user has no Working Caches.
     </div>
   <% else %>
-    <ul class="list-group">
+    <ul class="list-group list-group-root">
       <%= for cache <- @shown_user.caches do %>
         <li class="list-group-item">
-          <%= cache.name %>
+          <a data-toggle="collapse" href="#collapse<%= cache.id %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <%= cache.name %>
+          </a>
           <span class="label label-default float-right"><%= length(cache.entries) %></span>
+          
+          <div class="collapse" id="collapse<%= cache.id %>">
+            <div class="list-group">
+              <%= for entry <- cache.entries do %>
+                <div class="list-group-item"> 
+                  <a href="<%= entry_path(@conn, :show, entry.id) %>">
+                    <%= render Artus.SharedView, "entry.html", %{entry: entry} %>
+                  </a>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </li>
       <% end %>
     </ul>
