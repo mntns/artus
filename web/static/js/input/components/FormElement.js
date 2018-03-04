@@ -1,6 +1,6 @@
 import React from "react"
 
-import {TextInput, TextBoxInput, AbbreviationInput} from "./Inputs"
+import {TextInput, TextBoxInput, AbbreviationInput, LanguageInput} from "./Inputs"
 import AbstractInput from "./AbstractInput"
 
 const FormElement = (props) => {
@@ -13,7 +13,7 @@ const FormElement = (props) => {
       // TODO: YearInput w/ bootstrap-datepicker
       return <TextInput {...props} />
     case "language":
-      return <TextInput {...props} />
+      return <LanguageInput {...props} />
     case "badges":
       return <TagInput {...props} />
     case "abstract":

@@ -53,3 +53,7 @@ export const AbbreviationInput = (props) => (
     optionRenderer={renderAbbreviationOption} 
     labelKey={"abbr"} />
 )
+
+export const LanguageInput = (props) => (
+  <SelectInput {...props} />
+)

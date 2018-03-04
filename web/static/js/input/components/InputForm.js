@@ -16,13 +16,13 @@ const handleAutoComplete = (v, dispatch, change) => {
   })))
 }
 
-const renderMembers = ({ change, dispatch, fields, abbreviations, meta: { touched, error, submitFailed  }  }) => {
+const renderMembers = ({ change, dispatch, fields, abbreviations, languages, meta: { touched, error, submitFailed  }  }) => {
 	return( <div>
 		{fields.map((member, index) =>
 			<Field
         name={member.id}
 				label={member.label}
-        options={member.id == "ser_code" ? abbreviations : []}
+        options={member.id == "ser_code" ? abbreviations : (member.id == "language" ? languages : [])}
         onChange={member.id == "ser_code" ? (v) => handleAutoComplete(v.id, dispatch, change) : null}
         key={index}
         element={member}

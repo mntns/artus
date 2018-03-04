@@ -90,8 +90,10 @@ defmodule Artus.FormChannel do
 
     # Update type and parts
     options = Artus.DefinitionManager.options()
+    languages = Artus.DefinitionManager.languages()
     type_map = options["types"] |> Enum.find(fn(x) -> x["value"] == entry[:type] end)
     part_map = options["parts"] |> Enum.find(fn(x) -> x["value"] == entry[:part] end)
+    language_map = languages |> Enum.find(fn(x) -> x["value"] == entry[:language] end)
 
     # Update ser_code
     if (!is_nil(entry[:ser_code])) do
@@ -102,6 +104,7 @@ defmodule Artus.FormChannel do
 
     entry = %{entry | type: type_map}
     entry = %{entry | part: part_map}
+    entry = %{entry | language: language_map}
 
     {:reply, {:ok, %{entry: entry}}, socket}
   end
@@ -149,9 +152,9 @@ defmodule Artus.FormChannel do
       "review" -> %Entry{review_parent_id: parent.id}
       "reprint" -> %Entry{reprint_parent_id: parent.id}
     end
+    
     changeset = Entry.submit_changeset(original, user, cache, data)
     
-    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, entry} -> 
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "create")}

@@ -6,6 +6,7 @@ import {
   REQUEST_OPTIONS, RECEIVE_OPTIONS,
   REQUEST_FIELDS, RECEIVE_FIELDS,
   REQUEST_ABBREVIATION, RECEIVE_ABBREVIATIONS,
+  REQUEST_LANGUAGES, RECEIVE_LANGUAGES,
   REQUEST_FORM_SUBMIT, RECEIVE_FORM_SUBMIT,
   REQUEST_AUTOCOMPLETE, RECEIVE_AUTOCOMPLETE,
   REQUEST_ENTRY, RECEIVE_ENTRY
@@ -57,10 +58,11 @@ function formDefinitions(state = {
   options: [],
   fields: [],
   abbreviations: [],
+  languages: [],
   reviewID: null
 }, action) {
   switch(action.type) {
-    case REQUEST_CACHES || REQUEST_OPTIONS || REQUEST_FIELDS || REQUEST_ABBREVIATIONS:
+    case REQUEST_CACHES || REQUEST_OPTIONS || REQUEST_FIELDS || REQUEST_ABBREVIATIONS || REQUEST_LANGUAGES:
       return Object.assign({}, state, {
         isFetching: true,
       });
@@ -88,6 +90,11 @@ function formDefinitions(state = {
       return Object.assign({}, state, {
         isFetching: false,
         abbreviations: action.abbreviations
+      });
+    case RECEIVE_LANGUAGES:
+      return Object.assign({}, state, {
+        isFetching: false,
+        languages: action.languages
       });
     case RECEIVE_FORM_SUBMIT:
       return Object.assign({}, state, {

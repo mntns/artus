@@ -8,6 +8,8 @@ export const REQUEST_FIELDS = 'REQUEST_FIELDS'
 export const RECEIVE_FIELDS = 'RECEIVE_FIELDS'
 export const REQUEST_ABBREVIATIONS = 'REQUEST_ABBREVIATIONS'
 export const RECEIVE_ABBREVIATIONS = 'RECEIVE_ABBREVIATIONS'
+export const REQUEST_LANGUAGES = 'REQUEST_LANGUAGES'
+export const RECEIVE_LANGUAGES = 'RECEIVE_LANGUAGES'
 
 export const REQUEST_FORM_SUBMIT = 'REQUEST_FORM_SUBMIT'
 export const RECEIVE_FORM_SUBMIT = 'RECEIVE_FORM_SUBMIT'
@@ -106,6 +108,28 @@ export function fetchAbbreviations() {
     dispatch(requestAbbreviations());
     return channel.push("abbreviations")
       .receive("ok", (data) => dispatch(receiveAbbreviations(data)))
+  }
+}
+
+function requestLanguages() {
+  return {
+    type: REQUEST_LANGUAGES
+  }
+}
+
+function receiveLanguages(data) {
+  console.log(data);
+  return {
+    type: RECEIVE_LANGUAGES,
+    languages: data.languages
+  }
+}
+
+export function fetchLanguages() {
+  return dispatch => {
+    dispatch(requestLanguages());
+    return channel.push("languages")
+      .receive("ok", (data) => dispatch(receiveLanguages(data)))
   }
 }
 

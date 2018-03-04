@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchEntry, fetchCaches, fetchOptions, fetchFields, submitForm } from '../actions';
+import { fetchEntry, fetchCaches, fetchLanguages, fetchOptions, fetchFields, submitForm } from '../actions';
 import InputForm from "../components/InputForm"
 
 class AsyncApp extends Component {
@@ -17,6 +17,7 @@ class AsyncApp extends Component {
     const { dispatch } = this.props;
     dispatch(fetchCaches());
     dispatch(fetchOptions());
+    dispatch(fetchLanguages());
 
     // Fetches entry if edit view
     if ((window.inputType == "edit" || window.inputType == "article") && window.entryID) {
@@ -59,7 +60,7 @@ class AsyncApp extends Component {
 // };
 
 function mapStateToProps(state) {
-  const { fetching, abbreviations, cacheCount, caches, options, fields  } = state.formDefinitions;
+  const { fetching, languages, abbreviations, cacheCount, caches, options, fields  } = state.formDefinitions;
   const { cfetching, completion } = state.autoComplete;
   let nProps = {
     completion: completion,
@@ -68,6 +69,7 @@ function mapStateToProps(state) {
     caches: caches,
     options: options,
     abbreviations: abbreviations,
+    languages: languages,
     fields: fields,
     inputType: window.inputType
   }
