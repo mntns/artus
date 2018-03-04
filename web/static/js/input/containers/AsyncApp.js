@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchEntry, fetchCaches, fetchOptions, fetchFields, submitForm } from '../actions';
-import ContactForm from "../components/ContactForm"
+import InputForm from "../components/InputForm"
 
 class AsyncApp extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class AsyncApp extends Component {
 
     return (
       <div> 
-        <ContactForm onSubmit={(v) => dispatch(submitForm(v, this.submitCallback))} {...this.props} />
+        <InputForm onSubmit={(v) => dispatch(submitForm(v, this.submitCallback))} {...this.props} />
       </div>
     );
   }

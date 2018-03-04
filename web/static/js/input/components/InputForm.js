@@ -92,7 +92,7 @@ const renderFormContainer = (props) => (
   </div>
 )
 
-let ContactForm = props => {
+let InputForm = props => {
 	const { workingCache, dispatch, handleSubmit, cacheCount, caches, options, fields  } = props
 
 	return (
@@ -103,13 +103,13 @@ let ContactForm = props => {
 	)
 }
 
-ContactForm = reduxForm({
+InputForm = reduxForm({
 	form: 'input',
   enableReinitialize: true
-})(ContactForm)
+})(InputForm)
 
 const selector = formValueSelector('input')
-ContactForm = connect(state => {
+InputForm = connect(state => {
   // Selects cache, part and type
   const workingCache = selector(state, 'cache');
   const part = selector(state, 'part');
@@ -146,6 +146,6 @@ ContactForm = connect(state => {
     type,
     initialValues: initialValues
   }
-})(ContactForm)
+})(InputForm)
 
-export default ContactForm
+export default InputForm
