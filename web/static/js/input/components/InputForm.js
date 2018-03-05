@@ -16,7 +16,7 @@ const handleAutoComplete = (v, dispatch, change) => {
   })))
 }
 
-const renderMembers = ({ change, dispatch, fields, abbreviations, languages, meta: { touched, error, submitFailed  }  }) => {
+const renderMembers = ({ change, type, dispatch, fields, abbreviations, languages, meta: { touched, error, submitFailed  }  }) => {
 	return( <div>
 		{fields.map((member, index) =>
 			<Field
@@ -27,6 +27,7 @@ const renderMembers = ({ change, dispatch, fields, abbreviations, languages, met
         key={index}
         element={member}
 				component={FormElement}
+        formType={type}
 			/>
 		)}
 	</div>)

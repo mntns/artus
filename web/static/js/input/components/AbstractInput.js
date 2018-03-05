@@ -13,10 +13,15 @@ class AbstractInput extends React.Component {
 
     let handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {
-    // TODO: Set limit according to type
-    //if (this.props.type == "b")
-    //  this.setState({limit: 100})
+  componentWillMount() {
+    if (this.props.formType.value == "b") {
+      this.setState({limit: 100})
+    }
+  }
+  componentWillReceiveProps(nprops) {
+    if (nprops.formType.value == "b") {
+      this.setState({limit: 100})
+    }
   }
   handleChange(e) {
     // Split and filter empty strings
