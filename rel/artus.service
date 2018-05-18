@@ -1,0 +1,13 @@
+[Unit]
+After=network.target
+
+[Service]
+WorkingDirectory=/home/artus
+ExecStart=/home/artus/bin/artus start
+ExecStop=/home/artus/bin/artus stop
+User=artus
+RemainAfterExit=yes
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
