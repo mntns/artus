@@ -36,8 +36,8 @@ The following steps should provide a brief outline to installing the application
 2. Install PostgreSQL, configure it, create an empty database (i.e. `artus_prod`) or load a SQL dump. Also, install the latest Erlang runtime.
 3. Setup a nginx installation that is configured to reverse-proxy to `localhost:8888`. Make sure it handles SSL connections and use [Let's Encrypt](https://letsencrypt.org/).
 4. Get a [SendGrid](https://sendgrid.com/) API key.
-5. Deploy the application from your development machine (see below).
-6. Put your SendGrid API key and PostgreSQL credentials into a `config/prod.secret.exs`. See [this guide](https://hexdocs.pm/phoenix/deployment.html) for more information.
+5. Put your SendGrid API key and PostgreSQL credentials into a `config/prod.secret.exs`. See [this guide](https://hexdocs.pm/phoenix/deployment.html) for more information.
+6. Deploy the application from your development machine (see below).
 7. Create a systemd service for the application. You can use `rel/artus.service` as an example.
 
 ## Deployment from development machine
