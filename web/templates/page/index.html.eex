@@ -5,12 +5,6 @@
   <%= render Artus.SharedView, "noie.html", %{conn: @conn} %>
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
-  <%= if @notice do %>
-    <div class="alert alert-warning" role="alert" style="margin-bottom: 10vh;">
-      <%= @notice %>
-    </div>
-  <% end %>
-  
   <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
 
   <%= form_tag("/search") %>
@@ -29,5 +23,11 @@
     -->
   </fieldset>
   </form>
+  
+  <%= if @notice do %>
+    <div class="alert alert-warning" role="alert" style="margin-top: 3vh;">
+      <%= @notice %>
+    </div>
+  <% end %>
   
 </div>

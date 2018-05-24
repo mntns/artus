@@ -104,6 +104,7 @@ defmodule Artus.Router do
       get "/stats", PageController, :stats
       get "/logs", PageController, :logs
       get "/notice", PageController, :notice
+      post "/set_notice", PageController, :set_notice
       get "/backup", PageController, :backup
 
       # Tags

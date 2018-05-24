@@ -9,7 +9,9 @@ defmodule Artus.DefinitionManager do
 
   @doc "Initializes DefinitionManager by reading definitions"
   def init(:ok) do
-    defs = read_defs() |> Map.put(:notice, nil)
+    defs = read_defs() 
+           |> Map.put(:notice, nil)
+           |> Map.put(:notice_ts, NaiveDateTime.utc_now())
     {:ok, defs}
   end
 
@@ -68,7 +70,7 @@ defmodule Artus.DefinitionManager do
     {:noreply, read_defs()}
   end
   def handle_cast({:set_notice, notice}, state) do
-    {:noreply, %{state | :notice => notice}}
+    {:noreply, %{state | :notice => notice, :notice_ts => NaiveDateTime.utc_now()}}
   end
 
   @doc false
@@ -94,7 +96,12 @@ defmodule Artus.DefinitionManager do
     {:reply, state.field_defs[id], state}
   end
   def handle_call(:get_notice, _from, state) do
-    {:reply, state.notice, state}
+    case NaiveDateTime.diff(NaiveDateTime.utc_now(), state.notice_ts, :seconds) do
+      n when n < (40 * 60 * 60) ->
+        {:reply, state.notice, state}
+      _ -> 
+        {:reply, nil, %{state | notice: nil, notice_ts: nil}}
+    end
   end
 
   @doc "Reads definitions from JSON files in `defs/` and returns map"

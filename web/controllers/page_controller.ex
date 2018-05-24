@@ -3,7 +3,11 @@ defmodule Artus.PageController do
 
   @doc "Renders main page"
   def index(conn, _params) do
-    notice = Artus.DefinitionManager.get_notice()
+    notice = case Artus.DefinitionManager.get_notice() do
+      "" -> nil
+      nil -> nil
+      x -> x
+    end
     render conn, "index.html", %{notice: notice}
   end
 

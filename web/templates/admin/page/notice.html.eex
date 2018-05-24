@@ -9,6 +9,19 @@
 
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
-  <p>Here you can set a notice which will be shown on the front page. Please use this feature only for important updates.</p>
+  <div class="card">
+    <div class="card-body">
+    Here you can set a notice which will be shown on the front page for 48 hours.
+    </div>
+  </div>
+
+  <br>
+
+  <%= form_tag("/admin/set_notice") %>
+    <div class="form-group">
+      <textarea class="form-control" id="noticeBox" rows="3" name="notice"></textarea>
+      <%= submit "Show notice to users", class: "btn btn-primary float-right add-button" %>
+    </div>
+  </form>
 
 </div>

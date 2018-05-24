@@ -27,8 +27,18 @@ defmodule Artus.Admin.PageController do
     render conn, "logs.html", logs: Artus.EventLogger.get(50)
   end
 
+  @doc "Renders notice page"
   def notice(conn, _params) do
     render conn, "notice.html"
+  end
+
+  @doc "Sets notice"
+  def set_notice(conn, %{"notice" => notice}) do
+    Artus.DefinitionManager.set_notice(notice)
+
+    conn
+    |> put_flash(:info, "Successfully set notice to '#{notice}'.")
+    |> render("notice.html")
   end
 
   @doc "Returns SQL dump of whole database"

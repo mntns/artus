@@ -2,7 +2,10 @@
 
 <div class="container main">
   <ol class="breadcrumb">
-    <li class="active">Admin</li>
+    <li class="active">
+      Admin 
+      <span class="text-muted">(v<%= Artus.Mixfile.project[:version] %>)</span>
+    </li>
   </ol>
 
   <div class="list-group">
@@ -21,7 +24,7 @@
     <a class="list-group-item" href="<%= page_path(@conn, :logs) %>">
       <i class="fa fa-server fa-fw"></i> Logs
     </a>
-    <a class="list-group-item disabled" disabled href="#">
+    <a class="list-group-item" href="<%= page_path(@conn, :notice) %>">
       <i class="fa fa-comment fa-fw"></i> Notice
     </a>
     <a class="list-group-item" href="<%= page_path(@conn, :backup) %>">
