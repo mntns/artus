@@ -54,9 +54,9 @@ defmodule Artus.CacheController do
 
   @doc "Show page for sending cache upward"
   def up(conn, %{"id" => id}) do
-    supervisor = get_supervisor(conn.assigns.user)
+    supervisors = get_supervisors(conn.assigns.user)
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
-    render conn, "up.html", %{cache: cache, supervisor: supervisor}
+    render conn, "up.html", %{cache: cache, supervisors: supervisors}
   end
   
   @doc "Show page for sending cache downward"
@@ -129,7 +129,7 @@ defmodule Artus.CacheController do
     |> Repo.update!()
   end
 
-  defp get_supervisor(user) do
+  defp get_supervisors(user) do
     query = case user.level do
       x when x == 2 ->
         from u in User, where: u.level == 1
@@ -137,7 +137,7 @@ defmodule Artus.CacheController do
         from u in User,
         where: u.branch == ^user.branch and u.level == ^(user.level - 1)
     end
-    Repo.one(query)
+    Repo.all(query)
   end
 
   defp get_subordinates(user) do

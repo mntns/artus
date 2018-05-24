@@ -7,21 +7,21 @@
     <li class="breadcrumb-item active">Send Cache upward</li>
   </ol>
 
-  <%= if @supervisor do %>
+  <%= if @supervisors do %>
     <div class="alert alert-info">
       You're about to submit this Working Cache to your supervising bibliographer.
-    
     </div>
     
-    <div class="card mb-3">
-      <div class="card-body">
-        <h3 class="card-title"><%= @supervisor.name %></h3>
-        <p class="card-text"><%= lookup_role(@supervisor.level) %></p>
-      </div>
-    </div>
-
     <%= form_tag(cache_path(@conn, :send, @cache.id, :up)) %>
-      <input type="hidden" value="<%= @supervisor.id %>" name="recipient">
+      <div class="form-group">
+        <label for="subordinate">Subordinate / Recipient</label>
+        <select class="form-control" id="recipient" name="recipient">
+          <%= for supervisor <- @supervisors do %>
+            <option value="<%= supervisor.id %>"><%= supervisor.name %></option>
+          <% end %>
+        </select>
+      </div>
+
 			<div class="form-group">
 				<label for="comment">Comment</label>
 				<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
@@ -30,18 +30,9 @@
         <i class="fa fa-fw fa-arrow-up" aria-hidden="true"></i> Submit
       </button>
     </form>
-
   <% else %>
     <div class="alert alert-danger" role="alert">
       There is no person of your branch registered who represents a higher level.
     </div>
   <% end %>
-
-
-
-
-
-  
-
-
 </div>
