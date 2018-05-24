@@ -3,7 +3,7 @@ defmodule Artus.Mixfile do
 
   def project do
     [app: :artus,
-     version: "1.3.5",
+     version: "1.3.6",
      elixir: "~> 1.6.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,

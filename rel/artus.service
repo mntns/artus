@@ -2,9 +2,9 @@
 After=network.target
 
 [Service]
-WorkingDirectory=/home/artus
-ExecStart=/home/artus/bin/artus start
-ExecStop=/home/artus/bin/artus stop
+WorkingDirectory=/home/artus/app
+ExecStart=/home/artus/app/artus/bin/artus start
+ExecStop=/home/artus/app/artus/bin/artus stop
 User=artus
 RemainAfterExit=yes
 Restart=always

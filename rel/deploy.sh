@@ -8,3 +8,6 @@ MIX_ENV=prod mix phoenix.digest
 
 echo "Building releae..."
 MIX_ENV=prod mix release --env=prod
+
+echo "Syncing to server"
+rsync -avz --delete _build/prod/rel/artus ias:~/app
