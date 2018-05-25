@@ -10,6 +10,17 @@ defmodule Artus.FormChannel do
     {:ok, socket}
   end
 
+  @doc "Returns terms for autocomplete"
+  def handle_in("autocomplete", %{"string" => query}, socket) do
+    matches = Artus.FastSearchServer.match(query)
+    suggestions = query
+                  |> Artus.FastSearchServer.match()
+                  |> Enum.map(fn(x) -> %{value: x, label: x} end)
+                  |> Enum.take(9)
+
+    {:reply, {:ok, %{suggestions: suggestions}}, socket}
+  end
+
   @doc "Returns available options for parts and types"
   def handle_in("options", _, socket) do
     opts = DefinitionManager.options()

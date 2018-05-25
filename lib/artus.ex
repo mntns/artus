@@ -15,7 +15,8 @@ defmodule Artus do
       worker(Artus.DefinitionManager, []),
       worker(Artus.EntryCache, []),
       worker(Artus.QueryRunner, []),
-      worker(Artus.EventLogger, [])
+      worker(Artus.EventLogger, []),
+      worker(Artus.FastSearchServer, [])
     ]
 
     opts = [strategy: :one_for_one, name: Artus.Supervisor]

@@ -42,7 +42,7 @@ defmodule Artus.Router do
 
     # Query
     get "/advanced", QueryController, :advanced
-    post "/search", QueryController, :search
+    get "/search", QueryController, :search
     post "/advanced-search", QueryController, :advanced_search
     get "/query/:id", QueryController, :query
     post "/query/:id", QueryController, :query_sort

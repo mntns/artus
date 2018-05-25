@@ -7,6 +7,9 @@
 
   <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
 
+  <div id="reactSearchBar"></div>
+
+  <!--
   <%= form_tag("/search") %>
   <fieldset>
     <div class="input-group">
@@ -18,11 +21,10 @@
         <button class="btn btn-primary" type="submit">Go!</button>
       </div>
     </div>
-    <!--
     <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced Search</small></a>
-    -->
   </fieldset>
   </form>
+  -->
   
   <%= if @notice do %>
     <div class="alert alert-warning" role="alert" style="margin-top: 3vh;">

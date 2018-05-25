@@ -19,6 +19,9 @@ import AbbreviationContainer from "./admin/AbbreviationContainer"
 // Imports input form React module
 import Root from "./input/containers/Root"
 
+// Imports search bar module
+import SearchBar from "./search/SearchBar"
+
 // Enables tooltips globally 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
@@ -43,4 +46,9 @@ if (document.getElementById("reactAbbreviation")) {
 // Renders input module
 if (document.getElementById("reactInput")) {
   ReactDOM.render(<Root />, document.getElementById("reactInput"));
+}
+
+// Renders search widget
+if (document.getElementById("reactSearchBar")) {
+  ReactDOM.render(<SearchBar />, document.getElementById("reactSearchBar"));
 }

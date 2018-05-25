@@ -1,0 +1,34 @@
+<%= render Artus.SharedView, "navbar.html", assigns %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", assigns %>
+
+  <!-- Search bar -->
+  <div id="reactSearchBar"></div>
+
+  <small class="text-muted">
+    <%= query_info(length(@results), @query_time) %>
+  </small>
+
+  <div class="list-group" style="margin-top: 33px;">
+    <%= for item <- @results do %>
+      <div class="list-group-item"> 
+        <a href="<%= entry_path(@conn, :show, item.id) %>">
+          <%= render Artus.SharedView, "entry.html", %{entry: item} %>
+        </a>
+
+        <%= if item.reviews != [] do %>
+          <a style="z-index: 0;" class="float-right" data-toggle="collapse" href="#reviews<%= item.id %>" aria-expanded="false" aria-controls="collapseExample">
+            <i class="fa fa-fw fa-plus-circle" aria-hidden="true"></i>
+          </a>
+          <div class="collapse" id="reviews<%= item.id %>">
+            <br>
+            <%= render Artus.SharedView, "reviews.html", %{conn: @conn, entry: item} %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+</div>
+

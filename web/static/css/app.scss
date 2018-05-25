@@ -7,6 +7,9 @@ $btn-primary-bg: $belize_hole;
 $artus-primary: darken($nephritis, 10%);
 $border-radius: 0;
 
+$input-btn-focus-width:       .0rem !default;
+$input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width grey !default;
+
 @import '../../../node_modules/bootstrap/scss/bootstrap';
 @import '../../../node_modules/react-select/scss/default';
 @import 'font-awesome/font-awesome';
@@ -123,3 +126,34 @@ nav {
   opacity: 0.5;
 } 
 
+#searchBar {
+  height: 50px;
+  &:focus {
+  outline: none !important;
+  }
+}
+
+.search-item {
+  padding: 2px 0.75rem 2px;
+}
+.search-item-active {
+  padding: 2px 0.75rem 2px;
+  background-color: blue;
+}
+
+#searchCard {
+  z-index: 1;
+  list-style-type: none;
+  overflow: hidden;
+
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+}
+
+// .container *:not(#searchWrapper) {
+//   filter: blur(3px);
+//   pointer-events: none;
+
+// }
