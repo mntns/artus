@@ -24,8 +24,8 @@ defmodule Artus.QueryRunner do
     GenServer.call(:query_runner, {:create, data})
   end
 
-  def run(id) do
-    GenServer.call(:query_runner, {:run, id})
+  def run(id, params) do
+    GenServer.call(:query_runner, {:run, id, params})
   end
 
   def run_sorted(id, sort) do
@@ -41,7 +41,7 @@ defmodule Artus.QueryRunner do
     encoded_query = Poison.encode!(data)
     {:reply, uuid, Map.put(state, uuid, data)}
   end
-  def handle_call({:run, id}, _from, state) do
+  def handle_call({:run, id, params}, _from, state) do
     case query_data = state[id] do
       nil ->
         {:reply, {:err, :notfound}, state}
@@ -50,12 +50,13 @@ defmodule Artus.QueryRunner do
 
         # Fetch query data
         query_data = state[id]
-        query = from e in Entry, select: e
-        final = Enum.reduce(query_data["filters"], query, &build_chain(&1, &2))
-        #IO.inspect Ecto.Adapters.SQL.to_sql(:all, Artus.Repo, final)
+        query = from e in Entry, preload: :reviews
         
-        results = final |> Repo.all() |> Repo.preload(:reviews)
+        results = query_data["filters"]
+                  |> Enum.reduce(query, &build_chain(&1, &2))
+                  |> Repo.paginate(params)
         
+
         # Calculate query time
         m2 = System.system_time(:millisecond)
         query_time = m2 - m1

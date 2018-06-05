@@ -21,6 +21,7 @@ import Root from "./input/containers/Root"
 
 // Imports search bar module
 import SearchBar from "./search/SearchBar"
+import AdvancedSearch from "./search/AdvancedSearch"
 
 // Enables tooltips globally 
 $(function () {
@@ -51,4 +52,9 @@ if (document.getElementById("reactInput")) {
 // Renders search widget
 if (document.getElementById("reactSearchBar")) {
   ReactDOM.render(<SearchBar />, document.getElementById("reactSearchBar"));
+}
+
+// Renders advanced search widget
+if (document.getElementById("reactAdvancedSearch")) {
+  ReactDOM.render(<AdvancedSearch />, document.getElementById("reactAdvancedSearch"));
 }

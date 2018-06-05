@@ -1,6 +1,9 @@
 exports.config = {
   notifications: false,
-  // See http://brunch.io/#documentation for docs.
+  watcher: {
+    awaitWriteFinish: true,
+    usePolling: true
+  },
   files: {
     javascripts: {
        joinTo: {

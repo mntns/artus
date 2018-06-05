@@ -7,7 +7,7 @@
   <div id="reactSearchBar"></div>
 
   <small class="text-muted">
-    <%= query_info(length(@results), @query_time) %>
+    <%= query_info(@page.total_entries, @query_time) %>
   </small>
 
   <div class="list-group" style="margin-top: 33px;">
@@ -30,5 +30,16 @@
       </div>
     <% end %>
   </div>
+
+  <nav aria-label="Entry results navigation" style="background: none; margin-top: 50px;">
+    <ul class="pagination justify-content-center">
+      <%= for n <- 1..@page.total_pages do %>
+        <li class="page-item <%= if (@page.page_number == n), do: "active" %>">
+          <a class="page-link" href="<%= query_path(@conn, :search, %{"q" => @query, "page" => n}) %>">
+        <%= n %></a></li>
+    <% end %>
+    </ul>
+  </nav>
+
 </div>
 

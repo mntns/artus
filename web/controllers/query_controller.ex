@@ -2,16 +2,17 @@ defmodule Artus.QueryController do
   use Artus.Web, :controller
   import Ecto.Query
 
-  def search(conn, %{"q" => query}) do
+  def search(conn, %{"q" => query} = params) do
     opts = %{
       "filters" => [
-        %{"type" => "all", "params" => %{"string" => query}}
-        # %{"type" => "public", "params" => %{"public" => is_nil(conn.assigns.user)}}
+        %{"type" => "all", "params" => %{"string" => query}},
+        %{"type" => "public", "params" => %{"public" => is_nil(conn.assigns.user)}}
       ]
     }
     id = Artus.QueryRunner.create(opts)
-    {:ok, query_time, results} = Artus.QueryRunner.run(id)
-    render conn, "search.html", %{query_time: query_time, results: results}
+    {:ok, query_time, results} = Artus.QueryRunner.run(id, params)
+    
+    render conn, "search.html", %{query: query, query_time: query_time, results: results.entries, page: results}
   end
   
   def advanced(conn, _params) do

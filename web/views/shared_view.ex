@@ -30,7 +30,7 @@ defmodule Artus.SharedView do
 
   def style_editors(editors) do
     if String.contains?(editors, ["[", "]"]) do
-      Regex.replace(~r/\[(.*)\]/, editors, fn _, x -> "<span class=\"kapitaelchen\">#{x}</span>" end)
+      Regex.replace(~r/\[(.*?)\]/, editors, fn _, x -> "<span class=\"kapitaelchen\">#{x}</span>" end)
     else
       case String.split(editors, ";", trim: true) do
         [x] ->

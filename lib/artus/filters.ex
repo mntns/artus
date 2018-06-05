@@ -2,17 +2,42 @@ defmodule Artus.Filters do
   @moduledoc "Filter definitions for composable queries"
   import Ecto.Query
 
-  @doc "Filters by title, subtitle, editor and author"
+  # @doc "Filters by title, subtitle, editor and author"
+  # def all_sub_filter(filter, query) do
+  #   case filter do
+  #     nil -> query
+  #     s ->
+  #       from e in query,
+  #       where: e.type != "r",
+  #       or_where: ilike(e.titl_title, ^("%#{s}%")),
+  #       or_where: ilike(e.titl_subtitle, ^("%#{s}%")),
+  #       or_where: ilike(e.editor, ^("%#{s}%")),
+  #       or_where: ilike(e.author, ^("%#{s}%"))
+  #   end
+  # end
+
+  def all_sub_filter(s, dynamic) do
+    dynamic([e], ^dynamic and (
+      ilike(e.titl_title, ^("%#{s}%")) or
+      ilike(e.titl_subtitle, ^("%#{s}%")) or
+      ilike(e.editor, ^("%#{s}%")) or
+      ilike(e.author, ^("%#{s}%"))))
+   end
+
+  @doc "Constructs filter by words"
   def all_filter(filter, query) do
-    case filter["params"]["string"] do
+    case string_chain = filter["params"]["string"] do
       nil -> query
-      s ->
-        from e in query,
-        where: e.type != "r",
-        where: ilike(e.titl_title, ^("%#{s}%")),
-        or_where: ilike(e.titl_subtitle, ^("%#{s}%")),
-        or_where: ilike(e.editor, ^("%#{s}%")),
-        or_where: ilike(e.author, ^("%#{s}%"))
+      chain ->
+        dynamic = false
+        dynamic = dynamic([e], e.type != "r")
+
+        dynamic = chain
+                  |> String.split([" ", ";", "."], trim: true)
+                  |> Enum.reduce(dynamic, fn(x, acc) -> all_sub_filter(x, acc) end)
+
+
+        from query, where: ^dynamic
     end
   end
 

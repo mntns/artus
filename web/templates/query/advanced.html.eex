@@ -4,5 +4,7 @@
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
   <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   <script>window.systemType = 42;</script>
-  <div id="advanced"></div>
+  <div id="reactAdvancedSearch"></div>
 </div>
+
+<div id="builder-basic"></div>

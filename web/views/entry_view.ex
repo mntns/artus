@@ -118,6 +118,12 @@ defmodule Artus.EntryView do
     key |> Atom.to_string |> get_label()
   end
 
+  def render_value(:editor, value) do
+    value |> Artus.SharedView.style_editors() |> raw()
+  end
+  def render_value(:author, value) do
+    value |> Artus.SharedView.style_authors() |> raw()
+  end
   def render_value(:part, value) do
     get_part(value)
   end
