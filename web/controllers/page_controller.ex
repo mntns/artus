@@ -3,12 +3,9 @@ defmodule Artus.PageController do
 
   @doc "Renders main page"
   def index(conn, _params) do
-    notice = case Artus.DefinitionManager.get_notice() do
-      "" -> nil
-      nil -> nil
-      x -> x
-    end
-    render conn, "index.html", %{notice: notice}
+    notice = Artus.DefinitionManager.get_notice()
+    is_user = !is_nil(conn.assigns.user)
+    render conn, "index.html", %{notice: notice, is_user: is_user}
   end
 
   @doc "Renders warning for browsers with disabled JS"

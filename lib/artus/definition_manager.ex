@@ -98,7 +98,7 @@ defmodule Artus.DefinitionManager do
   def handle_call(:get_notice, _from, state) do
     case NaiveDateTime.diff(NaiveDateTime.utc_now(), state.notice_ts, :seconds) do
       n when n < (40 * 60 * 60) ->
-        {:reply, state.notice, state}
+        {:reply, prepare_notice(state.notice), state}
       _ -> 
         {:reply, nil, %{state | notice: nil, notice_ts: nil}}
     end
@@ -109,5 +109,13 @@ defmodule Artus.DefinitionManager do
     ~w(modals field_defs fields languages options branches)
     |> Enum.map(fn(x) -> {String.to_atom(x), "defs/#{x}.json" |> File.read! |> JSX.decode!} end) 
     |> Enum.into(%{})
+  end
+
+  defp prepare_notice(raw_notice) do
+    case raw_notice do 
+      "" -> nil
+      nil -> nil
+      x -> x
+    end
   end
 end

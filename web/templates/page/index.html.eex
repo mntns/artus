@@ -28,7 +28,7 @@
   </form>
   -->
   
-  <%= if @notice do %>
+  <%= if @notice && @is_user do %>
     <div class="alert alert-warning" role="alert" style="margin-top: 3vh;">
       <%= @notice %>
     </div>
