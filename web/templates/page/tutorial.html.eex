@@ -1,0 +1,49 @@
+<%= render Artus.SharedView, "navbar.html", user: @user %>
+
+<div class="container main">
+  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <div class="row justify-content-md-center">
+
+    <div class="col-md-8">
+      <h1 class="display-3">Welcome to BIAS!</h1>
+      <p class="lead">
+        Please take a few minutes to familiarize yourself with BIAS principles. If you have any questions, don't hesitate to ask your <a href="http://www.internationalarthuriansociety.com/branches-and-committees">national bibliographer or the international bibliographer</a>.<br>
+      </p>
+
+      <p>
+        This database follows the printed and searchable e-book <i>BIAS</i>. Its aim is to include all books, reviews and articles directly concerned with the <i>matière de Bretagne</i>. Subjects which are only indirectly concerned with Arthurian matters, such as the origins of courtly love, are deliberately excluded. Also excluded are fiction, popular works, and general surveys found in histories of literature. <br><br>
+      </p>
+
+      <h3>Procedure</h3>
+      <p>
+        Each branch is responsible for all publications that are printed in the country or area covered by the branch. Items with double imprints should usually be listed by the “home branch.” When a book is published in two countries (because the editing house has offices in both), please consult your colleague on who does what! E.g., Oxford University Press is handled by the British Branch but with Palgrave it is a matter of decision between the US and UK.<br>
+      </p>
+      <p>
+        The bibliographical staff is divided into three categories: Each branch will elect a national bibliographer. He or she may co-opt other bibliographical secretaries/assistants (or they might be proposed and/or elected by the branch committee) to assist with the annual branch bibliographical report. Once a year, by May 1st, the national bibliographer collates all the records to the international bibliographer.<br><br>
+      </p>
+
+      <h3>Formats</h3>
+      <p>
+        Colleagues are kindly requested to supply bibliography entries according to the well-established formats. Please make every effort to use these formats as it speeds up the editing of BIAS considerably. Traditionally the bibliographical items use the following headings:
+      </p>
+      <ol style="list-style-type:upper-roman;">
+        <li>Editions and translations</li>
+        <li>Critical and historical studies</li>
+        <li>Reviews</li>
+        <li>Reprints</li>
+        <li>Unpublished doctoral dissertations </li>
+      </ol>
+      <p>
+        (I), (II), and (V) - books and papers - are entered via the "Input"-button on the head of this page. If you want to enter reviews, reprints or several papers in a single collected volume, please go to "Input", too: There you may first enter the book revied or reprinted as well as the collected volume. Then you search for the item in the database and open it. There you may enter reviews, reprints, or articles within the collected volume.<br><br>
+      </p>
+
+      <h3>How to save and submit the data</h3>
+      <ol>
+        <li>Enter your data. Press "Create": Your data is not saved yet!</li>
+        <li>Press "Submit". Your data is now saved to your working cache. Others may see it but not edit or change it.</li>
+        <li>When you've finished your work for the whole bibliography submit the working cache to the national or international bibliographer: Click on your name on the top right. Open "working caches" and open the cache you want to submit. Press "submit".</li>
+      </ol>
+
+    </div>
+  </div>
+</div>

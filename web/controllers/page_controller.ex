@@ -32,4 +32,9 @@ defmodule Artus.PageController do
   def imprint(conn, _params) do
     render conn, "imprint.html"
   end
+
+  @doc "Renders tutorial page"
+  def tutorial(conn, _params) do
+    render conn, "tutorial.html"
+  end
 end

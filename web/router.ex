@@ -39,6 +39,7 @@ defmodule Artus.Router do
     get "/imprint", PageController, :imprint
     get "/feedback", PageController, :feedback
     post "/feedback", PageController, :submit_feedback
+    get "/tutorial", PageController, :tutorial
 
     # Query
     get "/advanced", QueryController, :advanced
