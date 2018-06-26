@@ -11,6 +11,7 @@ defmodule Artus.User do
 
     field :activated, :boolean
     field :activation_code, :string
+    field :last_login, :naive_datetime 
     field :level, :integer
 
     has_many :caches, Artus.Cache, on_delete: :delete_all
@@ -22,7 +23,7 @@ defmodule Artus.User do
   @doc "Builds default changeset"
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :hash, :mail, :branch, :admin, :activated, :activation_code, :level])
+    |> cast(params, [:name, :hash, :mail, :branch, :admin, :activated, :activation_code, :level, :last_login])
     |> validate_required([:name, :mail, :branch, :level])
     |> update_change(:mail, &String.downcase/1)
     |> unique_constraint(:mail)

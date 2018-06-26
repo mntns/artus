@@ -148,7 +148,9 @@ defmodule Artus.FormChannel do
       {:ok, entry} -> 
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "edit")}
         {:reply, {:ok, data}, socket}
-      {:error, changeset} -> {:reply, {:err, %{}}, socket}
+      {:error, changeset} -> 
+        IO.inspect changeset
+        {:reply, {:err, %{}}, socket}
     end
   end
 

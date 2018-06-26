@@ -19,11 +19,10 @@ defmodule Artus.AuthController do
     # Checks password
     case Comeonin.Bcrypt.checkpw(password, user.hash) do
       true ->
-        Artus.EventLogger.log(:log_in, user)
-
         conn
         |> put_session(:logged_in, true)
         |> put_session(:user_id, user.id)
+        |> log_login(user)
         |> redirect(to: "/")
       false ->
         raise_bad_login(conn)
@@ -128,6 +127,27 @@ defmodule Artus.AuthController do
         |> redirect(to: page_path(conn, :index))
     end
 
+  end
+
+  defp log_login(conn, user) do
+    Artus.EventLogger.log(:log_in, user)
+
+    datetime_now = NaiveDateTime.utc_now()
+    datetime_last = case is_nil(user.last_login) do
+      true -> ~N[0000-01-01 00:00:00]
+      false -> user.last_login
+    end
+    threshold = (60 * 60 * 24 * 3)
+    
+    changeset = Artus.User.changeset(user, %{last_login: datetime_now})
+    Repo.update!(changeset)
+    
+    case (NaiveDateTime.diff(datetime_now, datetime_last, :seconds)) do
+      x when x > threshold ->
+        put_flash(conn, :tutorial, "#{user.name}")
+      _ -> 
+        conn
+    end
   end
 
   defp raise_bad_login(conn) do
