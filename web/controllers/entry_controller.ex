@@ -2,6 +2,8 @@ defmodule Artus.EntryController do
   use Artus.Web, :controller
   alias Artus.{Entry, Cache}
 
+  plug :check_public_access
+
   @doc "Show entry by ID"
   def show(conn, %{"id" => id}) do
     entry = Entry 
@@ -96,7 +98,22 @@ defmodule Artus.EntryController do
     end
   end
 
+  @doc "Converts html input file to output file of specified type, using pandoc"
   defp convert_file(input, output, type, id) do
     System.cmd("pandoc", [input, "-f", "html", "-t", type, "-s", "-o", output])
+  end
+  
+  @doc "Checks if user that is not logged in has access"
+  defp check_public_access(conn, _) do
+    entry = Repo.get!(Entry, conn.params["id"])
+
+    case (!is_nil(conn.assigns.user) or entry.public) do
+      true -> conn
+      false -> 
+        conn 
+        |> put_flash(:info, "You don’t have access to this entry.") 
+        |> redirect(to: "/")
+        |> halt()
+    end
   end
 end
