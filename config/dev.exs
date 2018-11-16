@@ -43,7 +43,8 @@ config :artus, Artus.Repo,
   password: "postgres",
   database: "artus_dev",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 10,
+  pool_timeout: 20_000
 
 config :artus, Artus.Mailer,
   adapter: Bamboo.LocalAdapter

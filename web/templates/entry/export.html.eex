@@ -17,4 +17,10 @@
       <i class="fa fa-fw fa-download" aria-hidden="true"></i> OpenDocument Format (.odt)
     </a>
   </div>
+  
+  <p class="text-muted">
+    <small>
+      <i class="fa fa-creative-commons"></i> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
+    </small>
+  </p>
 </div>

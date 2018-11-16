@@ -77,9 +77,12 @@
   <% end %>
 
   <!-- Creation notice -->
-  <p class="text-muted float-right">
+  <p class="text-muted float-right text-right">
     <small>
-      Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %>
+      <i class="fa fa-creative-commons"></i> Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %>
+      <br>
+      This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
     </small>
   </p>
+
 </div>

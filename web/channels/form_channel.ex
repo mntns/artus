@@ -149,7 +149,9 @@ defmodule Artus.FormChannel do
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "edit")}
         {:reply, {:ok, data}, socket}
       {:error, changeset} -> 
-        IO.inspect changeset
+        changeset.errors
+        |> Enum.map(&Artus.ErrorHelpers.translate_error(&1))
+        |> IO.inspect()
         {:reply, {:err, %{}}, socket}
     end
   end
@@ -172,7 +174,9 @@ defmodule Artus.FormChannel do
       {:ok, entry} -> 
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "create")}
         {:reply, {:ok, data}, socket}
-      {:error, changeset} -> {:reply, {:err, %{}}, socket}
+      {:error, changeset} -> 
+        errors = nil
+        {:reply, {:err, errors}, socket}
     end
   end
   
@@ -189,4 +193,5 @@ defmodule Artus.FormChannel do
       {:error, changeset} -> {:reply, {:err, %{}}, socket}
     end
   end
+
 end
