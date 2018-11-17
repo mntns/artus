@@ -1,0 +1,1 @@
+<a target="_blank" href="<%= doi_link(@doi) %>"><%= @doi %></a>

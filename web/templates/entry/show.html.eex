@@ -44,6 +44,43 @@
     </a>
   </div>
 
+  <%= if @conn.assigns.user do %>
+    <div class="card">
+      <div class="card-body">
+    <table class="table table-hover" style="margin-bottom: 0;">
+      <tbody>
+        <tr>
+          <th>Entry status</th>
+          <td><%= render_entry_status(@entry) |> raw() %></td>
+        </tr>
+        <tr>
+          <th>Working bibliograper</th>
+          <td><b><%= @entry.user.name %></b> (Cache: <%= @entry.cache.name %>)</td>
+        </tr>
+        <tr>
+          <th scope="row">Branch</th>
+          <td>
+            <% branch = get_branch(@user.branch) %>
+            <%= for flag <- branch["flags"] do %>
+              <span class="flag-icon flag-icon-<%= flag %>"></span>
+            <% end %>
+            (<%= branch["name"] %>)
+          </td>
+        </tr>
+        <%= if !is_nil(@entry.internal_comment) do %>
+        <tr>
+          <th><%= render_label(:internal_comment) %></th>
+          <td><%= render_value(:internal_comment, @entry.internal_comment) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+      </div>
+    </div>
+  <% end %>
+  
+  <br>
+
   <!-- Table with fields -->
   <%= render Artus.EntryView, "table.html", assigns %>
 

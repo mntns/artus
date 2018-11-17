@@ -6,6 +6,8 @@ defmodule Artus.EntryView do
   alias Artus.Tag
   alias Artus.Cache
 
+  # TODO: Branch in Entry? Part/Type in Entry?
+
   def render_tag(tag) do
     tag.tag |> Artus.NotMarkdown.to_html()
   end
@@ -46,7 +48,9 @@ defmodule Artus.EntryView do
     end
   end
 
+  @doc "Returns DOI referer link"
   def doi_link(doi) do
+    # TODO: Check DOI with Regex
     "https://dx.doi.org/" <> doi
   end
 
@@ -64,42 +68,6 @@ defmodule Artus.EntryView do
     query |> Repo.all |> List.flatten |> Enum.member?(entry_id)
   end
   
-  # <%= case key do %>
-  #               <% :doi -> %>
-  #                 <th scope="row">Digital Object Identifier</th>
-  #                 <td>
-  #                 </td>
-
-  #                 <% :links -> %>
-  #                   <th scope="row">Links</th>
-  #                   <td>
-  #                     <%= for line <- String.split(value, "\n", trim: true) do %>
-  #                       <% link_set = String.split(line, " ") %>
-  #                       <a href="<%= hd(link_set) %>"><%= List.last(link_set) %></a>
-  #                     <% end %>
-  #                   </td>
-  #                   <% :part -> %>
-  #                     <th scope="row">Part</th>
-  #                     <td><%= get_part(value) %></td>
-  #                     <% :type -> %>
-  #                       <th scope="row">Type</th>
-  #                       <td><%= get_type(value) %></td>
-  #                       <% :branch -> %>
-  #                         <th scope="row">Branch</th>
-  #                         <td>
-  #                           <% branch = get_branch(@entry.branch) %>
-  #                           <%= for flag <- branch["flags"] do %>
-  #                             <span class="flag-icon flag-icon-<%= flag %>"></span>
-  #                           <% end %>
-  #                           (<%= branch["name"] %>)
-  #                         </td>
-  #                         <% _ -> %>
-  #                           <th scope="row"><%= key |> Atom.to_string |> get_label %></th>
-  #                           <td><%= value %></td>
-  #                         <% end %>
-  #
-  #                         
-  
   @doc """
   Prepares entry for table rendering
 
@@ -108,10 +76,11 @@ defmodule Artus.EntryView do
   """
   def prepare_entry_table(entry) do
     entry_map = Map.from_struct(entry)
+    to_remove = [:abstract, :internal_comment]
     
     Artus.DefinitionManager.fields()[entry.type]
     |> Enum.map(fn [k, _] -> String.to_atom(k) end)
-    |> List.delete(:abstract)
+    |> (&(&1 -- to_remove)).()
     |> Enum.map(fn(k) -> {k, entry_map[k]} end)
     |> Enum.filter(fn({k, v}) -> !is_nil(v) end)
   end
@@ -133,11 +102,28 @@ defmodule Artus.EntryView do
     get_part(value)
   end
   def render_value(:doi, value) do
-    value
+    render Artus.EntryView, "field_doi.html", %{doi: value}
+  end
+  def render_value(:language, value) do
+    language_map = Artus.DefinitionManager.languages()
+                   |> Enum.filter(fn(m) -> m["value"] == value end)
+                   |> hd()
+    language_map["label"]
+  end
+  def render_value(:links, value) do
+    # TODO: Refactor field_links.html
+    render Artus.EntryView, "field_links.html", %{links: value}
   end
   def render_value(key, value) do
     value
   end
 
+
+  def render_entry_status(entry) do
+    case entry.public do
+      true -> "<span class=\"badge badge-pill badge-success\">Public</span>"
+      false -> "<span class=\"badge badge-pill badge-warning\">Not public</span>"
+    end
+  end
 
 end

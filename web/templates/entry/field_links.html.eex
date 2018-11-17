@@ -1,0 +1,4 @@
+<%= for line <- String.split(@links, "\n", trim: true) do %>
+  <% link_set = String.split(line, " ") %>
+  <a href="<%= hd(link_set) %>"><%= List.last(link_set) %></a>
+<% end %>
