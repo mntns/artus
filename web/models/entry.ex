@@ -53,6 +53,7 @@ defmodule Artus.Entry do
     # Ownerships (cache, user) 
     belongs_to :cache, Artus.Cache, on_replace: :nilify
     belongs_to :user, Artus.User, on_replace: :nilify
+    
     field :bibliographer, :string
     field :last_change_user, :string
 
@@ -105,5 +106,13 @@ defmodule Artus.Entry do
                        ser_issue ser_count additional_info links internal_comment))
     |> cast_assoc(:cache, required: false)
     |> cast_assoc(:user, required: true)
+  end
+  
+  def publish_changeset(model) do
+    # ~w(type part submit_date public biblio_record_id author editor editor_primary_work reviewer titl_title titl_subtitle titl_add ser_title ser_volume ser_code ser_issue ser_count ser_year_pub publ_pub_house publ_pub_place biblio_issn biblio_isbn doi language abstract internal_comment additional_info links bibliographer last_change_user))
+    model
+    |> cast(%{}, [])
+    |> put_change(:public, true)
+    |> put_assoc(:cache, nil)
   end
 end

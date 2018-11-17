@@ -153,7 +153,7 @@ defmodule Artus.CacheController do
 
   defp publish_entry(entry) do
     p_entry = Repo.preload(entry, [:cache, :user])
-    changeset = Entry.changeset(p_entry, %{cache: nil, public: true})
+    changeset = Entry.publish_changeset(p_entry)
     Repo.update!(changeset)
   end
 
