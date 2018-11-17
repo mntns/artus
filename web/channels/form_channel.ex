@@ -89,7 +89,7 @@ defmodule Artus.FormChannel do
                :publ_pub_place, :biblio_issn, :biblio_isbn,
                :doi, :abstract, :language, :subject_things,
                :subject_works, :additional_info, :links,
-               :internal_comment, :id, :cache_id]
+               :internal_comment, :id, :cache_id, :bibliographer]
     entry = Artus.Entry
             |> Repo.get!(id)
             |> Map.from_struct
@@ -140,7 +140,7 @@ defmodule Artus.FormChannel do
     user = Repo.get!(Artus.User, socket.assigns.user)
     entry = Artus.Entry
             |> Repo.get!(entry_id)
-            |> Repo.preload([:cache, :user, :bibliograph])
+            |> Repo.preload([:cache, :user])
     cache = Repo.get!(Artus.Cache, data["cache"]["value"])
     changeset = Entry.submit_changeset(entry, user, cache, data)
     

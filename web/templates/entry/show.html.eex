@@ -55,7 +55,7 @@
         </tr>
         <%= if !@entry.public do %>
         <tr>
-          <th>Working bibliograper</th>
+          <th>Current owner</th>
           <td><b><%= @entry.user.name %></b> (Cache: <%= @entry.cache.name %>)</td>
         </tr>
         <tr>
@@ -108,7 +108,7 @@
   <!-- Creation notice -->
   <p class="text-muted float-right text-right">
     <small>
-      <i class="fa fa-creative-commons"></i> Last changed by <%= @entry.bibliograph.name %> at <%= @entry.updated_at %>
+      <i class="fa fa-creative-commons"></i> Last changed by <%= @entry.last_change_user %> at <%= @entry.updated_at %>
       <br>
       This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
     </small>

@@ -18,7 +18,8 @@
     ["additional_info", false],
     ["links", false],
     ["internal_comment", false],
-    ["biblio_record_id", false]
+    ["biblio_record_id", false],
+    ["bibliographer", true]
   ],
   "b": [
     ["author", false],
@@ -41,7 +42,8 @@
     ["additional_info", false],
     ["links", false],
     ["internal_comment", false],
-    ["biblio_record_id", false]
+    ["biblio_record_id", false],
+    ["bibliographer", true]
   ],
   "z": [
     ["author", true],
@@ -64,7 +66,8 @@
     ["additional_info", false],
     ["links", false],
     ["internal_comment", false],
-    ["biblio_record_id", false]
+    ["biblio_record_id", false],
+    ["bibliographer", true]
   ],
   "r": [
     ["reviewer", true],
@@ -82,7 +85,8 @@
     ["additional_info", false],
     ["links", false],
     ["internal_comment", false],
-    ["biblio_record_id", false]
+    ["biblio_record_id", false],
+    ["bibliographer", true]
   ]
 }
 

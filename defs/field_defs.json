@@ -1,4 +1,9 @@
 {    
+  "bibliographer": {
+    "label": "Bibliographer",
+    "type": "text",
+    "sample": "John Doe"
+  },
   "biblio_record_id": {
     "label": "Item number in printed BIAS/BBSIA (till 2015)",
     "type": "text",

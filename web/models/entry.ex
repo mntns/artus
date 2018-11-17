@@ -50,10 +50,11 @@ defmodule Artus.Entry do
     belongs_to :reprint_parent, Artus.Entry, foreign_key: :reprint_parent_id
     belongs_to :children_parent, Artus.Entry, foreign_key: :children_parent_id, on_replace: :nilify
 
-    # Ownerships (cache, bibliograph, user) 
+    # Ownerships (cache, user) 
     belongs_to :cache, Artus.Cache, on_replace: :nilify
-    belongs_to :bibliograph, Artus.User, on_replace: :nilify
     belongs_to :user, Artus.User, on_replace: :nilify
+    field :bibliographer, :string
+    field :last_change_user, :string
 
     timestamps()
   end
@@ -91,19 +92,18 @@ defmodule Artus.Entry do
     |> cast(params, permitted)
     |> validate_required(required)
     |> put_change(:public, false)
+    |> put_change(:last_change_user, user.name)
     |> put_assoc(:cache, cache, required: true)
     |> put_assoc(:user, user, required: true)
-    |> put_assoc(:bibliograph, user, required: true)
   end
 
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, ~w(biblio_record_id type part public author editor editor_primary_work reviewer
+    |> cast(params, ~w(bibliographer biblio_record_id type part public author editor editor_primary_work reviewer
                        titl_title titl_subtitle titl_add ser_title ser_volume ser_code ser_year_pub 
                        publ_pub_house publ_pub_place biblio_issn biblio_isbn doi abstract language
                        ser_issue ser_count additional_info links internal_comment))
     |> cast_assoc(:cache, required: false)
     |> cast_assoc(:user, required: true)
-    |> cast_assoc(:bibliograph, required: true)
   end
 end

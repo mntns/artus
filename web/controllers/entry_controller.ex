@@ -8,7 +8,7 @@ defmodule Artus.EntryController do
   def show(conn, %{"id" => id}) do
     entry = Entry 
             |> Repo.get!(id) 
-            |> Repo.preload([{:user, :caches}, :tags, :bibliograph, :cache, :reviews, :reprints, :children])
+            |> Repo.preload([{:user, :caches}, :tags, :cache, :reviews, :reprints, :children])
 
     is_owner = case conn.assigns.user do
       nil -> false
@@ -38,7 +38,7 @@ defmodule Artus.EntryController do
 
     Entry
     |> Repo.get!(id)
-    |> Repo.preload([:bibliograph, :cache, :reviews, :reprints])
+    |> Repo.preload([:cache, :reviews, :reprints])
     |> Ecto.Changeset.change
     |> Ecto.Changeset.put_assoc(:cache, target_cache)
     |> Repo.update!()
