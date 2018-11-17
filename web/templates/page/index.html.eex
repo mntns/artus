@@ -5,7 +5,9 @@
   <%= render Artus.SharedView, "noie.html", %{conn: @conn} %>
   <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
 
-  <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
+  <a target="_blank" href="http://internationalarthuriansociety.com/">
+    <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
+  </a>
 
   <div id="reactSearchBar"></div>
   <!--

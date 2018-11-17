@@ -68,13 +68,16 @@ defmodule Artus.Admin.UserController do
     end
   end
 
-  @doc "Send password reset link to user"
+  @doc "Sends password reset link to user"
   def reset(conn, %{"id" => id}) do
+    user = Repo.get!(User, id)
+    changeset = User.changeset(user, %{"activation_code" => UUID.uuid4()})
+    Repo.update!(changeset)
     user = Repo.get!(User, id)
 
     user 
-    |> Artus.Email.password_reset_email
-    |> Artus.Mailer.deliver_now
+    |> Artus.Email.password_reset_email()
+    |> Artus.Mailer.deliver_now()
 
     conn
     |> put_flash(:info, "Sent password reset link to user.")
