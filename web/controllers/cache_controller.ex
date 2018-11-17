@@ -3,19 +3,19 @@ defmodule Artus.CacheController do
   import Ecto.Query
   alias Artus.{Entry, Cache, User, Logger}
 
-  @doc "Show all working caches by current user"
+  @doc "Shows all working caches by current user"
   def index(conn, _params) do
     caches = get_caches_by_user(conn.assigns.user)
     render conn, "index.html", %{caches: caches}
   end
 
-  @doc "Show form to create new working cache"
+  @doc "Shows form to create new working cache"
   def new(conn, _params) do
     changeset = Cache.changeset(%Cache{})
     render conn, "new.html", %{changeset: changeset}
   end
 
-  @doc "Create new working cache"
+  @doc "Creates new working cache"
   def create(conn, %{"cache" => cache}) do
     changeset = Ecto.build_assoc(conn.assigns.user, :caches, %{name: cache["name"]})
 
@@ -33,7 +33,7 @@ defmodule Artus.CacheController do
     end
   end
 
-  @doc "Show working cache by ID with redirect alert"
+  @doc "Shows working cache by ID with redirect alert"
   def show(conn, %{"id" => id, "success" => type}) do
     message = case type do
       "edit" -> "Successfully edited entry!"
@@ -46,27 +46,27 @@ defmodule Artus.CacheController do
     |> render("show.html", %{cache: cache})
   end
 
-  @doc "Show working cache by ID"
+  @doc "Shows working cache by ID"
   def show(conn, %{"id" => id}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     render conn, "show.html", %{cache: cache}
   end
 
-  @doc "Show page for sending cache upward"
+  @doc "Shows page for sending cache upward"
   def up(conn, %{"id" => id}) do
     supervisors = get_supervisors(conn.assigns.user)
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     render conn, "up.html", %{cache: cache, supervisors: supervisors}
   end
   
-  @doc "Show page for sending cache downward"
+  @doc "Shows page for sending cache downward"
   def down(conn, %{"id" => id}) do
     subordinates = get_subordinates(conn.assigns.user)
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     render conn, "down.html", %{cache: cache, subordinates: subordinates}
   end
 
-  @doc "Send working cache to recipient"
+  @doc "Sends working cache to recipient"
   def send(conn, %{"id" => id, "direction" => _direction, "recipient" => recipient, "comment" => comment}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     r_user = Repo.get!(User, recipient)
@@ -82,7 +82,7 @@ defmodule Artus.CacheController do
     |> redirect(to: cache_path(conn, :index))
   end
 
-  @doc "Publish all entries in cache and delete it"
+  @doc "Publishes all entries in cache and deletes it"
   def publish(conn, %{"id" => id}) do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
 
@@ -152,7 +152,7 @@ defmodule Artus.CacheController do
   end
 
   defp publish_entry(entry) do
-    p_entry = Repo.preload(entry, :cache)
+    p_entry = Repo.preload(entry, [:cache, :user, :bibliograph])
     changeset = Entry.changeset(p_entry, %{cache: nil, public: true})
     Repo.update!(changeset)
   end

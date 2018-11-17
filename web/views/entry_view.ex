@@ -68,7 +68,6 @@ defmodule Artus.EntryView do
   #               <% :doi -> %>
   #                 <th scope="row">Digital Object Identifier</th>
   #                 <td>
-  #                   <a target="_blank" href="<%= doi_link(@entry.doi) %>"><%= @entry.doi %></a>
   #                 </td>
 
   #                 <% :links -> %>
@@ -101,14 +100,20 @@ defmodule Artus.EntryView do
   #
   #                         
   
-  def prepare_entry(entry) do
-    field_keys = Artus.DefinitionManager.field_defs()
-                 |> Map.keys()
-                 |> Enum.map(&String.to_atom(&1))
+  @doc """
+  Prepares entry for table rendering
 
-    entry
-    |> Map.from_struct()
-    |> Enum.filter(fn({k,v}) -> Enum.member?(field_keys, k) && !is_nil(v) && k != :abstract end)
+  It fetches the keys from the `DefinitionManager` and
+  builds a keyword list using the keys and the entry
+  """
+  def prepare_entry_table(entry) do
+    entry_map = Map.from_struct(entry)
+    
+    Artus.DefinitionManager.fields()[entry.type]
+    |> Enum.map(fn [k, _] -> String.to_atom(k) end)
+    |> List.delete(:abstract)
+    |> Enum.map(fn(k) -> {k, entry_map[k]} end)
+    |> Enum.filter(fn({k, v}) -> !is_nil(v) end)
   end
 
 
@@ -126,6 +131,9 @@ defmodule Artus.EntryView do
   end
   def render_value(:part, value) do
     get_part(value)
+  end
+  def render_value(:doi, value) do
+    value
   end
   def render_value(key, value) do
     value

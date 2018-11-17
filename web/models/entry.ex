@@ -59,14 +59,15 @@ defmodule Artus.Entry do
   end
 
   defp normalize_model(model) do
-    Enum.map(model, fn({k,v}) -> 
-      if (is_map(v)) do
+    model
+    |> Enum.map(fn({k, v}) -> 
+      if is_map(v) do
         case k do
           "ser_code" -> {k, v["abbr"]}
           _ -> {k, v["value"]}
         end
-      else
-        {k,v}
+    else
+      {k, v}
       end
     end)
     |> Enum.into(%{})
@@ -97,7 +98,7 @@ defmodule Artus.Entry do
 
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, ~w(biblio_record_id branch type part public author editor editor_primary_work reviewer
+    |> cast(params, ~w(biblio_record_id type part public author editor editor_primary_work reviewer
                        titl_title titl_subtitle titl_add ser_title ser_volume ser_code ser_year_pub 
                        publ_pub_house publ_pub_place biblio_issn biblio_isbn doi abstract language
                        ser_issue ser_count additional_info links internal_comment))

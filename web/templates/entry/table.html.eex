@@ -1,0 +1,11 @@
+<table class="table table-hover">
+  <thead></thead>
+  <tbody>
+    <%= for {key, value} <- prepare_entry_table(@entry) do %>
+      <tr>
+        <th><%= render_label(key) %></th>
+        <td><%= render_value(key, value) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
