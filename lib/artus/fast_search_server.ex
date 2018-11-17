@@ -50,6 +50,7 @@ defmodule Artus.FastSearchServer do
         String.downcase(first <> " " <> name)
       [name] ->
         String.downcase(name)
+      x -> author
     end
   end
 

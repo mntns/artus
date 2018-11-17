@@ -108,7 +108,7 @@
   <!-- Creation notice -->
   <p class="text-muted float-right text-right">
     <small>
-      <i class="fa fa-creative-commons"></i> Originally created at <%= @entry.updated_at %> by <%= @entry.bibliograph.name %>
+      <i class="fa fa-creative-commons"></i> Last changed by <%= @entry.bibliograph.name %> at <%= @entry.updated_at %>
       <br>
       This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
     </small>

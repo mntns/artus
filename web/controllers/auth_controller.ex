@@ -2,8 +2,7 @@ defmodule Artus.AuthController do
   use Artus.Web, :controller
   import Ecto.Query
   alias Artus.User
-  require Logger
-
+  
   def login(conn, _params) do
     render conn, "login.html"
   end

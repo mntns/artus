@@ -18,9 +18,10 @@ defmodule Artus.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Artus, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :gettext,
                     :phoenix_ecto, :postgrex, :uuid, :crypto, :comeonin, :exjsx, :bamboo, :temp,
-                    :scrivener_ecto]]
+                    :scrivener_ecto, :retrieval],
+    extra_applications: [:logger]]
   end
 
   # Specifies which paths to compile per environment.
