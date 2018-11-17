@@ -1,10 +1,10 @@
 defmodule Artus.EntryController do
   use Artus.Web, :controller
-  alias Artus.{Entry, Cache}
 
+  alias Artus.{Entry, Cache}
   plug :check_public_access
 
-  @doc "Show entry by ID"
+  @doc "Shows entry by ID"
   def show(conn, %{"id" => id}) do
     entry = Entry 
             |> Repo.get!(id) 
@@ -42,6 +42,8 @@ defmodule Artus.EntryController do
     |> Ecto.Changeset.change
     |> Ecto.Changeset.put_assoc(:cache, target_cache)
     |> Repo.update!()
+
+    Artus.EventLogger.log(:entry_move, "#{conn.assigns.user.name} moved entry ##{id} to working cache '#{target_cache.name}' (#{target_cache.id})")
     
     conn
     |> put_flash(:info, "Successfully moved entry to working cache '#{target_cache.name}'.")
@@ -58,6 +60,8 @@ defmodule Artus.EntryController do
   def delete(conn, %{"id" => id}) do
     entry = Repo.get!(Entry, id)
     Repo.delete!(entry)
+
+    Artus.EventLogger.log(:entry_delete, "#{conn.assigns.user.name} deleted entry ##{entry.id}")
 
     conn 
     |> put_flash(:info, "Entry deleted successfully.")

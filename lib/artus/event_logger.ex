@@ -10,8 +10,8 @@ defmodule Artus.EventLogger do
     {:ok, []}
   end
 
-  def log(type, user)  do
-    GenServer.cast(:event_logger, {:log, type, user})
+  def log(type, message)  do
+    GenServer.cast(:event_logger, {:log, type, message})
   end
   
   def get(count) do
@@ -22,7 +22,7 @@ defmodule Artus.EventLogger do
     {:reply, Enum.take(state, count), state}
   end
   
-  def handle_cast({:log, type, user}, state) do
-    {:noreply, state ++ [%{:timestamp => DateTime.utc_now(), :type => type, :user => user}]}
+  def handle_cast({:log, type, message}, state) do
+    {:noreply, state ++ [%{:timestamp => DateTime.utc_now(), :type => type, :message => message}]}
   end
 end

@@ -1,5 +1,6 @@
 defmodule Artus.CacheController do
   use Artus.Web, :controller
+  
   import Ecto.Query
   alias Artus.{Entry, Cache, User, Logger}
 
@@ -21,9 +22,9 @@ defmodule Artus.CacheController do
 
     case Repo.insert(changeset) do
       {:ok, new_cache} ->
-        Logger.info("Created new working cache '#{new_cache.name}'", 
-                    new_cache.id, 
-                    conn.assigns.user.id)
+        Artus.EventLogger.log(
+          :cache_create,
+          "#{conn.assigns.user.name} created the working cache '#{new_cache.name}' (##{new_cache.id})")
 
         conn
         |> put_flash(:info, "Working Cache created successfully.")
@@ -71,11 +72,11 @@ defmodule Artus.CacheController do
     cache = Cache |> Cache.with_entries() |> Repo.get!(id)
     r_user = Repo.get!(User, recipient)
 
-    Enum.each(cache.entries, &move_entry(&1, r_user))
+    Enum.each(cache.entries, &reassign(&1, r_user))
     send_transfer_mail(conn.assigns.user, r_user, cache, comment)
-    reassign_cache(cache, r_user)
+    reassign(cache, r_user)
 
-    Logger.info("Sent cache to user ##{recipient}", cache.id, conn.assigns.user.id)
+    Artus.EventLogger.log(:cache_send, "#{conn.assigns.user.name} sent the working cache '#{cache.name}' to #{r_user.name}")
 
     conn
     |> put_flash(:info, "Working Cache was sent successfully.")
@@ -89,7 +90,7 @@ defmodule Artus.CacheController do
     Enum.each(cache.entries, &publish_entry(&1))
     Repo.delete(cache)
 
-    Logger.info("Published cache '#{cache.name}'", cache.id, conn.assigns.user.id)
+    Artus.EventLogger.log(:cache_publish, "#{conn.assigns.user.name} published the working cache '#{cache.name}' (#{cache.id})")
 
     conn
     |> put_flash(:info, "Successfully published the Working Cache '#{cache.name}'!")
@@ -101,13 +102,15 @@ defmodule Artus.CacheController do
     cache = Repo.get!(Cache, id)
     Repo.delete!(cache)
 
-    Logger.info("Deleted cache '#{cache.name}'", cache.id, conn.assigns.user.id)
+    Artus.EventLogger.log(:cache_delete, "#{conn.assigns.user.name} delete the working cache '#{cache.name}' (#{cache.id})")
 
     conn
     |> put_flash(:info, "Cache deleted successfully.")
     |> redirect(to: cache_path(conn, :index))
   end
 
+
+  @doc "Fetches all the working caches of a specific user"
   defp get_caches_by_user(user) do
     user
     |> Ecto.assoc(:caches)
@@ -115,20 +118,14 @@ defmodule Artus.CacheController do
     |> Enum.map(fn(cache) -> Repo.preload(cache, [:entries]) end)
   end
 
+  @doc "Sends cache transfer mail"
   defp send_transfer_mail(from_user, user, cache, comment) do
     from_user
     |> Artus.Email.transfer_cache_email(user, cache, comment)
     |> Artus.Mailer.deliver_now
   end
 
-  defp reassign_cache(cache, target_user) do
-    cache 
-    |> Repo.preload(:user)
-    |> Ecto.Changeset.change
-    |> Ecto.Changeset.put_assoc(:user, target_user)
-    |> Repo.update!()
-  end
-
+  @doc "Fetches supervisors of user"
   defp get_supervisors(user) do
     query = case user.level do
       x when x == 2 ->
@@ -140,6 +137,7 @@ defmodule Artus.CacheController do
     Repo.all(query)
   end
 
+  @doc "Fetches subordinates of user"
   defp get_subordinates(user) do
     query = case user.level do
       x when x == 1 -> 
@@ -151,14 +149,16 @@ defmodule Artus.CacheController do
     Repo.all(query)
   end
 
+  @doc "Makes entry public and removes it from cache"
   defp publish_entry(entry) do
     p_entry = Repo.preload(entry, [:cache, :user])
     changeset = Entry.publish_changeset(p_entry)
     Repo.update!(changeset)
   end
 
-  defp move_entry(entry, recipient) do
-    entry
+  @doc "Reassigns entry/cache to new user"
+  defp reassign(object, recipient) do
+    object
     |> Repo.preload(:user)
     |> Ecto.Changeset.change
     |> Ecto.Changeset.put_assoc(:user, recipient)

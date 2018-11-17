@@ -17,7 +17,8 @@
   <div class="list-group">
     <%= for log <- @logs do %>
       <div class="list-group-item">
-        <%= inspect log %>
+        <span class="text-muted"><%= log.timestamp %></span>
+        <i class="fa fa-fw <%= get_log_icon(log.type)%> "></i> <%= log.message %>
       </div>
     <% end %>
   </div>

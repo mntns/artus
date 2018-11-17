@@ -29,7 +29,9 @@ defmodule Artus.AuthController do
   end 
 
   def logout(conn, _params) do
-    Artus.EventLogger.log(:log_out, conn.assigns.user)
+    if user = conn.assigns.user do
+      Artus.EventLogger.log(:auth_logout, "#{user.name} logged out")
+    end
 
     conn
     |> put_session(:logged_in, false)
@@ -56,7 +58,7 @@ defmodule Artus.AuthController do
     case user = get_user_by_mail(mail) do
       nil ->
         conn
-        |> put_flash(:error, "User not found. :(")
+        |> put_flash(:error, "User not found.")
         |> redirect(to: auth_path(conn, :forgot))
       x ->
         # TODO: Fix this shit and add time checking
@@ -94,6 +96,8 @@ defmodule Artus.AuthController do
         |> User.changeset(%{activation_code: "", activated: true, hash: hash})
         |> Repo.update!()
 
+        Artus.EventLogger.log(:auth_reset, "#{user.name} reset their password")
+
         conn
         |> put_flash(:info, "Successfully set password! Please log in now.")
         |> redirect(to: auth_path(conn, :login))
@@ -129,7 +133,7 @@ defmodule Artus.AuthController do
   end
 
   defp log_login(conn, user) do
-    Artus.EventLogger.log(:log_in, user)
+    Artus.EventLogger.log(:auth_login, "#{user.name} logged in")
 
     datetime_now = NaiveDateTime.utc_now()
     datetime_last = case is_nil(user.last_login) do
@@ -179,5 +183,4 @@ defmodule Artus.AuthController do
     query = from u in User, where: u.mail == ^mail
     Repo.one(query)
   end
-
 end
