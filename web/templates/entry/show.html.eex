@@ -50,9 +50,10 @@
     <table class="table table-hover" style="margin-bottom: 0;">
       <tbody>
         <tr>
-          <th>Entry status</th>
-          <td><%= render_entry_status(@entry) |> raw() %></td>
+          <th style="border-top: none;">Entry status</th>
+          <td style="border-top: none;"><%= render_entry_status(@entry) |> raw() %></td>
         </tr>
+        <%= if !@entry.public do %>
         <tr>
           <th>Working bibliograper</th>
           <td><b><%= @entry.user.name %></b> (Cache: <%= @entry.cache.name %>)</td>
@@ -60,13 +61,14 @@
         <tr>
           <th scope="row">Branch</th>
           <td>
-            <% branch = get_branch(@user.branch) %>
+            <% branch = get_branch(@entry.user.branch) %>
             <%= for flag <- branch["flags"] do %>
               <span class="flag-icon flag-icon-<%= flag %>"></span>
             <% end %>
             (<%= branch["name"] %>)
           </td>
         </tr>
+      <% end %>
         <%= if !is_nil(@entry.internal_comment) do %>
         <tr>
           <th><%= render_label(:internal_comment) %></th>

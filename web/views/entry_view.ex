@@ -88,6 +88,7 @@ defmodule Artus.EntryView do
 
   def render_label(:part), do: "Part"
   def render_label(:type), do: "Type"
+  def render_label(:editor), do: "Editor(s)"
   def render_label(key) do
     key |> Atom.to_string |> get_label()
   end
