@@ -4,7 +4,7 @@
   <ol class="breadcrumb">
     <li class="active">
       Admin 
-      <span class="text-muted">(v<%= Artus.Mixfile.project[:version] %>)</span>
+      <span class="text-muted">(v1.3.8)</span>
     </li>
   </ol>
 
