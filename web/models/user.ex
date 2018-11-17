@@ -15,7 +15,7 @@ defmodule Artus.User do
     field :level, :integer
 
     has_many :caches, Artus.Cache, on_delete: :delete_all
-    has_many :entries, Artus.Entry
+    has_many :entries, Artus.Entry, on_delete: :delete_all
 
     timestamps()
   end
