@@ -20,7 +20,7 @@ defmodule Artus.Mixfile do
     [mod: {Artus, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :gettext,
                     :phoenix_ecto, :postgrex, :uuid, :crypto, :comeonin, :exjsx, :bamboo, :temp,
-                    :scrivener_ecto, :retrieval],
+                    :scrivener_ecto, :scrivener_html, :retrieval],
     extra_applications: [:logger]]
   end
 
@@ -47,6 +47,7 @@ defmodule Artus.Mixfile do
      {:temp, "~> 0.4"},
      {:retrieval, "~> 0.9.1"},
      {:scrivener_ecto, "~> 1.0"},
+     {:scrivener_html, "~> 1.7"},
      {:credo, "~> 0.8", only: [:dev, :test]},
      {:distillery, "~> 1.5", runtime: false},
      {:inch_ex, "~> 0.5.6", only: :docs}]

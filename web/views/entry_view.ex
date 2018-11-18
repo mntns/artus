@@ -109,7 +109,10 @@ defmodule Artus.EntryView do
     language_map = Artus.DefinitionManager.languages()
                    |> Enum.filter(fn(m) -> m["value"] == value end)
                    |> hd()
-    language_map["label"]
+    case language_map["label"] do
+      nil -> value
+      x -> x
+    end
   end
   def render_value(:links, value) do
     # TODO: Refactor field_links.html

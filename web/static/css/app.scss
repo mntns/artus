@@ -19,6 +19,10 @@ nav {
   background-color: $artus-primary;
 }
 
+nav[aria-label="Page navigation"] {
+  background: none;
+}
+
 #loginBox {
   width: 33vw;
 }

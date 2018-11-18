@@ -26,3 +26,8 @@ config :phoenix, :generators,
 
 # Ecto
 config :artus, ecto_repos: [Artus.Repo]
+
+# Scrivener HTML
+config :scrivener_html,
+  routes_helper: Artus.Router.Helpers,
+  view_style: :bootstrap_v4
