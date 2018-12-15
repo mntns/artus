@@ -8,6 +8,7 @@ defmodule Artus.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug NavigationHistory.Tracker
   end
 
   pipeline :auth do
@@ -73,15 +74,15 @@ defmodule Artus.Router do
     # Account
     get "/account", PageController, :account
 
-    # Entries
+    # Entries, user routes
     get "/entries/:id/review", EntryController, :review
-    get "/entries/:id/edit", EntryController, :edit
-    get "/entries/:id/article", EntryController, :article
     get "/entries/:id/reprint", EntryController, :reprint
+    get "/entries/:id/article", EntryController, :article
+    
+    # Entries, owner routes
+    get "/entries/:id/edit", EntryController, :edit
     get "/entries/:id/delete", EntryController, :delete
     get "/entries/:id/move/:target", EntryController, :move
-    post "/entries/:id/link", EntryController, :link
-    get "/entries/:id/remove_link/:target", EntryController, :remove_link
 
     # Input form
     get "/input/:cache", InputController, :input

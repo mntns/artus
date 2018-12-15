@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Move entry to other Cache</h5>
+        <h5 class="modal-title">Move Entry to other Cache</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -10,7 +10,9 @@
       <div class="modal-body">
         <div class="list-group">
           <%= for cache <- @entry.user.caches do %>
-            <a class="list-group-item" href="<%= entry_path(@conn, :move, @entry.id, cache.id) %>"><%= cache.name %></a>
+            <%= if cache.id != @entry.cache.id do %>
+              <a class="list-group-item" href="<%= entry_path(@conn, :move, @entry.id, cache.id) %>"><%= cache.name %></a>
+            <% end %>
           <% end %>
         </div>
       </div>

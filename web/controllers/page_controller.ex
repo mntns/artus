@@ -1,11 +1,12 @@
 defmodule Artus.PageController do
+  @moduledoc "Controller for all the public-facing pages"
+
   use Artus.Web, :controller
 
   @doc "Renders main page"
   def index(conn, _params) do
     notice = Artus.DefinitionManager.get_notice()
-    is_user = !is_nil(Guardian.Plug.current_resource(conn))
-    render conn, "index.html", %{notice: notice, is_user: is_user}
+    render conn, "index.html", %{notice: notice}
   end
 
   @doc "Renders warning for browsers with disabled JS"

@@ -20,7 +20,8 @@ defmodule Artus.Mixfile do
     [mod: {Artus, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :gettext,
                     :phoenix_ecto, :postgrex, :uuid, :crypto, :comeonin, :exjsx, :bamboo, :temp,
-                    :scrivener_ecto, :scrivener_html, :retrieval, :guardian, :bcrypt_elixir],
+                    :scrivener_ecto, :scrivener_html, :retrieval, :guardian, :bcrypt_elixir,
+                    :navigation_history],
     extra_applications: [:logger]]
   end
 
@@ -52,7 +53,8 @@ defmodule Artus.Mixfile do
      {:inch_ex, "~> 0.5.6", only: :docs},
      {:guardian, "~> 1.0"},
      {:comeonin, "~> 4.0"},
-     {:bcrypt_elixir, "~> 0.12"}]
+     {:bcrypt_elixir, "~> 0.12"},
+     {:navigation_history, "~> 0.2.2"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
