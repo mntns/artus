@@ -1,35 +1,36 @@
 defmodule Artus.Router do
   use Artus.Web, :router
   use Plug.ErrorHandler
-  
-  @doc "Assigns :user do conn"
-  pipeline :artus_conn do
+
+  pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    
-    plug Artus.UserPlug
-    plug :put_user_token
   end
 
-  @doc "Checks if :user is assigned"
-  pipeline :artus_user do
-    plug :check_user
+  pipeline :auth do
+    plug Artus.Auth.Pipeline
+    plug :put_current_user
+    plug :put_socket_token
   end
 
-  @doc "Checks if assigned :user is admin"
-  pipeline :artus_admin do
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+  pipeline :ensure_admin do
     plug :check_admin
   end
 
+  # Uses EmailPreviewPlug in development environment
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
   end
 
   scope "/", Artus do
-    pipe_through :artus_conn
+    pipe_through [:browser, :auth]
 
     # General routes
     get "/", PageController, :index
@@ -59,85 +60,75 @@ defmodule Artus.Router do
     post "/reset_pass/:code", AuthController, :reset_pass
     get "/reset/:code", AuthController, :reset
 
-    # TODO: User guardian for auth
-    # TODO: Refactor export (JSON export)
-
     # Entries
     get "/entries/:id", EntryController, :show
     get "/entries/:id/export", EntryController, :export
     get "/entries/:id/export/:type", EntryController, :export_type
-
-    scope "/" do
-      pipe_through :artus_user
-
-      # Account
-      get "/account", PageController, :account
-
-      # Entries
-      get "/entries/:id/review", EntryController, :review
-      get "/entries/:id/edit", EntryController, :edit
-      get "/entries/:id/article", EntryController, :article
-      get "/entries/:id/reprint", EntryController, :reprint
-      get "/entries/:id/delete", EntryController, :delete
-      get "/entries/:id/move/:target", EntryController, :move
-      post "/entries/:id/link", EntryController, :link
-      get "/entries/:id/remove_link/:target", EntryController, :remove_link
-
-      # Input form
-      get "/input/:cache", InputController, :input
-      get "/input", InputController, :input
-
-      # Working caches
-      resources "/caches", CacheController, except: [:delete]
-      get "/caches/:id/delete", CacheController, :delete
-      get "/caches/:id/up", CacheController, :up
-      get "/caches/:id/down", CacheController, :down
-      get "/caches/:id/publish", CacheController, :publish
-      post "/caches/:id/send/:direction", CacheController, :send
-    end
-
-    # Admin routes
-    scope "/admin", Admin do
-      pipe_through :artus_user
-      pipe_through :artus_admin
-
-      get "/", PageController, :index
-      get "/stats", PageController, :stats
-      get "/logs", PageController, :logs
-      get "/notice", PageController, :notice
-      post "/set_notice", PageController, :set_notice
-      get "/backup", PageController, :backup
-
-      # Tags
-      get "/tags", TagController, :index
-
-      # Users
-      resources "/users", UserController, except: [:delete]
-      get "/users/:id/delete", UserController, :delete
-      get "/users/:id/reset", UserController, :reset
-      get "/users/:id/caches", UserController, :caches
-
-      # Abbreviations
-      resources "/abbreviations", AbbreviationController, except: [:delete]
-      get "/abbreviations/:id/delete", AbbreviationController, :delete
-    end
   end
 
-  defp check_admin(conn, _) do
-    case conn.assigns.user.admin do
-      true -> conn
-      _ -> conn |> put_flash(:info, "You have no admin rights!") |> redirect(to: "/")
-    end
+  # Routes for users
+  scope "/", Artus do
+    pipe_through [:browser, :auth, :ensure_auth]
+
+    # Account
+    get "/account", PageController, :account
+
+    # Entries
+    get "/entries/:id/review", EntryController, :review
+    get "/entries/:id/edit", EntryController, :edit
+    get "/entries/:id/article", EntryController, :article
+    get "/entries/:id/reprint", EntryController, :reprint
+    get "/entries/:id/delete", EntryController, :delete
+    get "/entries/:id/move/:target", EntryController, :move
+    post "/entries/:id/link", EntryController, :link
+    get "/entries/:id/remove_link/:target", EntryController, :remove_link
+
+    # Input form
+    get "/input/:cache", InputController, :input
+    get "/input", InputController, :input
+
+    # Working caches
+    resources "/caches", CacheController, except: [:delete]
+    get "/caches/:id/delete", CacheController, :delete
+    get "/caches/:id/up", CacheController, :up
+    get "/caches/:id/down", CacheController, :down
+    get "/caches/:id/publish", CacheController, :publish
+    post "/caches/:id/send/:direction", CacheController, :send
   end
 
-  defp check_user(conn, _) do
-    case conn.assigns.user do
-      nil -> conn |> put_flash(:info, "Please log in.") |> redirect(to: "/")
-      _ -> conn
-    end
+  # Admin routes
+  scope "/admin", Artus.Admin do
+    pipe_through [:browser, :auth, :ensure_auth, :ensure_admin]
+
+    get "/", PageController, :index
+    get "/stats", PageController, :stats
+    get "/logs", PageController, :logs
+    get "/notice", PageController, :notice
+    post "/set_notice", PageController, :set_notice
+    get "/backup", PageController, :backup
+
+    # Tags
+    get "/tags", TagController, :index
+
+    # Users
+    resources "/users", UserController, except: [:delete]
+    get "/users/:id/delete", UserController, :delete
+    get "/users/:id/reset", UserController, :reset
+    get "/users/:id/caches", UserController, :caches
+
+    # Abbreviations
+    resources "/abbreviations", AbbreviationController, except: [:delete]
+    get "/abbreviations/:id/delete", AbbreviationController, :delete
   end
 
-  defp put_user_token(conn, _) do
+  @doc "Assigns current user to connection"
+  defp put_current_user(conn, _) do
+    conn
+    |> assign(:user, Guardian.Plug.current_resource(conn))
+  end
+
+  @doc "Assigns websocket token to connection"
+  defp put_socket_token(conn, _) do
     if current_user = conn.assigns.user do
       token = Phoenix.Token.sign(conn, "user socket", current_user.id)
       assign(conn, :user_token, token)
@@ -145,4 +136,16 @@ defmodule Artus.Router do
       conn
     end
   end
+
+  @doc "Checks, if assigned user has admin rights"
+  defp check_admin(conn, _) do
+    if conn.assigns.user.admin do
+      conn
+    else
+      conn
+      |> put_flash(:info, "You have no admin rights!")
+      |> redirect(to: "/")
+    end
+  end
+
 end

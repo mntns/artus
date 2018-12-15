@@ -1,40 +1,44 @@
 defmodule Artus.AuthController do
   use Artus.Web, :controller
   import Ecto.Query
-  alias Artus.User
+  alias Artus.{User, EventLogger}
+  alias Comeonin.Bcrypt
+  alias Artus.Auth.Guardian
   
+  @doc "Render login page"
   def login(conn, _params) do
     render conn, "login.html"
   end
 
+  @doc "Logs user in"
   def auth(conn, %{"mail" => mail, "password" => password}) do
-    user = get_user_by_mail(mail)
-
-    # Check if query from DB is != nil and user exists
-    if is_nil(user) do
-      raise_bad_login(conn)
-    end
-
-    # Checks password
-    case Comeonin.Bcrypt.checkpw(password, user.hash) do
-      true ->
-        conn
-        |> put_session(:logged_in, true)
-        |> put_session(:user_id, user.id)
-        |> log_login(user)
-        |> redirect(to: "/")
-      false ->
-        raise_bad_login(conn)
-    end
+    mail
+    |> authenticate_user(password)
+    |> auth_reply(conn)
   end 
+  
+  @doc "Sends authentication response to user"
+  defp auth_reply({:ok, user}, conn) do
+    conn
+    |> log_login(user)
+    |> put_flash(:success, "Welcome back!")
+    |> Guardian.Plug.sign_in(user)
+    |> redirect(to: "/")
+  end
+  defp auth_reply({:error, reason}, conn) do
+    conn
+    |> put_flash(:error, to_string(reason))
+    |> redirect(to: auth_path(conn, :login))
+  end
 
+  @doc "Signs user out"
   def logout(conn, _params) do
     if user = conn.assigns.user do
-      Artus.EventLogger.log(:auth_logout, "#{user.name} logged out")
+      EventLogger.log(:auth_logout, "#{user.name} logged out")
     end
-
+    
     conn
-    |> put_session(:logged_in, false)
+    |> Guardian.Plug.sign_out()
     |> put_flash(:info, "Successfully logged out!")
     |> redirect(to: "/")
   end
@@ -50,6 +54,7 @@ defmodule Artus.AuthController do
     end
   end
 
+  @doc "Renders 'forgot password' page"
   def forgot(conn, _params) do
     render conn, "forgot.html"
   end
@@ -153,12 +158,6 @@ defmodule Artus.AuthController do
     end
   end
 
-  defp raise_bad_login(conn) do
-    conn
-    |> put_flash(:error, "Wrong username and/or password.")
-    |> redirect(to: auth_path(conn, :login))
-  end
-
   defp check_activation_code(code) do
     query = from u in User,
       where: u.activated == false and u.activation_code == ^code
@@ -179,8 +178,25 @@ defmodule Artus.AuthController do
     end
   end
 
+  @doc "Gets user by email address"
   defp get_user_by_mail(mail) do
     query = from u in User, where: u.mail == ^mail
     Repo.one(query)
   end
+
+  @doc "Authenticates user via email adress and password"
+  defp authenticate_user(email, password) do
+    case get_user_by_mail(email) do
+      nil ->
+        Bcrypt.dummy_checkpw()
+        {:error, :invalid_credentials}
+      user ->
+        if Bcrypt.checkpw(password, user.hash) do
+          {:ok, user}
+        else
+          {:error, :invalid_credentials}
+        end
+    end
+  end
+
 end

@@ -1,39 +1,23 @@
-<%= render Artus.SharedView, "navbar.html", user: @user %>
+<%= render Artus.SharedView, "navbar.html", assigns%>
 
 <div class="container main">
-  <%= render Artus.SharedView, "nojs.html", %{conn: @conn} %>
-  <%= render Artus.SharedView, "noie.html", %{conn: @conn} %>
-  <%= render Artus.SharedView, "alert.html", %{conn: @conn} %>
+  <%= render Artus.SharedView, "nojs.html", assigns %>
+  <%= render Artus.SharedView, "noie.html", assigns %>
+  <%= render Artus.SharedView, "alert.html", assigns %>
 
   <a target="_blank" href="http://internationalarthuriansociety.com/">
     <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
   </a>
 
   <div id="reactSearchBar"></div>
+
   <!--
   <a class="float-right" href="<%= query_path(@conn, :advanced) %>"><small>Advanced Search</small></a>
   -->
 
-  <!--
-  <%= form_tag("/search") %>
-  <fieldset>
-    <div class="input-group">
-      <input name="query" type="text" class="form-control" 
-             data-toggle="tooltip" data-placement="bottom" 
-             title="Searches by title, subtitle, author and editor" placeholder="Search BIAS">
-
-      <div class="input-group-append">
-        <button class="btn btn-primary" type="submit">Go!</button>
-      </div>
-    </div>
-  </fieldset>
-  </form>
-  -->
-  
-  <%= if @notice && @is_user do %>
+  <%= if @notice && @user do %>
     <div class="alert alert-warning" role="alert" style="margin-top: 3vh;">
       <%= @notice %>
     </div>
   <% end %>
-  
 </div>

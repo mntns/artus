@@ -10,6 +10,8 @@ defmodule Artus.EventLogger do
     {:ok, []}
   end
 
+  def log_login()
+
   def log(type, message)  do
     GenServer.cast(:event_logger, {:log, type, message})
   end

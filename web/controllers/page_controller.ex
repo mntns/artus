@@ -4,7 +4,7 @@ defmodule Artus.PageController do
   @doc "Renders main page"
   def index(conn, _params) do
     notice = Artus.DefinitionManager.get_notice()
-    is_user = !is_nil(conn.assigns.user)
+    is_user = !is_nil(Guardian.Plug.current_resource(conn))
     render conn, "index.html", %{notice: notice, is_user: is_user}
   end
 

@@ -46,5 +46,11 @@ config :artus, Artus.Repo,
   pool_size: 10,
   pool_timeout: 20_000
 
+# Config LocalAdapter for developement environment
 config :artus, Artus.Mailer,
   adapter: Bamboo.LocalAdapter
+
+# Configure Guardian
+config :artus, Artus.Auth.Guardian,
+  issuer: "artus",
+  secret_key: "5z5Elpgv27fQobqPAUfK5EqzgXKF1YCX9UGbV6uBJ31V6rPPbX3lvvWLcsXaomx6"
