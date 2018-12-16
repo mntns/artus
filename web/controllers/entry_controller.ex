@@ -100,9 +100,12 @@ defmodule Artus.EntryController do
     System.cmd("pandoc", [input, "-f", "html", "-t", type, "-s", "-o", output])
   end
 
-  @doc "Checks if user owns entry"
+  @doc "Checks if user owns entry or is admin"
   defp is_owner?(entry, user) do
-    (entry.user.id == user.id)
+    case user do
+      nil -> false
+      user -> (!entry.public && (entry.user.id == user.id)) || user.admin
+    end
   end
 
   @doc "Fetches entry and assigns it to connection"
@@ -128,7 +131,7 @@ defmodule Artus.EntryController do
   def check_ownership(conn, _) do
     user = conn.assigns.user
 
-    if is_owner?(conn.assigns.entry, user) || user.admin do
+    if is_owner?(conn.assigns.entry, user) do
       conn
     else
       conn

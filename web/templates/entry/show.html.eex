@@ -3,6 +3,7 @@
 <div class="container main">
   <%= render Artus.SharedView, "alert.html", assigns %>
 
+  <!-- Review hint -->
   <%= if parent_id = @entry.review_parent_id do %>
     <small>
       Review of <a href="<%= entry_path(@conn, :show, parent_id) %>">#<%= parent_id %></a>
@@ -26,7 +27,8 @@
 
   <!-- Actions -->
   <div class="mt-2 mb-4 btn-group d-flex" role="group">
-    <%= if @is_owner do %>
+    
+    <%= if @is_owner && !@entry.public do %>
       <%= if @entry.user.caches != [] do %>
         <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#entryMoveModal" >
           <i class="fa fa-fw fa-share" aria-hidden="true"></i> Move 
@@ -39,12 +41,14 @@
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
     <% end %>
+
     <a class="btn btn-secondary w-100" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
       <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
     </a>
   </div>
 
-  <%= if @conn.assigns.user do %>
+  <%= if @user do %>
+    <!-- Internal information -->
     <div class="card">
       <div class="card-body">
     <table class="table table-hover" style="margin-bottom: 0;">
