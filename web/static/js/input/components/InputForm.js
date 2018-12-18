@@ -126,8 +126,14 @@ InputForm = connect(state => {
   if (window.inputType == "edit" && window.entryID) {
     initialValues = R.merge(initialValues, state.editEntry.entry);
 
+    // Modify type field if review
     if (state.editEntry.entry.reviewer) {
       initialValues = R.assoc('type', {value: "r", label: "Review"}, initialValues);
+    }
+
+    if (state.editEntry.entry.ser_code) {
+      let ser_code = R.find(R.propEq('abbr', state.editEntry.entry.ser_code))(state.formDefinitions.abbreviations);
+      initialValues = R.assoc('ser_code', ser_code, initialValues);
     }
   }
 
