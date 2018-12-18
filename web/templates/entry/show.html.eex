@@ -26,7 +26,7 @@
   <% end %>
 
   <!-- Actions -->
-  <div class="mt-2 d-flex btn-group flex-wrap" role="group">
+  <div class="mt-2 mb-2 d-flex btn-group flex-wrap" role="group">
     <%= if @is_owner && !@entry.public do %>
       <%= if length(@entry.user.caches) > 1 do %>
         <div class="flex-fill">
@@ -56,7 +56,7 @@
 
   <%= if @user do %>
     <!-- Internal information -->
-    <div class="card" style="border-top: none;">
+    <div class="card">
       <div class="card-body">
     <table class="table table-hover" style="margin-bottom: 0;">
       <tbody>
