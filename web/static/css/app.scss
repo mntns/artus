@@ -35,6 +35,20 @@ nav[aria-label="Page navigation"] {
   border-radius: 0;
 }
 
+.btn-artus {
+  @include button-variant(
+  $artus-primary, 
+  darken($artus-primary, 7.5%), 
+  darken($artus-primary, 10%), 
+  lighten($artus-primary,5%), 
+  lighten($artus-primary, 10%), 
+  darken($artus-primary,30%));
+}
+
+.btn-outline-artus {
+    @include button-outline-variant($artus-primary, #222222, lighten($artus-primary,5%), $artus-primary);
+}
+
 .modal-content {
   border-radius: 0px;
   border: none;
@@ -88,6 +102,10 @@ nav[aria-label="Page navigation"] {
 
 .input-form-space {
   margin-top: 50px;
+}
+
+.btn-group {
+  display: flex;
 }
 
 .btn-group-fix {

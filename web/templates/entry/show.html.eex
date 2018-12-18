@@ -26,30 +26,37 @@
   <% end %>
 
   <!-- Actions -->
-  <div class="mt-2 mb-4 btn-group d-flex" role="group">
-    
+  <div class="mt-2 d-flex btn-group flex-wrap" role="group">
     <%= if @is_owner && !@entry.public do %>
-      <%= if @entry.user.caches != [] do %>
+      <%= if length(@entry.user.caches) > 1 do %>
+        <div class="flex-fill">
         <button type="button" class="btn btn-secondary w-100" data-toggle="modal" data-target="#entryMoveModal" >
           <i class="fa fa-fw fa-share" aria-hidden="true"></i> Move 
         </button>
+        </div>
       <% end %>
+        <div class="flex-fill">
       <button type="button" class="btn btn-danger w-100" data-toggle="modal" data-target="#entryDeleteModal">
         <i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete
       </button>
+        </div>
+        <div class="flex-fill">
       <a class="btn btn-primary w-100" href="<%= entry_path(@conn, :edit, @entry.id) %>" role="button">
         <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit
       </a>
+    </div>
     <% end %>
 
-    <a class="btn btn-secondary w-100" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
+        <div class="flex-fill">
+    <a class="btn btn-artus w-100" href="<%= entry_path(@conn, :export, @entry.id) %>" role="button">
       <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i> Export
     </a>
+  </div>
   </div>
 
   <%= if @user do %>
     <!-- Internal information -->
-    <div class="card">
+    <div class="card" style="border-top: none;">
       <div class="card-body">
     <table class="table table-hover" style="margin-bottom: 0;">
       <tbody>
@@ -60,7 +67,10 @@
         <%= if !@entry.public do %>
         <tr>
           <th>Current owner</th>
-          <td><b><%= @entry.user.name %></b> (Cache: <%= @entry.cache.name %>)</td>
+          <td>
+            <b><%= @entry.user.name %></b> 
+            <span class="badge badge-primary ml-md-1">Cache: <%= @entry.cache.name %></span>
+          </td>
         </tr>
         <tr>
           <th scope="row">Branch</th>
@@ -69,7 +79,7 @@
             <%= for flag <- branch["flags"] do %>
               <span class="flag-icon flag-icon-<%= flag %>"></span>
             <% end %>
-            (<%= branch["name"] %>)
+            <%= branch["name"] %>
           </td>
         </tr>
       <% end %>

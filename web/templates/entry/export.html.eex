@@ -8,17 +8,17 @@
 
   <div class="list-group">
     <a href="<%= entry_path(@conn, :export_type, @entry.id, "rtf") %>" class="list-group-item list-group-item-action" download>
-      <i class="fa fa-fw fa-download" aria-hidden="true"></i> Rich Text Format (.rtf)
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> Rich Text Format <span class="badge badge-primary">.rtf</span>
     </a>
     <a href="<%= entry_path(@conn, :export_type, @entry.id, "latex") %>" class="list-group-item list-group-item-action" download>
-      <i class="fa fa-fw fa-download" aria-hidden="true"></i> LaTeX (.latex)
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> LaTeX  <span class="badge badge-primary">.latex</span>
     </a>
     <a href="<%= entry_path(@conn, :export_type, @entry.id, "odt") %>" class="list-group-item list-group-item-action" download>
-      <i class="fa fa-fw fa-download" aria-hidden="true"></i> OpenDocument Format (.odt)
+      <i class="fa fa-fw fa-download" aria-hidden="true"></i> OpenDocument Format <span class="badge badge-primary">.odt</span>
     </a>
   </div>
   
-  <p class="text-muted">
+  <p class="text-muted text-center mt-2">
     <small>
       <i class="fa fa-creative-commons"></i> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
     </small>
