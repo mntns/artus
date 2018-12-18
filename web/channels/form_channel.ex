@@ -9,16 +9,19 @@ defmodule Artus.FormChannel do
   def join("input:form", _message, socket) do
     {:ok, socket}
   end
-
+  
   @doc "Returns terms for autocomplete"
   def handle_in("autocomplete", %{"string" => query}, socket) do
-    matches = Artus.FastSearchServer.match(query)
-    suggestions = query
-                  |> Artus.FastSearchServer.match()
-                  |> Enum.map(fn(x) -> %{value: x, label: x} end)
-                  |> Enum.take(9)
+    matches = query
+              |> Artus.FastSearchServer.match(is_nil(socket.assigns[:user]))
+              |> Enum.uniq()
+              |> Enum.take(9)
+              |> Enum.map(fn(x) -> %{
+                value: Regex.replace(~r/[^a-zA-Z0-9\ ]+/, x, ""),
+                label: Artus.NotMarkdown.to_html(x)} 
+              end)
 
-    {:reply, {:ok, %{suggestions: suggestions}}, socket}
+    {:reply, {:ok, %{suggestions: matches}}, socket}
   end
 
   @doc "Returns available options for parts and types"
@@ -172,6 +175,7 @@ defmodule Artus.FormChannel do
     
     case Repo.insert(changeset) do
       {:ok, entry} -> 
+        Artus.FastSearchServer.add(entry)
         data = %{id: entry.id, url: Artus.Router.Helpers.cache_path(socket, :show, cache.id, success: "create")}
         {:reply, {:ok, data}, socket}
       {:error, changeset} -> 

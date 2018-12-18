@@ -1,6 +1,6 @@
 defmodule Artus.Router do
   use Artus.Web, :router
-  use Plug.ErrorHandler
+  # use Plug.ErrorHandler
 
   pipeline :browser do
     plug :accepts, ["html"]

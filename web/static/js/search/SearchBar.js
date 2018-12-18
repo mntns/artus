@@ -56,16 +56,14 @@ class SearchBar extends React.Component {
                 this.setState({ value });
                 this.getOptions(value);
               }}
-              renderMenu={children => (
-                <div className="card" id="searchCard">
-                  {children}
-                </div>
+              renderMenu={(items, value, style) => (
+                <div className="card" id="searchCard" children={items} />
               )}
               renderItem={(item, isHighlighted) => (
                 <div
-                  className={"search-item ${isHighlighted ? 'search-item-active' : ''}"}
-                  key={item.value}
-                >{item.label}</div>
+                  className={isHighlighted ? 'search-item search-item-active' : 'search-item'}
+                  key={item.value} dangerouslySetInnerHTML={{__html: item.label}}>
+                </div>
               )}
             />
 

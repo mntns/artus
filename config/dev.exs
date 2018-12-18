@@ -9,7 +9,7 @@ use Mix.Config
 config :artus, Artus.Endpoint,
   http: [port: 4000],
   url: [host: "localhost"],
-  debug_errors: true,
+  debug_errors: false,
   code_reloader: true,
   check_origin: false,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",

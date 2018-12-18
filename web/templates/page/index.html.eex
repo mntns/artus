@@ -9,6 +9,7 @@
     <img id="ias-logo" src="images/IAS LOGO_modified.svg" alt="Logo of the IAS">
   </a>
 
+  <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   <div id="reactSearchBar"></div>
 
   <!--
@@ -20,4 +21,6 @@
       <%= @notice %>
     </div>
   <% end %>
+
+
 </div>

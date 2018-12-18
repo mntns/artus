@@ -5,7 +5,7 @@ config :artus, Artus.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "WXptf2mloqkTth6Sq/rWnGeiJqlTrLYHE0ZCdvajHAOUImJ2svY8LzDCA1+nxzHv",
-  render_errors: [accepts: ~w(html json)],
+  render_errors: [view: Artus.ErrorView, accepts: ~w(html), layout: false],
   pubsub: [name: Artus.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

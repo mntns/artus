@@ -15,6 +15,10 @@ $input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width grey !default;
 @import 'font-awesome/font-awesome';
 @import 'flag-icon/flag-icon';
 
+body,html {
+  height: 100%;
+}
+
 nav {
   background-color: $artus-primary;
 }
@@ -132,6 +136,8 @@ nav[aria-label="Page navigation"] {
 
 #searchBar {
   height: 50px;
+  border-bottom: none
+
   &:focus {
   outline: none !important;
   }
@@ -141,8 +147,10 @@ nav[aria-label="Page navigation"] {
   padding: 2px 0.75rem 2px;
 }
 .search-item-active {
-  padding: 2px 0.75rem 2px;
-  background-color: blue;
+  z-index: 2;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 #searchCard {
@@ -154,6 +162,10 @@ nav[aria-label="Page navigation"] {
   left: 0;
   top: 100%;
   width: 100%;
+
+  border-left: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
 }
 
 // .container *:not(#searchWrapper) {

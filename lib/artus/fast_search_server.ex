@@ -9,28 +9,64 @@ defmodule Artus.FastSearchServer do
 
   def init(:ok) do
     GenServer.cast(:fast_search, :build_tree)
-    {:ok, []}
+    {:ok, %{public: [], non_public: []}}
   end
 
-  def match(query) do
-    GenServer.call(:fast_search, {:match, query})
+  def match(query, public) do
+    GenServer.call(:fast_search, {:match, %{query: query, public: public}})
   end
 
-  def handle_call({:match, query}, _from, state) do
-    {:reply, Retrieval.prefix(state.trie, query), state}
+  def rebuild() do
+    GenServer.cast(:fast_search, :build_tree)
+  end
+
+  def add(entry) do
+    GenServer.cast(:fast_search, {:add, entry})
+  end
+
+  def handle_call({:match, %{query: query, public: public}}, _from, state) do
+    pub_result = Retrieval.prefix(state.public, query)
+
+    case public do
+      true ->
+        {:reply, pub_result, state}
+      false ->
+        non_result = Retrieval.prefix(state.non_public, query)
+        {:reply, pub_result ++ non_result, state}
+    end
+  end
+
+  def handle_cast({:add, entry}, state) do
+    token_list = entry |> tokenize_entry() |> List.flatten()
+
+    if entry.public do
+      trie = Retrieval.insert(state.public, token_list)
+
+      {:noreply, %{state | public: trie}}
+    else
+      trie = Retrieval.insert(state.non_public, token_list)
+      {:noreply, %{state | non_public: trie}}
+    end
   end
 
   def handle_cast(:build_tree, state) do
     keys = [:titl_title, :titl_subtitle, :editor, :author]
-    query = from e in Artus.Entry, select: map(e, ^keys)
+    query_non = from e in Artus.Entry, select: map(e, ^keys), where: e.public == false
+    query_pub = from e in Artus.Entry, select: map(e, ^keys), where: e.public == true
 
-    trie = query
-           |> Artus.Repo.all()
-           |> Enum.map(&tokenize_entry(&1))
-           |> List.flatten()
-           |> Retrieval.new()
+    pub_trie = query_pub
+               |> Artus.Repo.all()
+               |> Enum.map(&tokenize_entry(&1))
+               |> List.flatten()
+               |> Retrieval.new()
 
-    {:noreply, %{trie: trie}}
+    non_trie = query_non
+               |> Artus.Repo.all()
+               |> Enum.map(&tokenize_entry(&1))
+               |> List.flatten()
+               |> Retrieval.new()
+
+    {:noreply, %{state | public: pub_trie, non_public: non_trie}}
   end
 
   defp tokenize_entry(entry) do
@@ -45,9 +81,9 @@ defmodule Artus.FastSearchServer do
   end
 
   defp tokenize_author(author) do
-    case String.split(author, ", ", trim: true) do
+    case String.split(author, ",", trim: true) do
       [name, first] ->
-        String.downcase(first <> " " <> name)
+        String.downcase(String.trim(first) <> " " <> String.trim(name))
       [name] ->
         String.downcase(name)
       x -> author

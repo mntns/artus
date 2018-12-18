@@ -91,6 +91,7 @@ defmodule Artus.CacheController do
     Repo.delete(cache)
 
     Artus.EventLogger.log(:cache_publish, "#{conn.assigns.user.name} published the working cache '#{cache.name}' (#{cache.id})")
+    Artus.FastSearchServer.rebuild()
 
     conn
     |> put_flash(:info, "Successfully published the Working Cache '#{cache.name}'!")
