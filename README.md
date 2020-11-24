@@ -42,7 +42,7 @@ The following steps should provide a brief outline to installing the application
 
 ## Deployment from development machine
 
-Deployment is straightforward. Contact [Eddy Shure](https://github.com/EddyShure) for the SSH key and then simply run:
+Deployment is straightforward. Contact [Niklas Kunz](https://github.com/mntns) for the SSH key and then simply run:
 
 ```sh
 ./rel/deploy.sh
@@ -52,6 +52,3 @@ If there are any migrations to run, execute this command:
 ```sh
 bin/artus command Elixir.Release.Tasks migrate
 ```
-
-## Maintainers
-* [Eddy Shure](https://github.com/EddyShure)
