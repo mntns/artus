@@ -1363,7 +1363,7 @@ classnames@^2.2.4:
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
 
-clean-css-brunch@^2.0.0:
+clean-css-brunch@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/clean-css-brunch/-/clean-css-brunch-2.10.0.tgz#6a151e6509589cd341dce04981a1c75062a22d18"
   integrity sha1-ahUeZQlYnNNB3OBJgaHHUGKiLRg=
@@ -1586,7 +1586,7 @@ crypto-browserify@~3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
 
-css-brunch@^2.6.1:
+css-brunch@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/css-brunch/-/css-brunch-2.10.0.tgz#b7c8e7208ea7a837c8608ea0e8e7b9a03c4a72f2"
   integrity sha1-t8jnII6nqDfIYI6g6Oe5oDxKcvI=
