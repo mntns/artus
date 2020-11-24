@@ -42,7 +42,7 @@ config :artus, Artus.Repo,
   username: "postgres",
   password: "postgres",
   database: "artus_dev",
-  hostname: "localhost",
+  hostname: "db",
   pool_size: 10,
   pool_timeout: 20_000
 

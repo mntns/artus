@@ -11,7 +11,6 @@
     "jQuery-QueryBuilder": "^2.5.2",
     "javascript-brunch": "^2.0.0",
     "jquery": "^3.3.1",
-    "node-sass": "^4.5.3",
     "phoenix": "file:deps/phoenix",
     "phoenix_html": "file:deps/phoenix_html",
     "pickadate": "^3.5.6",
@@ -31,10 +30,11 @@
     "redux-form": "^7.2.3",
     "redux-logger": "3.0.1",
     "redux-thunk": "^2.2.0",
-    "sass-brunch": "^2.6.3",
     "uglify-js-brunch": "^2.0.1"
   },
   "devDependencies": {
-    "babel-preset-env": "^1.6.0"
+    "babel-preset-env": "^1.6.0",
+    "node-sass": "^4.12.0",
+    "sass-brunch": "^3.0.0"
   }
 }
