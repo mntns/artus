@@ -34,7 +34,7 @@
     "brunch": "^2.8.2",
     "clean-css-brunch": "^3.0.0",
     "css-brunch": "^2.10.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "sass-brunch": "^3.0.0"
   }
 }
